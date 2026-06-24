@@ -14,6 +14,10 @@ function clamp(v: number, min: number, max: number) {
   return Math.max(min, Math.min(max, v))
 }
 
+function easeInOutCubic(t: number): number {
+  return t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2
+}
+
 function animate() {
   const wh = window.innerHeight
 
@@ -45,4 +49,20 @@ export function registerTargets(target: AnimationTargets) {
     const i = targets.indexOf(target)
     if (i !== -1) targets.splice(i, 1)
   }
+}
+
+export function smoothScrollTo(container: HTMLElement, targetY: number, duration = 800) {
+  const startY = container.scrollTop
+  const diff = targetY - startY
+  if (Math.abs(diff) < 1) return
+  const startTime = performance.now()
+
+  function step(now: number) {
+    const elapsed = now - startTime
+    const progress = Math.min(elapsed / duration, 1)
+    container.scrollTop = startY + diff * easeInOutCubic(progress)
+    if (progress < 1) requestAnimationFrame(step)
+  }
+
+  requestAnimationFrame(step)
 }

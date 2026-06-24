@@ -103,17 +103,11 @@ html {
 }
 
 .splash-bar {
-  position: absolute;
-  bottom: calc(15% + 40px);
-  left: 50%;
   height: 1px;
   background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-  transform: translateX(-50%);
 }
 
 .splash-label {
-  position: absolute;
-  bottom: 15%;
   color: rgba(255,255,255,0.25);
   font-size: clamp(0.5rem, 0.6vw, 0.65rem);
   letter-spacing: 0.45em;

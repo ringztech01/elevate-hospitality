@@ -17,11 +17,14 @@ interface SectionProps {
   loop?: boolean
 }
 
-export default function Section({ id, number, title, desc, video, zIndex, active, isCurrent, align, delay, loop }: SectionProps) {
+export default function Section({ id, number, title, desc, video, zIndex, active, isCurrent, align, delay }: SectionProps) {
   const sectionRef = useRef<HTMLDivElement>(null)
   const revealRef = useRef<HTMLDivElement>(null)
   const videoWrapRef = useRef<HTMLDivElement>(null)
-  const videoRef = useRef<HTMLVideoElement>(null)
+  const videoRefA = useRef<HTMLVideoElement>(null)
+  const videoRefB = useRef<HTMLVideoElement>(null)
+  const timerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
+  const [showing, setShowing] = useState(0)
   const [videoError, setVideoError] = useState(false)
   const [entered, setEntered] = useState(false)
 
@@ -45,10 +48,46 @@ export default function Section({ id, number, title, desc, video, zIndex, active
   }, [])
 
   useEffect(() => {
-    if (!videoRef.current) return
-    if (active) videoRef.current.play().catch(() => {})
-    else videoRef.current.pause()
-  }, [active])
+    const a = videoRefA.current
+    const b = videoRefB.current
+    if (active) {
+      if (showing === 0) a?.play().catch(() => {})
+      else b?.play().catch(() => {})
+    } else {
+      a?.pause()
+      b?.pause()
+    }
+  }, [active, showing])
+
+  useEffect(() => {
+    const activeVid = showing === 0 ? videoRefA.current : videoRefB.current
+    const inactiveVid = showing === 0 ? videoRefB.current : videoRefA.current
+    if (!activeVid || !inactiveVid) return
+
+    const onTime = () => {
+      if (timerRef.current) return
+      if (activeVid.duration && activeVid.currentTime >= activeVid.duration - 0.5) {
+        inactiveVid.currentTime = 0
+        inactiveVid.play()
+        setShowing(showing === 0 ? 1 : 0)
+
+        timerRef.current = setTimeout(() => {
+          activeVid.pause()
+          activeVid.currentTime = 0
+          timerRef.current = undefined
+        }, 600)
+      }
+    }
+
+    activeVid.addEventListener("timeupdate", onTime)
+    return () => {
+      activeVid.removeEventListener("timeupdate", onTime)
+      if (timerRef.current) {
+        clearTimeout(timerRef.current)
+        timerRef.current = undefined
+      }
+    }
+  }, [showing, video, active])
 
   return (
     <section id={id} ref={sectionRef} className="section" style={{ zIndex }}>
@@ -73,13 +112,24 @@ export default function Section({ id, number, title, desc, video, zIndex, active
         ) : (
           <div ref={videoWrapRef} style={{ position: "absolute", inset: 0, willChange: "transform" }}>
             <video
-              ref={videoRef}
+              ref={videoRefA}
               muted
               playsInline
-              loop={loop !== false}
+              loop={false}
               preload={active ? "auto" : "none"}
               onError={() => setVideoError(true)}
-              style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              style={{ width: "100%", height: "100%", objectFit: "cover", opacity: showing === 0 ? 1 : 0, transition: "opacity 0.5s ease" }}
+            >
+              <source src={video} type="video/webm" />
+            </video>
+            <video
+              ref={videoRefB}
+              muted
+              playsInline
+              loop={false}
+              preload={active ? "auto" : "none"}
+              onError={() => setVideoError(true)}
+              style={{ width: "100%", height: "100%", objectFit: "cover", opacity: showing === 1 ? 1 : 0, transition: "opacity 0.5s ease", position: "absolute", inset: 0 }}
             >
               <source src={video} type="video/webm" />
             </video>
