@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#e5e7eb"/>
+  <text x="400" y="290" text-anchor="middle" font-family="system-ui,sans-serif" font-size="20" fill="#9ca3af">Project Image</text>
+  <text x="400" y="320" text-anchor="middle" font-family="system-ui,sans-serif" font-size="14" fill="#b0b5bb">Add your image here</text>
+</svg>
