@@ -26,13 +26,19 @@ const team = [
 ]
 
 function HomeContent() {
-  const [splashDone, setSplashDone] = useState(() => typeof window !== "undefined" && sessionStorage.getItem("splashSeen") === "1")
+  const [splashDone, setSplashDone] = useState(false)
   const [current, setCurrent] = useState(0)
   const containerRef = useRef<HTMLDivElement>(null)
   const currentRef = useRef(0)
   const searchParams = useSearchParams()
 
   currentRef.current = current
+
+  useEffect(() => {
+    if (sessionStorage.getItem("splashSeen") === "1") {
+      setSplashDone(true)
+    }
+  }, [])
 
   const goTo = useCallback((targetIdx: number) => {
     if (targetIdx < 0 || targetIdx >= slides.length) return
