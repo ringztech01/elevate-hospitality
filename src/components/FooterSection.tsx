@@ -9,13 +9,17 @@ interface FooterSectionProps {
   slideCount: number
 }
 
-const internalLinks = [
-  { label: "Portfolio", index: 2 },
-  { label: "Team", index: 4 },
-  { label: "Contact", index: 5 },
+const pageLinks = [
+  { label: "Concept", path: "/about" },
+  { label: "Design", path: "/about" },
+  { label: "Build", path: "/about" },
+  { label: "Portfolio", path: "/portfolio" },
 ]
 
-const externalLinks = ["Concept", "Design", "Build"]
+const internalLinks = [
+  { label: "Team", index: 2 },
+  { label: "Contact", index: 3 },
+]
 
 export default function FooterSection({ isCurrent, onClick, slideCount }: FooterSectionProps) {
   const [entered, setEntered] = useState(false)
@@ -109,10 +113,10 @@ export default function FooterSection({ isCurrent, onClick, slideCount }: Footer
           marginBottom: "3rem",
           flexWrap: "wrap",
         }}>
-          {externalLinks.map((label) => (
+          {pageLinks.map((item) => (
             <button
-              key={label}
-              onClick={() => router.push("/about")}
+              key={item.label}
+              onClick={() => router.push(item.path)}
               style={{
                 background: "none",
                 border: "none",
@@ -128,10 +132,10 @@ export default function FooterSection({ isCurrent, onClick, slideCount }: Footer
               onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.8)" }}
               onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.25)" }}
             >
-              {label}
+              {item.label}
             </button>
           ))}
-          {internalLinks.map((link, i) => (
+          {internalLinks.map((link, idx) => (
             <button
               key={link.label}
               onClick={() => onClick(link.index)}
@@ -147,7 +151,7 @@ export default function FooterSection({ isCurrent, onClick, slideCount }: Footer
                 fontFamily: "inherit",
                 opacity: entered ? 1 : 0,
                 transform: entered ? "translateY(0)" : "translateY(10px)",
-                transition: `opacity 0.5s ease ${0.3 + i * 0.06}s, transform 0.5s ease ${0.3 + i * 0.06}s, color 0.3s ease`,
+                transition: `opacity 0.5s ease ${0.3 + idx * 0.06}s, transform 0.5s ease ${0.3 + idx * 0.06}s, color 0.3s ease`,
               }}
               onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = "#fff" }}
               onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.25)" }}

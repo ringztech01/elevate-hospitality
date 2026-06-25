@@ -7,7 +7,7 @@ interface NavbarProps {
   current: number
   slides: { type: string; id?: string }[]
   onClick: (index: number) => void
-  page: "home" | "about"
+  page: "home" | "about" | "portfolio"
 }
 
 const navItems = [
@@ -20,9 +20,8 @@ const navItems = [
 
 const homeIndices: Record<string, number> = {
   Home: 0,
-  Portfolio: 2,
-  Team: 4,
-  Contact: 5,
+  Team: 2,
+  Contact: 3,
 }
 
 export default function Navbar({ current, slides, onClick, page }: NavbarProps) {
@@ -32,14 +31,26 @@ export default function Navbar({ current, slides, onClick, page }: NavbarProps) 
     if (label === "About Us") {
       if (page === "home") {
         router.push("/about")
-      } else {
+      } else if (page === "about") {
         onClick(0)
+      } else {
+        router.push("/about")
       }
-    } else if (page === "about") {
-      const homeIdx = homeIndices[label]
-      router.push(homeIdx !== undefined ? `/?to=${homeIdx}` : "/")
+    } else if (label === "Portfolio") {
+      if (page === "home") {
+        router.push("/portfolio")
+      } else if (page === "portfolio") {
+        onClick(0)
+      } else {
+        router.push("/portfolio")
+      }
     } else {
-      onClick(origIdx)
+      if (page === "home") {
+        onClick(origIdx)
+      } else {
+        const homeIdx = homeIndices[label]
+        router.push(homeIdx !== undefined ? `/?to=${homeIdx}` : "/")
+      }
     }
   }
 
@@ -62,7 +73,8 @@ export default function Navbar({ current, slides, onClick, page }: NavbarProps) 
             key={i}
             className={
               (page === "home" && current === item.index) ||
-              (page === "about" && item.label === "About Us")
+              (page === "about" && item.label === "About Us") ||
+              (page === "portfolio" && item.label === "Portfolio")
                 ? "active"
                 : ""
             }
