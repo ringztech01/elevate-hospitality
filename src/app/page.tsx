@@ -126,7 +126,7 @@ export default function Home() {
             return (
               <div key={origIdx} className="slide">
                 {slide.type === "hero" ? (
-                  <HeroSection video="/videos/hero.webm" />
+                  <HeroSection containerRef={containerRef} isCurrent={origIdx === current} />
                 ) : slide.type === "section" ? (
                   <Section
                     id={slide.id!}

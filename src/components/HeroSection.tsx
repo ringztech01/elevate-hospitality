@@ -3,75 +3,79 @@
 import { useEffect, useRef, useState } from "react"
 
 interface HeroSectionProps {
-  video: string
+  containerRef: React.RefObject<HTMLDivElement | null>
+  isCurrent: boolean
 }
 
-export default function HeroSection({ video }: HeroSectionProps) {
-  const videoRefA = useRef<HTMLVideoElement>(null)
-  const videoRefB = useRef<HTMLVideoElement>(null)
-  const timerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
-  const [showing, setShowing] = useState(0)
+const TOTAL_FRAMES = 474
+const ZERO_PAD = 4
+
+function frameSrc(index: number) {
+  const padded = String(index + 1).padStart(ZERO_PAD, "0")
+  return `/hero-frames/frame_${padded}.webp`
+}
+
+export default function HeroSection({ containerRef, isCurrent }: HeroSectionProps) {
+  const imgRef = useRef<HTMLImageElement>(null)
+  const rafRef = useRef<number>(0)
+  const currentFrameRef = useRef(-1)
   const [revealed, setRevealed] = useState(false)
 
   useEffect(() => {
-    const show = setTimeout(() => setRevealed(true), 50)
-    const hide = setTimeout(() => setRevealed(false), 4000)
-    return () => { clearTimeout(show); clearTimeout(hide) }
-  }, [])
+    if (isCurrent) {
+      const show = setTimeout(() => setRevealed(true), 50)
+      const hide = setTimeout(() => setRevealed(false), 4000)
+      return () => { clearTimeout(show); clearTimeout(hide) }
+    } else {
+      setRevealed(false)
+    }
+  }, [isCurrent])
 
   useEffect(() => {
-    const active = showing === 0 ? videoRefA.current : videoRefB.current
-    const inactive = showing === 0 ? videoRefB.current : videoRefA.current
-    if (!active || !inactive) return
+    const el = containerRef?.current
+    if (!el) return
 
-    const onTime = () => {
-      if (timerRef.current) return
-      if (active.duration && active.currentTime >= active.duration - 0.5) {
-        inactive.currentTime = 0
-        inactive.play()
-        setShowing(showing === 0 ? 1 : 0)
+    const tick = () => {
+      const vh = window.innerHeight
+      const progress = Math.min(1, el.scrollTop / vh)
+      const frame = Math.min(TOTAL_FRAMES - 1, Math.floor(progress * TOTAL_FRAMES))
 
-        timerRef.current = setTimeout(() => {
-          active.pause()
-          active.currentTime = 0
-          timerRef.current = undefined
-        }, 600)
+      if (frame !== currentFrameRef.current && imgRef.current) {
+        currentFrameRef.current = frame
+        imgRef.current.src = frameSrc(frame)
       }
+
+      rafRef.current = requestAnimationFrame(tick)
     }
 
-    active.addEventListener("timeupdate", onTime)
-    return () => {
-      active.removeEventListener("timeupdate", onTime)
-      if (timerRef.current) {
-        clearTimeout(timerRef.current)
-        timerRef.current = undefined
+    rafRef.current = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(rafRef.current)
+  }, [containerRef])
+
+  useEffect(() => {
+    const preloadNext = () => {
+      const base = currentFrameRef.current
+      if (base < 0) return
+      for (let i = -3; i <= 3; i++) {
+        const idx = base + i
+        if (idx >= 0 && idx < TOTAL_FRAMES) {
+          const img = new Image()
+          img.src = frameSrc(idx)
+        }
       }
     }
-  }, [showing, video])
+    const id = setInterval(preloadNext, 500)
+    return () => clearInterval(id)
+  }, [])
 
   return (
     <section style={{ position: "relative", height: "100vh", overflow: "hidden" }}>
-      <video
-        ref={videoRefA}
-        autoPlay
-        muted
-        playsInline
-        preload="auto"
-        className="hero-video"
-        style={{ opacity: showing === 0 ? 1 : 0, transition: "opacity 0.5s ease" }}
-      >
-        <source src={video} type="video/webm" />
-      </video>
-      <video
-        ref={videoRefB}
-        muted
-        playsInline
-        preload="auto"
-        className="hero-video"
-        style={{ opacity: showing === 1 ? 1 : 0, transition: "opacity 0.5s ease" }}
-      >
-        <source src={video} type="video/webm" />
-      </video>
+      <img
+        ref={imgRef}
+        src={frameSrc(0)}
+        alt=""
+        style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
+      />
       <div className="hero-overlay" />
       <div className="hero-perspective">
         <h1

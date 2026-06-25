@@ -68,11 +68,11 @@ export default function Section({ id, number, title, desc, video, zIndex, active
       if (timerRef.current) return
       if (activeVid.duration && activeVid.currentTime >= activeVid.duration - 0.5) {
         inactiveVid.currentTime = 0
-        inactiveVid.play()
+        inactiveVid.play().catch(() => {})
         setShowing(showing === 0 ? 1 : 0)
 
         timerRef.current = setTimeout(() => {
-          activeVid.pause()
+          try { activeVid.pause() } catch {}
           activeVid.currentTime = 0
           timerRef.current = undefined
         }, 600)
