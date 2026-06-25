@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
 
 interface FooterSectionProps {
   isCurrent: boolean
@@ -8,17 +9,17 @@ interface FooterSectionProps {
   slideCount: number
 }
 
-const links = [
-  { label: "Concept", index: 1 },
-  { label: "Design", index: 3 },
-  { label: "Build", index: 5 },
-  { label: "Portfolio", index: 13 },
-  { label: "Team", index: 15 },
-  { label: "Contact", index: 16 },
+const internalLinks = [
+  { label: "Portfolio", index: 2 },
+  { label: "Team", index: 4 },
+  { label: "Contact", index: 5 },
 ]
+
+const externalLinks = ["Concept", "Design", "Build"]
 
 export default function FooterSection({ isCurrent, onClick, slideCount }: FooterSectionProps) {
   const [entered, setEntered] = useState(false)
+  const router = useRouter()
 
   useEffect(() => {
     if (isCurrent && !entered) {
@@ -108,7 +109,29 @@ export default function FooterSection({ isCurrent, onClick, slideCount }: Footer
           marginBottom: "3rem",
           flexWrap: "wrap",
         }}>
-          {links.map((link, i) => (
+          {externalLinks.map((label) => (
+            <button
+              key={label}
+              onClick={() => router.push("/about")}
+              style={{
+                background: "none",
+                border: "none",
+                color: "rgba(255,255,255,0.25)",
+                fontSize: "clamp(0.65rem, 0.7vw, 0.75rem)",
+                letterSpacing: "0.2em",
+                textTransform: "uppercase",
+                cursor: "pointer",
+                padding: "0.25rem 0",
+                fontFamily: "inherit",
+                transition: "color 0.3s ease",
+              }}
+              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.8)" }}
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.25)" }}
+            >
+              {label}
+            </button>
+          ))}
+          {internalLinks.map((link, i) => (
             <button
               key={link.label}
               onClick={() => onClick(link.index)}

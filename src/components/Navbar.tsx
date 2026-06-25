@@ -1,12 +1,13 @@
 "use client"
 
 import Image from "next/image"
+import { useRouter } from "next/navigation"
 
 interface NavbarProps {
   current: number
   slides: { type: string; id?: string }[]
   onClick: (index: number) => void
-  aboutMode?: boolean
+  page: "home" | "about"
 }
 
 const navItems = [
@@ -17,10 +18,34 @@ const navItems = [
   { label: "Contact", index: 16 },
 ]
 
-export default function Navbar({ current, slides, onClick, aboutMode }: NavbarProps) {
+const homeIndices: Record<string, number> = {
+  Home: 0,
+  Portfolio: 2,
+  Team: 4,
+  Contact: 5,
+}
+
+export default function Navbar({ current, slides, onClick, page }: NavbarProps) {
+  const router = useRouter()
+
+  const handleClick = (label: string, origIdx: number) => {
+    if (label === "About Us") {
+      if (page === "home") {
+        router.push("/about")
+      } else {
+        onClick(0)
+      }
+    } else if (page === "about") {
+      const homeIdx = homeIndices[label]
+      router.push(homeIdx !== undefined ? `/?to=${homeIdx}` : "/")
+    } else {
+      onClick(origIdx)
+    }
+  }
+
   return (
     <nav className="navbar">
-      <div className="navbar-logo" onClick={() => onClick(0)}>
+      <div className="navbar-logo" onClick={() => handleClick("Home", 0)}>
         <Image
           alt="Elevate"
           src="/ELEVATE.png"
@@ -35,8 +60,13 @@ export default function Navbar({ current, slides, onClick, aboutMode }: NavbarPr
         {navItems.map((item, i) => (
           <button
             key={i}
-            className={current === item.index || (aboutMode && item.index === 1) ? "active" : ""}
-            onClick={() => onClick(item.index)}
+            className={
+              (page === "home" && current === item.index) ||
+              (page === "about" && item.label === "About Us")
+                ? "active"
+                : ""
+            }
+            onClick={() => handleClick(item.label, item.index)}
           >
             {item.label}
           </button>
@@ -45,7 +75,7 @@ export default function Navbar({ current, slides, onClick, aboutMode }: NavbarPr
 
       <button className="navbar-mobile" onClick={() => {
         const next = navItems.find(item => item.index > current)
-        onClick(next ? next.index : navItems[0].index)
+        handleClick(next ? next.label : "Home", next ? next.index : 0)
       }}>
         Menu
       </button>
