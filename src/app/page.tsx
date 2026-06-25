@@ -26,7 +26,7 @@ const team = [
 ]
 
 function HomeContent() {
-  const [splashDone, setSplashDone] = useState(false)
+  const [splashDone, setSplashDone] = useState(() => typeof window !== "undefined" && sessionStorage.getItem("splashSeen") === "1")
   const [current, setCurrent] = useState(0)
   const containerRef = useRef<HTMLDivElement>(null)
   const currentRef = useRef(0)
@@ -72,7 +72,7 @@ function HomeContent() {
 
   return (
     <>
-      {!splashDone && <SplashScreen onDone={() => setSplashDone(true)} />}
+      {!splashDone && <SplashScreen onDone={() => { sessionStorage.setItem("splashSeen", "1"); setSplashDone(true) }} />}
       <Navbar current={current} slides={slides} onClick={goTo} page="home" />
       {splashDone && (
         <div ref={containerRef} className="slide-container">
