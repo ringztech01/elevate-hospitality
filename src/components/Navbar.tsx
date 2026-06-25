@@ -4,20 +4,15 @@ import Image from "next/image"
 
 interface NavbarProps {
   current: number
-  slides: { type: string; id?: string }[]
   onClick: (index: number) => void
-  aboutMode?: boolean
 }
 
 const navItems = [
   { label: "Home", index: 0 },
-  { label: "About Us", index: 1 },
-  { label: "Portfolio", index: 13 },
-  { label: "Team", index: 15 },
-  { label: "Contact", index: 16 },
+  { label: "Contact", index: 1 },
 ]
 
-export default function Navbar({ current, slides, onClick, aboutMode }: NavbarProps) {
+export default function Navbar({ current, onClick }: NavbarProps) {
   return (
     <nav className="navbar">
       <div className="navbar-logo" onClick={() => onClick(0)}>
@@ -35,7 +30,7 @@ export default function Navbar({ current, slides, onClick, aboutMode }: NavbarPr
         {navItems.map((item, i) => (
           <button
             key={i}
-            className={current === item.index || (aboutMode && item.index === 1) ? "active" : ""}
+            className={current === item.index ? "active" : ""}
             onClick={() => onClick(item.index)}
           >
             {item.label}

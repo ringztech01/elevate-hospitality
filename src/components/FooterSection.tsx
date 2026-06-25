@@ -9,12 +9,8 @@ interface FooterSectionProps {
 }
 
 const links = [
-  { label: "Concept", index: 1 },
-  { label: "Design", index: 3 },
-  { label: "Build", index: 5 },
-  { label: "Portfolio", index: 13 },
-  { label: "Team", index: 15 },
-  { label: "Contact", index: 16 },
+  { label: "Home", index: 0 },
+  { label: "Contact", index: 1 },
 ]
 
 export default function FooterSection({ isCurrent, onClick, slideCount }: FooterSectionProps) {
