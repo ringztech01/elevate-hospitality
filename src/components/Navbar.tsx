@@ -14,12 +14,10 @@ const navItems = [
   { label: "Home", index: 0 },
   { label: "About Us", index: 1 },
   { label: "Portfolio", index: 13 },
-  { label: "Contact", index: 16 },
 ]
 
 const homeIndices: Record<string, number> = {
   Home: 0,
-  Contact: 2,
 }
 
 export default function Navbar({ current, slides, onClick, page }: NavbarProps) {
