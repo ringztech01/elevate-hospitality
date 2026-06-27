@@ -165,12 +165,14 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
     <section style={{ position: "relative", height: "100vh", overflow: "hidden" }}>
       <video
         ref={videoRef}
-        src="/hero.webm"
         muted
         playsInline
         preload="auto"
         style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
-      />
+      >
+        <source src="/hero.mp4" type="video/mp4" />
+        <source src="/hero.webm" type="video/webm" />
+      </video>
       <div className="hero-overlay" />
       <div style={{
         position: "absolute",
