@@ -1,8 +1,12 @@
 "use client"
 
-import { useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
+import { useRouter } from "next/navigation"
 import Navbar from "@/components/Navbar"
 import PortfolioSection from "@/components/PortfolioSection"
+import ContactSection from "@/components/ContactSection"
+import FooterSection from "@/components/FooterSection"
+import { smoothScrollTo } from "@/lib/scrollAnimate"
 
 const projects = [
   { name: "The Cage", category: "Nightclub · Full Scope", desc: "A nightlife venue where raw steel cage architecture became the entire concept.", image: "https://elevateng.co/images/projects/cage.jpg" },
@@ -16,17 +20,62 @@ const projects = [
   { name: "Grey Lounge", category: "Lounge · Full Scope", desc: "A monochrome lounge concept where texture and tone create atmosphere.", image: "https://elevateng.co/images/projects/gray1.png" },
 ]
 
+const slides = [
+  { type: "portfolio" },
+  { type: "contact", id: "contact" },
+  { type: "footer", id: "footer" },
+]
+
 export default function Portfolio() {
-  const [current] = useState(0)
-  const slides = [{ type: "portfolio" }]
+  const [current, setCurrent] = useState(0)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const currentRef = useRef(0)
+  const router = useRouter()
+
+  currentRef.current = current
+
+  const goTo = useCallback((targetIdx: number) => {
+    if (targetIdx < 0 || targetIdx >= slides.length) return
+    setCurrent(targetIdx)
+    const el = containerRef.current
+    if (!el) return
+    requestAnimationFrame(() => smoothScrollTo(el, targetIdx * window.innerHeight, 900))
+  }, [])
+
+  const footerGoTo = useCallback((targetIdx: number) => {
+    router.push(targetIdx === 1 ? "/?to=1" : "/?to=2")
+  }, [router])
+
+  useEffect(() => {
+    const container = containerRef.current
+    if (!container) return
+
+    const onScroll = () => {
+      const idx = Math.round(container.scrollTop / window.innerHeight)
+      if (idx >= 0 && idx < slides.length && idx !== currentRef.current) {
+        setCurrent(idx)
+      }
+    }
+
+    container.addEventListener("scroll", onScroll, { passive: true })
+    return () => container.removeEventListener("scroll", onScroll)
+  }, [])
 
   return (
     <>
-      <Navbar current={current} slides={slides} onClick={() => {}} page="portfolio" />
-      <div className="slide-container">
-        <div className="slide">
-          <PortfolioSection projects={projects} isCurrent={true} />
-        </div>
+      <Navbar current={current} slides={slides} onClick={goTo} page="portfolio" />
+      <div ref={containerRef} className="slide-container">
+        {slides.map((slide, i) => (
+          <div key={i} className="slide">
+            {slide.type === "portfolio" ? (
+              <PortfolioSection projects={projects} isCurrent={i === current} />
+            ) : slide.type === "contact" ? (
+              <ContactSection active={Math.abs(i - current) <= 1} />
+            ) : (
+              <FooterSection active={Math.abs(i - current) <= 1} onClick={footerGoTo} slideCount={slides.length} />
+            )}
+          </div>
+        ))}
       </div>
     </>
   )

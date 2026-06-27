@@ -1,10 +1,12 @@
 "use client"
 
 import { useCallback, useEffect, useRef, useState } from "react"
+import { useRouter } from "next/navigation"
 import Navbar from "@/components/Navbar"
 import Section from "@/components/Section"
 import StatementSection from "@/components/StatementSection"
-
+import ContactSection from "@/components/ContactSection"
+import FooterSection from "@/components/FooterSection"
 import { smoothScrollTo } from "@/lib/scrollAnimate"
 
 const slides = [
@@ -19,12 +21,15 @@ const slides = [
   { type: "section", id: "realization", number: "05", title: "Realization", desc: "The culmination of every decision made manifest. A space that stands as both statement and service to those who inhabit it.", video: "/videos/5.webm", z: 10 },
   { type: "statement", id: "statement-5", z: 11, lines: ["A great space is never complete.", "It evolves with every person", "who walks through it."] },
   { type: "section", id: "operate", number: "06", title: "Operate", desc: "Real becomes running. We stay to make it perform. We don't hand over the keys and walk away.", video: "/videos/6.webm", z: 12 },
+  { type: "contact", id: "contact" },
+  { type: "footer", id: "footer" },
 ]
 
 export default function About() {
   const [current, setCurrent] = useState(0)
   const containerRef = useRef<HTMLDivElement>(null)
   const currentRef = useRef(0)
+  const router = useRouter()
 
   currentRef.current = current
 
@@ -35,6 +40,10 @@ export default function About() {
     if (!el) return
     requestAnimationFrame(() => smoothScrollTo(el, targetIdx * window.innerHeight, 900))
   }, [])
+
+  const footerGoTo = useCallback((targetIdx: number) => {
+    router.push(targetIdx === 1 ? "/?to=1" : "/?to=2")
+  }, [router])
 
   useEffect(() => {
     const container = containerRef.current
@@ -70,13 +79,17 @@ export default function About() {
                 align={slide.align as "left" | "right" | undefined}
                 loop={(slide as any).loop}
               />
-            ) : (
+            ) : slide.type === "statement" ? (
               <StatementSection
                 id={slide.id!}
                 lines={slide.lines!}
                 zIndex={slide.z!}
                 active={i === current}
               />
+            ) : slide.type === "contact" ? (
+              <ContactSection active={Math.abs(i - current) <= 1} />
+            ) : (
+              <FooterSection active={Math.abs(i - current) <= 1} onClick={footerGoTo} slideCount={slides.length} />
             )}
           </div>
         ))}
