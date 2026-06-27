@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 
 interface FooterSectionProps {
-  isCurrent: boolean
+  active: boolean
   onClick: (index: number) => void
   slideCount: number
 }
@@ -17,20 +17,17 @@ const pageLinks = [
 ]
 
 const internalLinks = [
-  { label: "Team", index: 2 },
-  { label: "Contact", index: 3 },
+  { label: "Team", index: 1 },
+  { label: "Contact", index: 2 },
 ]
 
-export default function FooterSection({ isCurrent, onClick, slideCount }: FooterSectionProps) {
+export default function FooterSection({ active, onClick, slideCount }: FooterSectionProps) {
   const [entered, setEntered] = useState(false)
   const router = useRouter()
 
   useEffect(() => {
-    if (isCurrent && !entered) {
-      const t = setTimeout(() => setEntered(true), 300)
-      return () => clearTimeout(t)
-    }
-  }, [isCurrent, entered])
+    if (active && !entered) setEntered(true)
+  }, [active, entered])
 
   return (
     <section style={{

@@ -3,18 +3,15 @@
 import { useEffect, useState } from "react"
 
 interface ContactSectionProps {
-  isCurrent: boolean
+  active: boolean
 }
 
-export default function ContactSection({ isCurrent }: ContactSectionProps) {
+export default function ContactSection({ active }: ContactSectionProps) {
   const [entered, setEntered] = useState(false)
 
   useEffect(() => {
-    if (isCurrent && !entered) {
-      const t = setTimeout(() => setEntered(true), 300)
-      return () => clearTimeout(t)
-    }
-  }, [isCurrent, entered])
+    if (active && !entered) setEntered(true)
+  }, [active, entered])
 
   return (
     <section style={{

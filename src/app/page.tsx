@@ -5,16 +5,16 @@ import { useSearchParams } from "next/navigation"
 import Navbar from "@/components/Navbar"
 import SplashScreen from "@/components/SplashScreen"
 import HeroSection from "@/components/HeroSection"
-import StatementSection from "@/components/StatementSection"
-import TeamSection from "@/components/TeamSection"
+import TeamMotionSection from "@/components/TeamMotionSection"
 import ContactSection from "@/components/ContactSection"
 import FooterSection from "@/components/FooterSection"
-import { smoothScrollTo } from "@/lib/scrollAnimate"
+import gsap from "gsap"
+
+let splashSeen = false
 
 const slides = [
   { type: "hero" },
-  { type: "statement", id: "statement-team", z: 1, lines: ["The Same People From The First Conversation", "To The Final Handover."] },
-  { type: "team", id: "team" },
+  { type: "team-motion", id: "team" },
   { type: "contact", id: "contact" },
   { type: "footer", id: "footer" },
 ]
@@ -26,26 +26,51 @@ const team = [
 ]
 
 function HomeContent() {
-  const [splashDone, setSplashDone] = useState(false)
+  const [splashDone, setSplashDone] = useState(splashSeen)
   const [current, setCurrent] = useState(0)
+  const [heroDone, setHeroDone] = useState(false)
+  const [pinFrame, setPinFrame] = useState(false)
+  const [replayArmed, setReplayArmed] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
   const currentRef = useRef(0)
+  const pinFrameRef = useRef(pinFrame)
   const searchParams = useSearchParams()
 
   currentRef.current = current
+  pinFrameRef.current = pinFrame
 
-  useEffect(() => {
-    if (sessionStorage.getItem("splashSeen") === "1") {
-      setSplashDone(true)
+  const handleHeroComplete = useCallback(() => {
+    setReplayArmed(false)
+    setHeroDone(true)
+    setPinFrame(true)
+    const el = containerRef.current
+    if (el) {
+      gsap.to(el, {
+        scrollTop: window.innerHeight,
+        duration: 1.15,
+        ease: "power2.inOut",
+        overwrite: true,
+        onComplete: () => {
+          setPinFrame(false)
+        },
+      })
+    } else {
+      setPinFrame(false)
     }
   }, [])
 
   const goTo = useCallback((targetIdx: number) => {
     if (targetIdx < 0 || targetIdx >= slides.length) return
+    setHeroDone(true)
+    setPinFrame(false)
     setCurrent(targetIdx)
     const el = containerRef.current
     if (!el) return
-    requestAnimationFrame(() => smoothScrollTo(el, targetIdx * window.innerHeight, 900))
+    gsap.to(el, {
+      scrollTop: targetIdx * window.innerHeight,
+      duration: 1.2,
+      ease: "power2.inOut",
+    })
   }, [])
 
   useEffect(() => {
@@ -53,10 +78,11 @@ function HomeContent() {
     if (!container || !splashDone) return
 
     const onScroll = () => {
-      const idx = Math.round(container.scrollTop / window.innerHeight)
+      const idx = Math.floor(container.scrollTop / window.innerHeight)
       if (idx >= 0 && idx < slides.length && idx !== currentRef.current) {
         setCurrent(idx)
       }
+      if (idx > 0) setReplayArmed(true)
     }
 
     container.addEventListener("scroll", onScroll, { passive: true })
@@ -69,8 +95,12 @@ function HomeContent() {
     if (to !== null) {
       const idx = parseInt(to, 10)
       if (!isNaN(idx) && idx >= 0 && idx < slides.length) {
-        requestAnimationFrame(() => {
-          smoothScrollTo(containerRef.current!, idx * window.innerHeight, 900)
+        setHeroDone(true)
+        setPinFrame(false)
+        gsap.to(containerRef.current, {
+          scrollTop: idx * window.innerHeight,
+          duration: 1.2,
+          ease: "power2.inOut",
         })
       }
     }
@@ -78,28 +108,21 @@ function HomeContent() {
 
   return (
     <>
-      {!splashDone && <SplashScreen onDone={() => { sessionStorage.setItem("splashSeen", "1"); setSplashDone(true) }} />}
+      {!splashDone && <SplashScreen onDone={() => { splashSeen = true; setSplashDone(true) }} />}
       <Navbar current={current} slides={slides} onClick={goTo} page="home" />
       {splashDone && (
         <div ref={containerRef} className="slide-container">
           {slides.map((slide, i) => (
             <div key={i} className="slide">
               {slide.type === "hero" ? (
-                <HeroSection containerRef={containerRef} isCurrent={i === current} />
-              ) : slide.type === "team" ? (
-                <TeamSection members={team} isCurrent={i === current} />
+                <HeroSection containerRef={containerRef} isCurrent={i === current} pinFrame={pinFrame} replayArmed={replayArmed} onComplete={handleHeroComplete} />
+              ) : slide.type === "team-motion" ? (
+                <TeamMotionSection members={team} active={Math.abs(i - current) <= 1} />
               ) : slide.type === "contact" ? (
-                <ContactSection isCurrent={i === current} />
+                <ContactSection active={Math.abs(i - current) <= 1} />
               ) : slide.type === "footer" ? (
-                <FooterSection isCurrent={i === current} onClick={goTo} slideCount={slides.length} />
-              ) : (
-                <StatementSection
-                  id={slide.id!}
-                  lines={slide.lines!}
-                  zIndex={slide.z!}
-                  active={i === current}
-                />
-              )}
+                <FooterSection active={Math.abs(i - current) <= 1} onClick={goTo} slideCount={slides.length} />
+              ) : null}
             </div>
           ))}
         </div>

@@ -1,5 +1,7 @@
 "use client"
 
+import gsap from "gsap"
+
 type AnimationTargets = {
   section: HTMLElement
   reveal: HTMLElement | null
@@ -8,14 +10,9 @@ type AnimationTargets = {
 }
 
 const targets: AnimationTargets[] = []
-let running = false
 
 function clamp(v: number, min: number, max: number) {
   return Math.max(min, Math.min(max, v))
-}
-
-function easeInOutCubic(t: number): number {
-  return t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2
 }
 
 function animate() {
@@ -34,16 +31,20 @@ function animate() {
       t.video.style.transform = `scale(${scale})`
     }
   }
+}
 
-  requestAnimationFrame(animate)
+let tickerStarted = false
+
+function startTicker() {
+  if (!tickerStarted && typeof window !== "undefined") {
+    tickerStarted = true
+    gsap.ticker.add(animate)
+  }
 }
 
 export function registerTargets(target: AnimationTargets) {
   targets.push(target)
-  if (!running) {
-    running = true
-    requestAnimationFrame(animate)
-  }
+  startTicker()
 
   return () => {
     const i = targets.indexOf(target)
@@ -51,18 +52,25 @@ export function registerTargets(target: AnimationTargets) {
   }
 }
 
-export function smoothScrollTo(container: HTMLElement, targetY: number, duration = 800) {
-  const startY = container.scrollTop
-  const diff = targetY - startY
-  if (Math.abs(diff) < 1) return
-  const startTime = performance.now()
+function easeInOutCubic(t: number): number {
+  return t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2
+}
 
-  function step(now: number) {
-    const elapsed = now - startTime
-    const progress = Math.min(elapsed / duration, 1)
-    container.scrollTop = startY + diff * easeInOutCubic(progress)
-    if (progress < 1) requestAnimationFrame(step)
-  }
+export function smoothScrollTo(container: HTMLElement, targetY: number, duration = 800): Promise<void> {
+  return new Promise((resolve) => {
+    const startY = container.scrollTop
+    const diff = targetY - startY
+    if (Math.abs(diff) < 1) { resolve(); return }
+    const startTime = performance.now()
 
-  requestAnimationFrame(step)
+    function step(now: number) {
+      const elapsed = now - startTime
+      const progress = Math.min(elapsed / duration, 1)
+      container.scrollTop = startY + diff * easeInOutCubic(progress)
+      if (progress < 1) requestAnimationFrame(step)
+      else resolve()
+    }
+
+    requestAnimationFrame(step)
+  })
 }

@@ -33,7 +33,7 @@ html {
   justify-content: space-between;
   align-items: center;
   z-index: 1000;
-  mix-blend-mode: difference;
+  background: #000;
 }
 
 .navbar-logo {
@@ -286,9 +286,9 @@ html {
   transform: translateY(20px);
   transition: opacity 0.5s ease, transform 0.5s ease;
 }
-.statement.entered .statement-line:nth-child(1) { transition-delay: 0.5s; }
-.statement.entered .statement-line:nth-child(2) { transition-delay: 0.65s; }
-.statement.entered .statement-line:nth-child(3) { transition-delay: 0.8s; }
+.statement.entered .statement-line:nth-child(1) { transition-delay: 0s; }
+.statement.entered .statement-line:nth-child(2) { transition-delay: 0.05s; }
+.statement.entered .statement-line:nth-child(3) { transition-delay: 0.1s; }
 .statement.entered .statement-line {
   opacity: 1;
   transform: translateY(0);
@@ -347,12 +347,11 @@ html {
 .slide-container {
   height: 100vh;
   overflow-y: scroll;
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
 }
 
 .slide {
   height: 100vh;
   overflow: hidden;
 }
-
 
