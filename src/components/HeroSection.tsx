@@ -10,18 +10,10 @@ interface HeroSectionProps {
   onComplete?: () => void
 }
 
-const TOTAL_FRAMES = 451
-const ZERO_PAD = 4
 const COMPLETE_AT = 0.999
 
-function frameSrc(index: number) {
-  const padded = String(index + 1).padStart(ZERO_PAD, "0")
-  return `/hero-frames/frame_${padded}.webp`
-}
-
 export default function HeroSection({ containerRef, isCurrent, pinFrame, replayArmed, onComplete }: HeroSectionProps) {
-  const imgRef = useRef<HTMLImageElement>(null)
-  const currentFrameRef = useRef(-1)
+  const videoRef = useRef<HTMLVideoElement>(null)
   const completedRef = useRef(false)
   const rawProgressRef = useRef(0)
   const smoothProgressRef = useRef(0)
@@ -40,24 +32,13 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
     completedRef.current = false
     rawProgressRef.current = 0
     smoothProgressRef.current = 0
-    currentFrameRef.current = 0
     setRightEntered(false)
     setRightExited(false)
     setCenterEntered(false)
     setCenterExited(false)
     setTopRightEntered(false)
-    if (imgRef.current) imgRef.current.src = frameSrc(0)
+    if (videoRef.current) videoRef.current.currentTime = 0
   }
-
-  useEffect(() => {
-    const imgs: HTMLImageElement[] = []
-    for (let i = 0; i < TOTAL_FRAMES; i++) {
-      const img = new Image()
-      img.src = frameSrc(i)
-      imgs.push(img)
-    }
-    return () => imgs.forEach(i => { i.src = "" })
-  }, [])
 
   const accumulateScroll = useCallback((delta: number) => {
     if (completedRef.current) return
@@ -66,8 +47,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
     if (rawProgressRef.current >= COMPLETE_AT && !completedRef.current) {
       rawProgressRef.current = 1
       smoothProgressRef.current = 1
-      currentFrameRef.current = TOTAL_FRAMES - 1
-      if (imgRef.current) imgRef.current.src = frameSrc(TOTAL_FRAMES - 1)
+      if (videoRef.current) videoRef.current.currentTime = videoRef.current.duration
       completedRef.current = true
       pinFrameRef.current = true
       onComplete?.()
@@ -131,6 +111,8 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
   useEffect(() => {
     const el = containerRef?.current
     if (!el) return
+    const video = videoRef.current
+    if (!video) return
 
     const tick = () => {
       let target: number
@@ -146,10 +128,8 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
       smoothProgressRef.current += (target - smoothProgressRef.current) * 0.1
       if (isCurrent) setDisplayProgress(smoothProgressRef.current)
 
-      const frame = Math.min(TOTAL_FRAMES - 1, Math.floor(smoothProgressRef.current * TOTAL_FRAMES))
-      if (frame !== currentFrameRef.current) {
-        currentFrameRef.current = frame
-        if (imgRef.current) imgRef.current.src = frameSrc(frame)
+      if (video.duration && isFinite(video.duration)) {
+        video.currentTime = smoothProgressRef.current * video.duration
       }
 
       rafIdRef.current = requestAnimationFrame(tick)
@@ -181,10 +161,12 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
 
   return (
     <section style={{ position: "relative", height: "100vh", overflow: "hidden" }}>
-      <img
-        ref={imgRef}
-        src={frameSrc(0)}
-        alt=""
+      <video
+        ref={videoRef}
+        src="/hero.webm"
+        muted
+        playsInline
+        preload="auto"
         style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
       />
       <div className="hero-overlay" />
