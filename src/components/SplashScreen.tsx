@@ -52,7 +52,7 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
       </div>
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 24, zIndex: 1 }}>
         <div ref={logoRef} style={{ opacity: 0, transform: "translateY(8px)" }}>
-          <Image alt="Elevate" src="/ELEVATE.png" width={260} height={260} style={{ opacity: 0.9 }} />
+          <Image alt="Elevate" src="/ELEVATE.png" width={260} height={260} style={{ opacity: 0.85, filter: "grayscale(1) brightness(1.4)" }} />
         </div>
         <div ref={barRef} className="splash-bar" style={{ width: 0 }} />
         <div
