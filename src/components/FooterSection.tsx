@@ -103,13 +103,7 @@ export default function FooterSection({ active, onClick, slideCount }: FooterSec
         </p>
 
         {/* Nav links */}
-        <div style={{
-          display: "flex",
-          justifyContent: "center",
-          gap: "2.5rem",
-          marginBottom: "3rem",
-          flexWrap: "wrap",
-        }}>
+        <div className="footer-nav-links">
           {pageLinks.map((item) => (
             <button
               key={item.label}

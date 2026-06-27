@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 
@@ -21,9 +22,11 @@ const homeIndices: Record<string, number> = {
 }
 
 export default function Navbar({ current, slides, onClick, page }: NavbarProps) {
+  const [menuOpen, setMenuOpen] = useState(false)
   const router = useRouter()
 
   const handleClick = (label: string, origIdx: number) => {
+    setMenuOpen(false)
     if (label === "About Us") {
       if (page === "home") {
         router.push("/about")
@@ -81,12 +84,43 @@ export default function Navbar({ current, slides, onClick, page }: NavbarProps) 
         ))}
       </div>
 
-      <button className="navbar-mobile" onClick={() => {
-        const next = navItems.find(item => item.index > current)
-        handleClick(next ? next.label : "Home", next ? next.index : 0)
-      }}>
-        Menu
+      <button className="navbar-mobile" onClick={() => setMenuOpen(!menuOpen)}>
+        <span style={{ opacity: menuOpen ? 0.4 : 1 }}>Menu</span>
       </button>
+
+      {menuOpen && (
+        <div style={{
+          position: "fixed",
+          inset: 0,
+          top: "60px",
+          zIndex: 999,
+          background: "rgba(0,0,0,0.97)",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "2rem",
+        }}>
+          {navItems.map((item, i) => (
+            <button
+              key={i}
+              onClick={() => handleClick(item.label, item.index)}
+              style={{
+                background: "none",
+                border: "none",
+                color: "#fff",
+                fontSize: "1.4rem",
+                letterSpacing: "0.1em",
+                cursor: "pointer",
+                fontFamily: "inherit",
+                padding: "0.5rem 1rem",
+              }}
+            >
+              {item.label}
+            </button>
+          ))}
+        </div>
+      )}
     </nav>
   )
 }

@@ -36,10 +36,9 @@ export default function ContactSection({ active }: ContactSectionProps) {
         pointerEvents: "none",
       }} />
 
-      {/* Left — Info */}
-      <div style={{
-        flex: "0 0 45%",
-        paddingRight: "5rem",
+      <div className="contact-inner" style={{ display: "flex", width: "100%", maxWidth: "1100px", gap: "0" }}>
+        {/* Left — Info */}
+        <div className="contact-info" style={{
         opacity: entered ? 1 : 0,
         transform: entered ? "translateY(0)" : "translateY(20px)",
         transition: "opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s",
@@ -167,8 +166,7 @@ export default function ContactSection({ active }: ContactSectionProps) {
       </div>
 
       {/* Right — Form */}
-      <div style={{
-        flex: "0 0 55%",
+      <div className="contact-form" style={{
         opacity: entered ? 1 : 0,
         transform: entered ? "translateY(0)" : "translateY(20px)",
         transition: "opacity 0.6s ease 0.35s, transform 0.6s ease 0.35s",
@@ -271,6 +269,7 @@ export default function ContactSection({ active }: ContactSectionProps) {
             Send Message →
           </button>
         </form>
+      </div>
       </div>
     </section>
   )

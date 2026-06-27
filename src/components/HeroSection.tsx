@@ -195,7 +195,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
         pointerEvents: "none",
         zIndex: 1,
       }} />
-      <div style={{
+      <div className="hero-text-left" style={{
         position: "absolute",
         bottom: "12vh",
         left: "2rem",
@@ -217,7 +217,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
           the build space,<br />we elevate experience.
         </p>
       </div>
-      <div style={{
+      <div className="hero-text-right" style={{
         position: "absolute",
         bottom: "42vh",
         right: "2rem",
@@ -246,7 +246,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
           </p>
         ))}
       </div>
-      <div style={{
+      <div className="hero-text-center" style={{
         position: "absolute",
         top: "50%",
         left: "50%",
@@ -276,7 +276,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
           </p>
         ))}
       </div>
-      <div style={{
+      <div className="hero-text-right" style={{
         position: "absolute",
         bottom: "48vh",
         right: "2rem",

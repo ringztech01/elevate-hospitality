@@ -123,7 +123,7 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
       }} />
 
       {/* Portfolio label */}
-      <div style={{
+      <div className="portfolio-label" style={{
         position: "absolute",
         top: "6rem",
         left: "4rem",
@@ -150,7 +150,7 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
       </div>
 
       {/* Project counter */}
-      <div style={{
+      <div className="portfolio-counter" style={{
         position: "absolute",
         bottom: "5rem",
         left: "4rem",
@@ -170,7 +170,7 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
       </div>
 
       {/* Project info */}
-      <div style={{
+      <div className="portfolio-info" style={{
         position: "absolute",
         left: "4rem",
         top: "50%",
@@ -213,7 +213,7 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
       </div>
 
       {/* Thumbnail strip */}
-      <div style={{
+      <div className="portfolio-thumbnails" style={{
         position: "absolute",
         bottom: "3rem",
         left: "50%",

@@ -59,15 +59,7 @@ export default function TeamMotionSection({ members, active }: TeamMotionSection
         </p>
       </div>
 
-      <div style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(3, 1fr)",
-        gap: "3rem",
-        maxWidth: "1100px",
-        width: "100%",
-        position: "relative",
-        zIndex: 2,
-      }}>
+      <div className="team-grid">
         {members.map((m, i) => (
           <div
             key={m.name}
