@@ -27,6 +27,11 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
   const smoothProgressRef = useRef(0)
   const touchStartRef = useRef(0)
   const [displayProgress, setDisplayProgress] = useState(0)
+  const [rightEntered, setRightEntered] = useState(false)
+  const [rightExited, setRightExited] = useState(false)
+  const [centerEntered, setCenterEntered] = useState(false)
+  const [centerExited, setCenterExited] = useState(false)
+  const [topRightEntered, setTopRightEntered] = useState(false)
   const rafIdRef = useRef(0)
   const pinFrameRef = useRef(pinFrame)
   pinFrameRef.current = pinFrame
@@ -36,6 +41,11 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
     rawProgressRef.current = 0
     smoothProgressRef.current = 0
     currentFrameRef.current = 0
+    setRightEntered(false)
+    setRightExited(false)
+    setCenterEntered(false)
+    setCenterExited(false)
+    setTopRightEntered(false)
     if (imgRef.current) imgRef.current.src = frameSrc(0)
   }
 
@@ -149,6 +159,26 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
     return () => cancelAnimationFrame(rafIdRef.current)
   }, [containerRef, isCurrent])
 
+  useEffect(() => {
+    const shouldRightEnter = displayProgress >= 0.279 && displayProgress < 0.488
+    const shouldRightExit = displayProgress >= 0.488
+    if (shouldRightEnter && !rightEntered) setRightEntered(true)
+    if (!shouldRightEnter && rightEntered) setRightEntered(false)
+    if (shouldRightExit && !rightExited) setRightExited(true)
+    if (!shouldRightExit && rightExited) setRightExited(false)
+
+    const shouldCenterEnter = displayProgress >= 0.510 && displayProgress < 0.665
+    const shouldCenterExit = displayProgress >= 0.665
+    if (shouldCenterEnter && !centerEntered) setCenterEntered(true)
+    if (!shouldCenterEnter && centerEntered) setCenterEntered(false)
+    if (shouldCenterExit && !centerExited) setCenterExited(true)
+    if (!shouldCenterExit && centerExited) setCenterExited(false)
+
+    const shouldTopRightEnter = displayProgress >= 0.931
+    if (shouldTopRightEnter && !topRightEntered) setTopRightEntered(true)
+    if (!shouldTopRightEnter && topRightEntered) setTopRightEntered(false)
+  }, [displayProgress])
+
   return (
     <section style={{ position: "relative", height: "100vh", overflow: "hidden" }}>
       <img
@@ -167,24 +197,107 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
       }} />
       <div style={{
         position: "absolute",
-        bottom: "25vh",
+        bottom: "12vh",
         left: "2rem",
         zIndex: 2,
         maxWidth: "520px",
         pointerEvents: "none",
+        opacity: Math.min(1, Math.max(0, (0.279 - displayProgress) / 0.1)),
+        transition: "opacity 0.2s ease",
       }}>
         <p style={{
-          fontSize: "clamp(1rem, 1.8vw, 1.6rem)",
+          fontSize: "36px",
           fontWeight: 300,
+          textTransform: "capitalize",
           lineHeight: 1.6,
           color: "#fff",
           margin: 0,
-          opacity: Math.min(1, displayProgress * 2),
-          transform: `translateY(${Math.max(0, 20 - displayProgress * 40)}px)`,
-          transition: "opacity 0.3s ease, transform 0.3s ease",
           textShadow: "0 2px 8px rgba(0,0,0,0.6)",
         }}>
-          We design, build, and operate luxury hospitality spaces — from first concept through every detail to the final handover.
+          the build space,<br />we elevate experience.
+        </p>
+      </div>
+      <div style={{
+        position: "absolute",
+        bottom: "42vh",
+        right: "2rem",
+        zIndex: 2,
+        maxWidth: "520px",
+        pointerEvents: "none",
+        textAlign: "right",
+        opacity: rightExited ? 0 : (rightEntered ? 1 : 0),
+        transform: rightEntered ? "translateY(0)" : "translateY(20px)",
+        transition: rightExited ? "opacity 0.4s ease" : "opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s",
+      }}>
+        {["every surface tells a story,", "every corner holds intent."].map((line, i) => (
+          <p key={i} style={{
+            fontSize: "28px",
+            fontWeight: 300,
+            textTransform: "capitalize",
+            lineHeight: 1.6,
+            color: "#fff",
+            margin: 0,
+            textShadow: "0 2px 8px rgba(0,0,0,0.6)",
+            opacity: rightEntered ? 1 : 0,
+            transform: rightEntered ? "translateY(0)" : "translateY(20px)",
+            transition: `opacity 0.5s ease ${i * 0.05}s, transform 0.5s ease ${i * 0.05}s`,
+          }}>
+            {line}
+          </p>
+        ))}
+      </div>
+      <div style={{
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        zIndex: 2,
+        maxWidth: "360px",
+        width: "20%",
+        pointerEvents: "none",
+        textAlign: "center",
+        opacity: centerExited ? 0 : (centerEntered ? 1 : 0),
+        transform: centerEntered ? "translate(-50%, -50%)" : "translate(-50%, calc(-50% + 20px))",
+        transition: centerExited ? "opacity 0.4s ease" : "opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s",
+      }}>
+        {["we design, build and operate", "luxury hospitality spaces."].map((line, i) => (
+          <p key={i} style={{
+            fontSize: "28px",
+            fontWeight: 300,
+            textTransform: "capitalize",
+            lineHeight: 1.6,
+            color: "#fff",
+            margin: 0,
+            textShadow: "0 2px 12px rgba(0,0,0,0.7)",
+            opacity: centerEntered ? 1 : 0,
+            transform: centerEntered ? "translateY(0)" : "translateY(20px)",
+            transition: `opacity 0.5s ease ${i * 0.05}s, transform 0.5s ease ${i * 0.05}s`,
+          }}>
+            {line}
+          </p>
+        ))}
+      </div>
+      <div style={{
+        position: "absolute",
+        bottom: "48vh",
+        right: "2rem",
+        zIndex: 2,
+        maxWidth: "520px",
+        pointerEvents: "none",
+        textAlign: "right",
+        opacity: topRightEntered ? 1 : 0,
+        transform: topRightEntered ? "translateY(0)" : "translateY(20px)",
+        transition: "opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s",
+      }}>
+        <p style={{
+          fontSize: "28px",
+          fontWeight: 300,
+          textTransform: "capitalize",
+          lineHeight: 1.6,
+          color: "#fff",
+          margin: 0,
+          textShadow: "0 2px 8px rgba(0,0,0,0.6)",
+        }}>
+          from first concept to final handover,<br />every decision is intentional,<br />every detail deliberate.
         </p>
       </div>
     </section>
