@@ -174,7 +174,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
     if (shouldCenterExit && !centerExited) setCenterExited(true)
     if (!shouldCenterExit && centerExited) setCenterExited(false)
 
-    const shouldTopRightEnter = displayProgress >= 0.931
+    const shouldTopRightEnter = displayProgress >= 0.798
     if (shouldTopRightEnter && !topRightEntered) setTopRightEntered(true)
     if (!shouldTopRightEnter && topRightEntered) setTopRightEntered(false)
   }, [displayProgress])
@@ -229,9 +229,9 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
         transform: rightEntered ? "translateY(0)" : "translateY(20px)",
         transition: rightExited ? "opacity 0.4s ease" : "opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s",
       }}>
-        {["every surface tells a story,", "every corner holds intent."].map((line, i) => (
+        {["every surface tells a story,", "every corner holds intent.", "craft is the thread", "that ties vision to space."].map((line, i) => (
           <p key={i} style={{
-            fontSize: "28px",
+            fontSize: "24px",
             fontWeight: 300,
             textTransform: "capitalize",
             lineHeight: 1.6,
@@ -261,7 +261,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
       }}>
         {["we design, build and operate", "luxury hospitality spaces."].map((line, i) => (
           <p key={i} style={{
-            fontSize: "28px",
+            fontSize: "24px",
             fontWeight: 300,
             textTransform: "capitalize",
             lineHeight: 1.6,
@@ -289,7 +289,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
         transition: "opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s",
       }}>
         <p style={{
-          fontSize: "28px",
+          fontSize: "24px",
           fontWeight: 300,
           textTransform: "capitalize",
           lineHeight: 1.6,

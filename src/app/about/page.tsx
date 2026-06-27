@@ -4,11 +4,10 @@ import { useCallback, useEffect, useRef, useState } from "react"
 import Navbar from "@/components/Navbar"
 import Section from "@/components/Section"
 import StatementSection from "@/components/StatementSection"
-import HeroVideoSection from "@/components/HeroVideoSection"
+
 import { smoothScrollTo } from "@/lib/scrollAnimate"
 
 const slides = [
-  { type: "hero", id: "hero", video: "/videos/hero-storyboard.mp4", z: 1 },
   { type: "section", id: "concept", number: "01", title: "Concept", desc: "Atmosphere before furniture. The direction is set before anything is built. Rooted in guest flow, emotion, and operating logic.", video: "/videos/1.webm", z: 2 },
   { type: "statement", id: "statement-1", z: 3, lines: ["We believe the best spaces", "begin not with materials,", "but with a point of view."] },
   { type: "section", id: "design", number: "02", title: "Design", desc: "Direction becomes detail. Materials, lighting, and joinery resolved into one complete visual system. Every surface aligned before execution begins.", video: "/videos/2.webm", z: 4, align: "right" },
@@ -24,15 +23,10 @@ const slides = [
 
 export default function About() {
   const [current, setCurrent] = useState(0)
-  const [heroDone, setHeroDone] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
   const currentRef = useRef(0)
 
   currentRef.current = current
-
-  const handleHeroComplete = useCallback(() => {
-    setHeroDone(true)
-  }, [])
 
   const goTo = useCallback((targetIdx: number) => {
     if (targetIdx < 0 || targetIdx >= slides.length) return
@@ -60,18 +54,10 @@ export default function About() {
   return (
     <>
       <Navbar current={current} slides={slides} onClick={goTo} page="about" />
-      <div ref={containerRef} className="slide-container" style={{ overflowY: heroDone ? "scroll" : "hidden" }}>
+      <div ref={containerRef} className="slide-container">
         {slides.map((slide, i) => (
           <div key={i} className="slide">
-            {slide.type === "hero" ? (
-              <HeroVideoSection
-                id={slide.id!}
-                video={slide.video!}
-                zIndex={slide.z!}
-                active={Math.abs(i - current) <= 1}
-                onComplete={handleHeroComplete}
-              />
-            ) : slide.type === "section" ? (
+            {slide.type === "section" ? (
               <Section
                 id={slide.id!}
                 number={slide.number!}

@@ -278,7 +278,7 @@ html {
 }
 
 .statement-line {
-  font-size: clamp(1.2rem, 2.5vw, 2rem);
+  font-size: 28px;
   font-weight: 300;
   line-height: 1.6;
   letter-spacing: 0.03em;
