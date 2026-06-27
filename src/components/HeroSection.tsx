@@ -18,6 +18,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
   const rawProgressRef = useRef(0)
   const smoothProgressRef = useRef(0)
   const touchStartRef = useRef(0)
+  const lastVideoTimeRef = useRef(-1)
   const [displayProgress, setDisplayProgress] = useState(0)
   const [rightEntered, setRightEntered] = useState(false)
   const [rightExited, setRightExited] = useState(false)
@@ -32,6 +33,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
     completedRef.current = false
     rawProgressRef.current = 0
     smoothProgressRef.current = 0
+    lastVideoTimeRef.current = -1
     setRightEntered(false)
     setRightExited(false)
     setCenterEntered(false)
@@ -47,6 +49,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
     if (rawProgressRef.current >= COMPLETE_AT && !completedRef.current) {
       rawProgressRef.current = 1
       smoothProgressRef.current = 1
+      lastVideoTimeRef.current = -1
       if (videoRef.current) videoRef.current.currentTime = videoRef.current.duration
       completedRef.current = true
       pinFrameRef.current = true
@@ -113,30 +116,29 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
     if (!el) return
     const video = videoRef.current
     if (!video) return
+    const SEEK_DEADZONE = 0.015
 
     const tick = () => {
-      let target: number
-      if (!completedRef.current) {
-        target = rawProgressRef.current
-      } else if (pinFrameRef.current) {
-        target = 1
-      } else {
-        const vh = window.innerHeight
-        target = Math.min(1, el.scrollTop / vh)
-      }
+      const target = !completedRef.current
+        ? rawProgressRef.current
+        : pinFrameRef.current ? 1 : Math.min(1, el.scrollTop / window.innerHeight)
 
       smoothProgressRef.current += (target - smoothProgressRef.current) * 0.1
       if (isCurrent) setDisplayProgress(smoothProgressRef.current)
 
       if (video.duration && isFinite(video.duration)) {
-        video.currentTime = smoothProgressRef.current * video.duration
+        const seekTo = target * video.duration
+        if (Math.abs(seekTo - lastVideoTimeRef.current) > SEEK_DEADZONE) {
+          video.currentTime = seekTo
+          lastVideoTimeRef.current = seekTo
+        }
       }
 
       rafIdRef.current = requestAnimationFrame(tick)
     }
 
     rafIdRef.current = requestAnimationFrame(tick)
-    return () => cancelAnimationFrame(rafIdRef.current)
+    return () => { cancelAnimationFrame(rafIdRef.current); lastVideoTimeRef.current = -1 }
   }, [containerRef, isCurrent])
 
   useEffect(() => {
