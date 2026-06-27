@@ -43,6 +43,11 @@ export default function Section({ id, number, title, desc, video, zIndex, active
       reveal: revealRef.current,
       video: videoWrapRef.current,
       isStatement: false,
+      slide: {
+        el: videoWrapRef.current!,
+        exitDir: "left",
+        offset: 600,
+      },
     })
     return cleanup
   }, [])

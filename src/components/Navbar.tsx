@@ -56,12 +56,10 @@ export default function Navbar({ current, slides, onClick, page }: NavbarProps) 
   return (
     <nav className="navbar">
       <div className="navbar-logo" onClick={() => handleClick("Home", 0)}>
-        <Image
+        <img
           alt="Elevate"
-          src="/ELEVATE.png"
-          width={56}
-          height={56}
-          style={{ opacity: 0.9 }}
+          src="/logo-nav.png"
+          style={{ width: "auto", height: "40px", opacity: 0.9 }}
         />
         Elevate
       </div>

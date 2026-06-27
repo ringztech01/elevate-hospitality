@@ -74,7 +74,7 @@ export default function TeamSection({ members, isCurrent }: TeamSectionProps) {
           color: "rgba(255,255,255,0.3)",
           margin: "0 0 0.75rem 0",
         }}>
-          Principals
+          Founders
         </p>
 
       </div>
@@ -133,10 +133,10 @@ export default function TeamSection({ members, isCurrent }: TeamSectionProps) {
 
             {/* Name */}
             <h3 style={{
-              fontSize: "clamp(1rem, 1.2vw, 1.2rem)",
-              fontWeight: 400,
+              fontSize: "clamp(1.15rem, 1.4vw, 1.5rem)",
+              fontWeight: 500,
               color: "#fff",
-              margin: "0 0 0.25rem 0",
+              margin: "0 0 0.4rem 0",
               letterSpacing: "0.02em",
             }}>
               {m.name}
@@ -144,9 +144,9 @@ export default function TeamSection({ members, isCurrent }: TeamSectionProps) {
 
             {/* Role */}
             <p style={{
-              fontSize: "clamp(0.6rem, 0.65vw, 0.7rem)",
+              fontSize: "clamp(0.7rem, 0.75vw, 0.85rem)",
               letterSpacing: "0.15em",
-              color: "rgba(255,255,255,0.3)",
+              color: "rgba(255,255,255,0.5)",
               margin: "0 0 0.75rem 0",
             }}>
               {m.role}
@@ -154,12 +154,12 @@ export default function TeamSection({ members, isCurrent }: TeamSectionProps) {
 
             {/* Description */}
             <p style={{
-              fontSize: "clamp(0.7rem, 0.8vw, 0.85rem)",
-              fontWeight: 300,
+              fontSize: "clamp(0.85rem, 0.95vw, 1rem)",
+              fontWeight: 350,
               lineHeight: 1.7,
-              color: "rgba(255,255,255,0.45)",
+              color: "rgba(255,255,255,0.65)",
               margin: 0,
-              maxWidth: "280px",
+              maxWidth: "300px",
               marginLeft: "auto",
               marginRight: "auto",
             }}>

@@ -214,7 +214,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
           margin: 0,
           textShadow: "0 2px 8px rgba(0,0,0,0.6)",
         }}>
-          the build space,<br />we elevate experience.
+          they build space,<br />we elevate experiences.
         </p>
       </div>
       <div className="hero-text-right" style={{
@@ -299,6 +299,25 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
         }}>
           from first concept to final handover,<br />every decision is intentional,<br />every detail deliberate.
         </p>
+      </div>
+      <div style={{
+        position: "absolute",
+        bottom: "4vh",
+        left: "50%",
+        transform: "translateX(-50%)",
+        zIndex: 3,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: "6px",
+        opacity: Math.max(0, 1 - displayProgress * 8),
+        transition: "opacity 0.3s ease",
+        pointerEvents: "none",
+      }}>
+        <span style={{ fontSize: "11px", letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)" }}>scroll</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth="1.5" style={{ animation: "bounce 2s ease-in-out infinite" }}>
+          <path d="M12 5v14M5 12l7 7 7-7" />
+        </svg>
       </div>
     </section>
   )

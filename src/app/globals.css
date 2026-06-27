@@ -46,7 +46,6 @@ html {
 }
 
 .navbar-logo img {
-  border-radius: 50%;
   opacity: 0.9;
 }
 
@@ -319,6 +318,12 @@ html {
 
 .nav-dot.active {
   background: #fff;
+}
+
+/* ===== Scroll indicator bounce ===== */
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
 }
 
 /* ===== Shimmer loading ===== */

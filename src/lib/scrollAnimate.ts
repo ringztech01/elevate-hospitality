@@ -7,6 +7,7 @@ type AnimationTargets = {
   reveal: HTMLElement | null
   video: HTMLElement | null
   isStatement: boolean
+  slide?: { el: HTMLElement; exitDir: "left" | "right"; offset?: number }
 }
 
 const targets: AnimationTargets[] = []
@@ -29,6 +30,15 @@ function animate() {
     if (t.video) {
       const scale = 1.08 - progress * 0.08
       t.video.style.transform = `scale(${scale})`
+    }
+
+    if (t.slide) {
+      const wh = window.innerHeight
+      const r = t.section.getBoundingClientRect()
+      const exitP = clamp(-r.top / wh, 0, 1)
+      const offset = t.slide.offset ?? 500
+      const dir = t.slide.exitDir === "right" ? 1 : -1
+      t.slide.el.style.transform = `translateX(${exitP * dir * offset}px)`
     }
   }
 }

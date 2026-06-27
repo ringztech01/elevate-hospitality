@@ -55,7 +55,7 @@ export default function TeamMotionSection({ members, active }: TeamMotionSection
           color: "rgba(255,255,255,0.3)",
           margin: "0 0 0.75rem 0",
         }}>
-          Principals
+          Founders
         </p>
       </div>
 
@@ -73,8 +73,8 @@ export default function TeamMotionSection({ members, active }: TeamMotionSection
           >
             <div style={{
               position: "relative",
-              width: "120px",
-              height: "120px",
+              width: "150px",
+              height: "150px",
               borderRadius: "50%",
               overflow: "hidden",
               margin: "0 auto 1.25rem",
@@ -85,7 +85,7 @@ export default function TeamMotionSection({ members, active }: TeamMotionSection
                 src={m.image}
                 alt={m.name}
                 fill
-                sizes="120px"
+                sizes="150px"
                 style={{ objectFit: "cover" }}
               />
             </div>
@@ -101,31 +101,31 @@ export default function TeamMotionSection({ members, active }: TeamMotionSection
             </p>
 
             <h3 style={{
-              fontSize: "clamp(1rem, 1.2vw, 1.2rem)",
-              fontWeight: 400,
+              fontSize: "clamp(1.3rem, 1.6vw, 1.8rem)",
+              fontWeight: 600,
               color: "#fff",
-              margin: "0 0 0.25rem 0",
+              margin: "0 0 0.4rem 0",
               letterSpacing: "0.02em",
             }}>
               {m.name}
             </h3>
 
             <p style={{
-              fontSize: "clamp(0.6rem, 0.65vw, 0.7rem)",
+              fontSize: "clamp(0.8rem, 0.85vw, 0.95rem)",
               letterSpacing: "0.15em",
-              color: "rgba(255,255,255,0.3)",
-              margin: "0 0 0.75rem 0",
+              color: "rgba(255,255,255,0.6)",
+              margin: "0 0 1rem 0",
             }}>
               {m.role}
             </p>
 
             <p style={{
-              fontSize: "clamp(0.7rem, 0.8vw, 0.85rem)",
-              fontWeight: 300,
+              fontSize: "clamp(0.95rem, 1.05vw, 1.15rem)",
+              fontWeight: 400,
               lineHeight: 1.7,
-              color: "rgba(255,255,255,0.45)",
+              color: "rgba(255,255,255,0.75)",
               margin: 0,
-              maxWidth: "280px",
+              maxWidth: "320px",
               marginLeft: "auto",
               marginRight: "auto",
             }}>
