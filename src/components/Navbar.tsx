@@ -58,7 +58,7 @@ export default function Navbar({ current, slides, onClick, page }: NavbarProps) 
       <div className="navbar-logo" onClick={() => handleClick("Home", 0)}>
         <img
           alt="Elevate"
-          src="/logo-nav.png"
+          src="/logo-nav.webp"
           style={{ width: "auto", height: "40px", opacity: 0.9 }}
         />
         Elevate
