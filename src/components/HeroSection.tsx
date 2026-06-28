@@ -8,11 +8,12 @@ interface HeroSectionProps {
   pinFrame: boolean
   replayArmed: boolean
   onComplete?: () => void
+  onReady?: () => void
 }
 
 const COMPLETE_AT = 0.999
 
-export default function HeroSection({ containerRef, isCurrent, pinFrame, replayArmed, onComplete }: HeroSectionProps) {
+export default function HeroSection({ containerRef, isCurrent, pinFrame, replayArmed, onComplete, onReady }: HeroSectionProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const completedRef = useRef(false)
   const rawProgressRef = useRef(0)
@@ -28,7 +29,21 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
   const rafIdRef = useRef(0)
   const pinFrameRef = useRef(pinFrame)
   const wasCurrentRef = useRef(false)
+  const readyFiredRef = useRef(false)
   pinFrameRef.current = pinFrame
+
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video || readyFiredRef.current) return
+    const fireReady = () => {
+      if (readyFiredRef.current) return
+      readyFiredRef.current = true
+      onReady?.()
+    }
+    video.addEventListener("canplaythrough", fireReady)
+    if (video.readyState >= 4) fireReady()
+    return () => video.removeEventListener("canplaythrough", fireReady)
+  }, [onReady])
 
   useEffect(() => {
     if (isCurrent && completedRef.current && !wasCurrentRef.current) {

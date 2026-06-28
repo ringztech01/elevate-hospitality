@@ -31,6 +31,7 @@ function HomeContent() {
   const [heroDone, setHeroDone] = useState(false)
   const [pinFrame, setPinFrame] = useState(false)
   const [replayArmed, setReplayArmed] = useState(false)
+  const [heroReady, setHeroReady] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
   const currentRef = useRef(0)
   const pinFrameRef = useRef(pinFrame)
@@ -58,6 +59,8 @@ function HomeContent() {
       setPinFrame(false)
     }
   }, [])
+
+  const handleHeroReady = useCallback(() => setHeroReady(true), [])
 
   const goTo = useCallback((targetIdx: number) => {
     if (targetIdx < 0 || targetIdx >= slides.length) return
@@ -108,25 +111,23 @@ function HomeContent() {
 
   return (
     <>
-      {!splashDone && <SplashScreen onDone={() => { splashSeen = true; setSplashDone(true) }} />}
+      {!splashDone && <SplashScreen onDone={() => { splashSeen = true; setSplashDone(true) }} ready={heroReady} />}
       <Navbar current={current} slides={slides} onClick={goTo} page="home" />
-      {splashDone && (
-        <div ref={containerRef} className="slide-container">
-          {slides.map((slide, i) => (
-            <div key={i} className="slide">
-              {slide.type === "hero" ? (
-                <HeroSection containerRef={containerRef} isCurrent={i === current} pinFrame={pinFrame} replayArmed={replayArmed} onComplete={handleHeroComplete} />
-              ) : slide.type === "team-motion" ? (
-                <TeamMotionSection members={team} active={Math.abs(i - current) <= 1} />
-              ) : slide.type === "contact" ? (
-                <ContactSection active={Math.abs(i - current) <= 1} />
-              ) : slide.type === "footer" ? (
-                <FooterSection active={Math.abs(i - current) <= 1} onClick={goTo} slideCount={slides.length} />
-              ) : null}
-            </div>
-          ))}
-        </div>
-      )}
+      <div ref={containerRef} className="slide-container">
+        {slides.map((slide, i) => (
+          <div key={i} className="slide">
+            {slide.type === "hero" ? (
+              <HeroSection containerRef={containerRef} isCurrent={i === current} pinFrame={pinFrame} replayArmed={replayArmed} onComplete={handleHeroComplete} onReady={handleHeroReady} />
+            ) : slide.type === "team-motion" ? (
+              <TeamMotionSection members={team} active={Math.abs(i - current) <= 1} />
+            ) : slide.type === "contact" ? (
+              <ContactSection active={Math.abs(i - current) <= 1} />
+            ) : slide.type === "footer" ? (
+              <FooterSection active={Math.abs(i - current) <= 1} onClick={goTo} slideCount={slides.length} />
+            ) : null}
+          </div>
+        ))}
+      </div>
     </>
   )
 }

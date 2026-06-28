@@ -1,13 +1,32 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import ParticleCanvas from "./ParticleCanvas"
 
-export default function SplashScreen({ onDone }: { onDone: () => void }) {
+export default function SplashScreen({ onDone, ready }: { onDone: () => void; ready: boolean }) {
   const [phase, setPhase] = useState<"loading" | "closing" | "hidden">("loading")
   const videoRef = useRef<HTMLVideoElement>(null)
   const barRef = useRef<HTMLDivElement>(null)
   const labelRef = useRef<HTMLDivElement>(null)
+  const [videoEnded, setVideoEnded] = useState(false)
+  const closeStartedRef = useRef(false)
+
+  const close = useCallback(() => {
+    if (closeStartedRef.current) return
+    closeStartedRef.current = true
+    setPhase("closing")
+    setTimeout(() => {
+      setPhase("hidden")
+      onDone()
+    }, 800)
+  }, [onDone])
+
+  useEffect(() => {
+    if (videoEnded && ready && !closeStartedRef.current) {
+      const t = setTimeout(() => close(), 500)
+      return () => clearTimeout(t)
+    }
+  }, [videoEnded, ready, close])
 
   useEffect(() => {
     const video = videoRef.current
@@ -27,41 +46,16 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
       }
     }, 400)
 
-    let timeout: ReturnType<typeof setTimeout>
     if (video) {
-      const onEnd = () => {
-        timeout = setTimeout(() => {
-          setPhase("closing")
-          setTimeout(() => {
-            setPhase("hidden")
-            onDone()
-          }, 800)
-        }, 500)
-      }
+      const onEnd = () => setVideoEnded(true)
       video.addEventListener("ended", onEnd)
-      // fallback if video doesn't end
-      timeout = setTimeout(() => {
-        setPhase("closing")
-        setTimeout(() => {
-          setPhase("hidden")
-          onDone()
-        }, 800)
-      }, 5000)
+      const fallback = setTimeout(() => setVideoEnded(true), 6000)
       return () => {
         video.removeEventListener("ended", onEnd)
-        clearTimeout(timeout)
+        clearTimeout(fallback)
       }
-    } else {
-      timeout = setTimeout(() => {
-        setPhase("closing")
-        setTimeout(() => {
-          setPhase("hidden")
-          onDone()
-        }, 800)
-      }, 3500)
-      return () => clearTimeout(timeout)
     }
-  }, [onDone])
+  }, [])
 
   if (phase === "hidden") return null
 
@@ -71,11 +65,11 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
       <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 32 }}>
         <video
           ref={videoRef}
-          src="/splash-logo.webm"
+          src="/splash-video.mp4"
           muted
           playsInline
           style={{
-            width: "clamp(180px, 30vw, 320px)",
+            width: "clamp(240px, 40vw, 500px)",
             height: "auto",
             display: "block",
           }}
