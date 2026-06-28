@@ -80,6 +80,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
       }
 
       if (completedRef.current && !pinFrameRef.current) return
+      if (e.deltaY < 0 && rawProgressRef.current <= 0) return
       e.preventDefault()
       if (completedRef.current) return
       accumulateScroll(e.deltaY)
@@ -102,9 +103,10 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
       }
 
       if (completedRef.current && !pinFrameRef.current) return
+      const delta = e.touches[0].clientY - touchStartRef.current
+      if (delta > 0 && rawProgressRef.current <= 0) return
       e.preventDefault()
       if (completedRef.current) return
-      const delta = e.touches[0].clientY - touchStartRef.current
       touchStartRef.current = e.touches[0].clientY
       accumulateScroll(delta)
     }
