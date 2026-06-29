@@ -61,7 +61,12 @@ export default function Navbar({ current, slides, onClick, page }: NavbarProps) 
           src="/logo-nav.webp"
           style={{ width: "auto", height: "40px", opacity: 0.9 }}
         />
-        Elevate
+        <img
+          alt="Elevate"
+          src="/elevate_text.png"
+          style={{ width: "auto",           height: "68px", opacity: 0.9 }}
+        />
+        <span style={{ display: "none" }}>Elevate</span>
       </div>
 
       <div className="navbar-links">

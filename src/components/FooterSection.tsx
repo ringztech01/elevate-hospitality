@@ -62,16 +62,11 @@ export default function FooterSection({ active, onClick, slideCount }: FooterSec
         transition: "opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s",
       }}>
         {/* Brand */}
-        <p style={{
-          fontSize: "clamp(1.2rem, 1.8vw, 1.8rem)",
-          fontWeight: 200,
-          letterSpacing: "0.15em",
-          textTransform: "uppercase",
-          color: "#fff",
-          margin: "0 0 0.5rem 0",
-        }}>
-          Elevate
-        </p>
+        <img
+          alt="Elevate"
+          src="/elevate_text.png"
+          style={{ width: "clamp(120px, 18vw, 280px)", height: "auto", opacity: 0.9, display: "block", margin: "0 auto 0.5rem" }}
+        />
         <p style={{
           fontSize: "clamp(0.55rem, 0.6vw, 0.65rem)",
           letterSpacing: "0.4em",

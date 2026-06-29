@@ -26,6 +26,19 @@ const slides = [
 ]
 
 export default function About() {
+  useEffect(() => {
+    const links = ["/videos/1.webm", "/videos/2.webm"].map(src => {
+      const link = document.createElement("link")
+      link.rel = "preload"
+      link.as = "video"
+      link.href = src
+      link.setAttribute("fetchpriority", "high")
+      document.head.appendChild(link)
+      return link
+    })
+    return () => links.forEach(l => l.remove())
+  }, [])
+
   const [current, setCurrent] = useState(0)
   const containerRef = useRef<HTMLDivElement>(null)
   const currentRef = useRef(0)

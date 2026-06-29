@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import ParticleCanvas from "./ParticleCanvas"
 
 export default function SplashScreen({ onDone, ready }: { onDone: () => void; ready: boolean }) {
@@ -8,31 +8,48 @@ export default function SplashScreen({ onDone, ready }: { onDone: () => void; re
   const videoRef = useRef<HTMLVideoElement>(null)
   const barRef = useRef<HTMLDivElement>(null)
   const labelRef = useRef<HTMLDivElement>(null)
-  const [videoEnded, setVideoEnded] = useState(false)
   const closeStartedRef = useRef(false)
-
-  const close = useCallback(() => {
-    if (closeStartedRef.current) return
-    closeStartedRef.current = true
-    setPhase("closing")
-    setTimeout(() => {
-      setPhase("hidden")
-      onDone()
-    }, 800)
-  }, [onDone])
+  const mountTime = useRef(Date.now())
 
   useEffect(() => {
-    if (videoEnded && ready && !closeStartedRef.current) {
-      const t = setTimeout(() => close(), 500)
+    if (ready && !closeStartedRef.current) {
+      const elapsed = Date.now() - mountTime.current
+      const delay = Math.max(0, 3500 - elapsed)
+      const t = setTimeout(() => {
+        closeStartedRef.current = true
+        setPhase("closing")
+        setTimeout(() => {
+          setPhase("hidden")
+          onDone()
+        }, 800)
+      }, delay)
       return () => clearTimeout(t)
     }
-  }, [videoEnded, ready, close])
+  }, [ready, onDone])
 
   useEffect(() => {
     const video = videoRef.current
-    if (video) {
-      video.play().catch(() => {})
+    if (!video) return
+    video.play().catch(() => {})
+
+    let rafId: number
+    const tick = () => {
+      if (video.readyState >= 2 && video.duration) {
+        const nearEnd = video.currentTime >= video.duration - 0.12
+        const nearStart = video.currentTime < 0.08
+        if (nearEnd) {
+          video.style.transition = "opacity 0.12s linear"
+          video.style.opacity = "0"
+        } else if (nearStart) {
+          video.style.transition = "opacity 0.12s linear"
+          video.style.opacity = "1"
+        } else {
+          video.style.opacity = "1"
+        }
+      }
+      rafId = requestAnimationFrame(tick)
     }
+    rafId = requestAnimationFrame(tick)
 
     setTimeout(() => {
       if (barRef.current) {
@@ -46,15 +63,7 @@ export default function SplashScreen({ onDone, ready }: { onDone: () => void; re
       }
     }, 400)
 
-    if (video) {
-      const onEnd = () => setVideoEnded(true)
-      video.addEventListener("ended", onEnd)
-      const fallback = setTimeout(() => setVideoEnded(true), 6000)
-      return () => {
-        video.removeEventListener("ended", onEnd)
-        clearTimeout(fallback)
-      }
-    }
+    return () => cancelAnimationFrame(rafId)
   }, [])
 
   if (phase === "hidden") return null
@@ -68,8 +77,9 @@ export default function SplashScreen({ onDone, ready }: { onDone: () => void; re
           src="/splash-video.mp4"
           muted
           playsInline
+          loop
           style={{
-            width: "clamp(240px, 40vw, 500px)",
+            width: "clamp(160px, 28vw, 340px)",
             height: "auto",
             display: "block",
           }}
