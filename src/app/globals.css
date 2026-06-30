@@ -447,7 +447,16 @@ html {
   .hero-text-center { width: 55% !important; max-width: 260px !important; }
   .hero-text-center p { font-size: 18px !important; }
 
+  .team-motion-section {
+    justify-content: flex-start !important;
+    padding-top: 5.5rem !important;
+    padding-bottom: 2rem !important;
+  }
+
   .team-grid { grid-template-columns: 1fr !important; gap: 2rem !important; max-width: 320px !important; }
+  .team-motion-section .team-grid { margin-top: 1rem !important; }
+  .team-motion-section .team-grid > div:first-child { margin-top: 0.5rem; }
+  .team-motion-section .team-grid > div:first-child > div:first-child { width: 130px !important; height: 130px !important; }
 
   .contact-inner { flex-direction: column !important; gap: 2.5rem !important; }
   .contact-info { flex: 0 0 100% !important; padding-right: 0 !important; }

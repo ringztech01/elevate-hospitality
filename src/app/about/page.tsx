@@ -76,7 +76,7 @@ export default function About() {
   return (
     <>
       <Navbar current={current} slides={slides} onClick={goTo} page="about" />
-      <div ref={containerRef} className="slide-container">
+      <div ref={containerRef} className="slide-container entered">
         {slides.map((slide, i) => (
           <div key={i} className="slide">
             {slide.type === "section" ? (

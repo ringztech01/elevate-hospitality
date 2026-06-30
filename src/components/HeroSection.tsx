@@ -189,7 +189,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
   }, [displayProgress])
 
   return (
-    <section style={{ position: "relative", height: "100vh", overflow: "hidden", touchAction: scrubbing ? "none" : "auto" }}>
+    <section style={{ position: "relative", height: "100vh", overflow: "hidden", touchAction: scrubbing ? "pan-y" : "auto" }}>
       <video
         ref={videoRef}
         src="/hero.mp4"

@@ -36,7 +36,7 @@ export default function TeamMotionSection({ members, active }: TeamMotionSection
       alignItems: "center",
       justifyContent: "center",
       padding: "0 4rem",
-    }}>
+    }} className="team-motion-section">
       <ParticleCanvas style={{ position: "absolute", inset: 0, width: "100%", height: "100%", opacity: 0.6 }} />
 
       <div style={{
