@@ -64,7 +64,7 @@ export default function Navbar({ current, slides, onClick, page }: NavbarProps) 
         <img
           alt="Elevate"
           src="/elevate_text.png"
-          style={{ width: "auto",           height: "68px", opacity: 0.9 }}
+          style={{ width: "auto", height: "68px", opacity: 0.9 }}
         />
         <span style={{ display: "none" }}>Elevate</span>
       </div>
@@ -87,8 +87,12 @@ export default function Navbar({ current, slides, onClick, page }: NavbarProps) 
         ))}
       </div>
 
-      <button className="navbar-mobile" onClick={() => setMenuOpen(!menuOpen)}>
-        <span style={{ opacity: menuOpen ? 0.4 : 1 }}>Menu</span>
+      <button className="navbar-mobile" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" style={{ opacity: menuOpen ? 0.4 : 1, transition: "opacity 0.2s" }}>
+          <line x1="4" y1="7" x2="20" y2="7" />
+          <line x1="4" y1="12" x2="20" y2="12" />
+          <line x1="4" y1="17" x2="20" y2="17" />
+        </svg>
       </button>
 
       {menuOpen && (

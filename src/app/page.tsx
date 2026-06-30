@@ -113,7 +113,7 @@ function HomeContent() {
     <>
       {!splashDone && <SplashScreen onDone={() => { splashSeen = true; setSplashDone(true) }} ready={heroReady} />}
       <Navbar current={current} slides={slides} onClick={goTo} page="home" />
-      <div ref={containerRef} className="slide-container">
+      <div ref={containerRef} className={`slide-container ${splashDone ? "entered" : ""}`}>
         {slides.map((slide, i) => (
           <div key={i} className="slide">
             {slide.type === "hero" ? (

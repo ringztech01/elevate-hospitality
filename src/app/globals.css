@@ -101,6 +101,21 @@ html {
   inset: 0;
 }
 
+.splash-video-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  overflow: visible;
+}
+
+.splash-video-wrap video {
+  display: block;
+  mask-image: radial-gradient(circle at center, black 58%, transparent 100%);
+  -webkit-mask-image: radial-gradient(circle at center, black 58%, transparent 100%);
+}
+
 .splash-bar {
   height: 1px;
   background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
@@ -354,7 +369,18 @@ html {
   height: 100vh;
   overflow-y: scroll;
   scroll-behavior: auto;
+  opacity: 0;
+  transform: scale(1.03) translateY(10px);
+  filter: blur(10px);
+  transition: opacity 1.2s ease, transform 1.2s cubic-bezier(0.22, 1, 0.36, 1), filter 1.2s ease;
 }
+
+.slide-container.entered {
+  opacity: 1;
+  transform: scale(1);
+  filter: blur(0);
+}
+
 
 .slide {
   height: 100vh;
@@ -444,4 +470,3 @@ html {
   .team-grid { gap: 2rem; }
   .section-content { padding: 0 3rem; }
 }
-

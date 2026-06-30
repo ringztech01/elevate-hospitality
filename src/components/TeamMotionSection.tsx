@@ -81,12 +81,10 @@ export default function TeamMotionSection({ members, active }: TeamMotionSection
               border: "1px solid rgba(255,255,255,0.08)",
               background: "#111",
             }}>
-              <Image
+              <img
                 src={m.image}
                 alt={m.name}
-                fill
-                sizes="150px"
-                style={{ objectFit: "cover" }}
+                style={{ width: "100%", height: "100%", objectFit: "contain" }}
               />
             </div>
 

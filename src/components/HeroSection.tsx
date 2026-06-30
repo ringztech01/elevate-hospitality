@@ -21,6 +21,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
   const touchStartRef = useRef(0)
   const lastVideoTimeRef = useRef(-1)
   const [displayProgress, setDisplayProgress] = useState(0)
+  const [scrubbing, setScrubbing] = useState(true)
   const [rightEntered, setRightEntered] = useState(false)
   const [rightExited, setRightExited] = useState(false)
   const [centerEntered, setCenterEntered] = useState(false)
@@ -54,6 +55,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
 
   const resetHeroPlayback = () => {
     completedRef.current = false
+    setScrubbing(true)
     rawProgressRef.current = 0
     smoothProgressRef.current = 0
     lastVideoTimeRef.current = -1
@@ -75,6 +77,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
       lastVideoTimeRef.current = -1
       if (videoRef.current) videoRef.current.currentTime = videoRef.current.duration
       completedRef.current = true
+      setScrubbing(false)
       pinFrameRef.current = true
       onComplete?.()
     }
@@ -102,7 +105,6 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
     }
 
     const onTouchStart = (e: TouchEvent) => {
-      if (completedRef.current) return
       touchStartRef.current = e.touches[0].clientY
     }
 
@@ -187,14 +189,14 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
   }, [displayProgress])
 
   return (
-    <section style={{ position: "relative", height: "100vh", overflow: "hidden" }}>
+    <section style={{ position: "relative", height: "100vh", overflow: "hidden", touchAction: scrubbing ? "none" : "auto" }}>
       <video
         ref={videoRef}
         src="/hero.mp4"
         muted
         playsInline
         preload="auto"
-        style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
+        style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", pointerEvents: "none" }}
       />
       <div className="hero-overlay" />
       <div style={{
