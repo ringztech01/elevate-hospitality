@@ -120,8 +120,8 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
       }
 
       if (completedRef.current && !pinFrameRef.current) return
-      const delta = e.touches[0].clientY - touchStartRef.current
-      if (delta > 0 && rawProgressRef.current <= 0) return
+      const delta = touchStartRef.current - e.touches[0].clientY
+      if (delta < 0 && rawProgressRef.current <= 0) return
       e.preventDefault()
       if (completedRef.current) return
       touchStartRef.current = e.touches[0].clientY
@@ -189,7 +189,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
   }, [displayProgress])
 
   return (
-    <section style={{ position: "relative", height: "100vh", overflow: "hidden", touchAction: scrubbing ? "pan-y" : "auto" }}>
+    <section style={{ position: "relative", height: "100vh", overflow: "hidden", touchAction: scrubbing ? "none" : "auto", backgroundColor: "#050505" }}>
       <video
         ref={videoRef}
         src="/hero.mp4"

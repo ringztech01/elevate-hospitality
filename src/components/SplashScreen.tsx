@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import ParticleCanvas from "./ParticleCanvas"
 
 export default function SplashScreen({ onDone, ready }: { onDone: () => void; ready: boolean }) {
@@ -9,24 +9,51 @@ export default function SplashScreen({ onDone, ready }: { onDone: () => void; re
   const barRef = useRef<HTMLDivElement>(null)
   const labelRef = useRef<HTMLDivElement>(null)
   const closeStartedRef = useRef(false)
+  const readyRef = useRef(ready)
+  readyRef.current = ready
+
+  const close = useCallback(() => {
+    if (closeStartedRef.current) return
+    closeStartedRef.current = true
+    setPhase("closing")
+    setTimeout(() => {
+      setPhase("hidden")
+      onDone()
+    }, 800)
+  }, [onDone])
 
   useEffect(() => {
     const video = videoRef.current
     if (!video) return
+    video.loop = true
     video.play().catch(() => {})
 
     const onEnd = () => {
-      if (closeStartedRef.current) return
-      closeStartedRef.current = true
-      setPhase("closing")
-      setTimeout(() => {
-        setPhase("hidden")
-        onDone()
-      }, 800)
+      if (readyRef.current) {
+        video.loop = false
+        close()
+      }
     }
     video.addEventListener("ended", onEnd)
-    return () => video.removeEventListener("ended", onEnd)
-  }, [onDone])
+
+    const fallbackTimer = setTimeout(() => {
+      if (!closeStartedRef.current) close()
+    }, 12000)
+
+    return () => {
+      video.removeEventListener("ended", onEnd)
+      clearTimeout(fallbackTimer)
+    }
+  }, [close])
+
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+    if (ready) {
+      video.loop = false
+      if (video.ended) close()
+    }
+  }, [ready, close])
 
   useEffect(() => {
     setTimeout(() => {
