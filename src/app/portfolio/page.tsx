@@ -64,7 +64,7 @@ export default function Portfolio() {
   return (
     <>
       <Navbar current={current} slides={slides} onClick={goTo} page="portfolio" />
-      <div ref={containerRef} className="slide-container">
+      <div ref={containerRef} className="slide-container entered">
         {slides.map((slide, i) => (
           <div key={i} className="slide">
             {slide.type === "portfolio" ? (
