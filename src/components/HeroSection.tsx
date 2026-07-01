@@ -42,8 +42,15 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
       onReady?.()
     }
     video.addEventListener("canplaythrough", fireReady)
-    if (video.readyState >= 4) fireReady()
-    return () => video.removeEventListener("canplaythrough", fireReady)
+    video.addEventListener("loadeddata", fireReady)
+    if (video.readyState >= 3) fireReady()
+    video.load()
+    const fallbackTimer = setTimeout(fireReady, 5000)
+    return () => {
+      video.removeEventListener("canplaythrough", fireReady)
+      video.removeEventListener("loadeddata", fireReady)
+      clearTimeout(fallbackTimer)
+    }
   }, [onReady])
 
   useEffect(() => {
@@ -189,7 +196,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
   }, [displayProgress])
 
   return (
-    <section style={{ position: "relative", height: "100vh", overflow: "hidden", touchAction: scrubbing ? "none" : "auto", backgroundColor: "#050505" }}>
+    <section style={{ position: "relative", height: "100vh", overflow: "hidden", touchAction: scrubbing ? "none" : "auto", background: "radial-gradient(ellipse at 50% 50%, #0a0a0a 0%, #050505 100%)" }}>
       <video
         ref={videoRef}
         src="/hero.mp4"

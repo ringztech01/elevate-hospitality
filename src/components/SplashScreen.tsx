@@ -38,7 +38,7 @@ export default function SplashScreen({ onDone, ready }: { onDone: () => void; re
 
     const fallbackTimer = setTimeout(() => {
       if (!closeStartedRef.current) close()
-    }, 12000)
+    }, 8000)
 
     return () => {
       video.removeEventListener("ended", onEnd)
