@@ -203,6 +203,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
         muted
         playsInline
         preload="auto"
+        poster="/images/hero-poster.png"
         style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", pointerEvents: "none" }}
       />
       <div className="hero-overlay" />
