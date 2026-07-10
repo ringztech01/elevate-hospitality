@@ -10,17 +10,15 @@ import FooterSection from "@/components/FooterSection"
 import { smoothScrollTo } from "@/lib/scrollAnimate"
 
 const slides = [
-  { type: "section", id: "concept", number: "01", title: "Concept", desc: "Atmosphere before furniture. The direction is set before anything is built. Rooted in guest flow, emotion, and operating logic.", video: "/videos/1.webm", z: 2 },
-  { type: "statement", id: "statement-1", z: 3, lines: ["We believe the best spaces", "begin not with materials,", "but with a point of view."] },
-  { type: "section", id: "design", number: "02", title: "Design", desc: "Direction becomes detail. Materials, lighting, and joinery resolved into one complete visual system. Every surface aligned before execution begins.", video: "/videos/2.webm", z: 4, align: "right" },
-  { type: "statement", id: "statement-2", z: 5, lines: ["Every element is a decision.", "Every decision shapes", "how a space feels."] },
-  { type: "section", id: "build", number: "03", title: "Build", desc: "Drawings become real. Structure and finishes assembled with sequencing, precision, and control. Every install decision protects the final result.", video: "/videos/3.webm", z: 6, align: "left", loop: true },
+  { type: "section", id: "who-we-are", number: "01", title: "Who we are", desc: "One team. One contract. Full accountability from first sketch to opening night — and beyond. We design, build and operate luxury hospitality spaces under a single agreement. No handovers. No excuses.", video: "/videos/1.webm", z: 2 },
+  { type: "statement", id: "statement-1", z: 3, lines: ["We don't hand over drawings and walk away.", "We design what we build,", "build what we operate,", "and operate what we design."] },
+  { type: "section", id: "design", number: "02", title: "Design", desc: "We design for the people who will work the space — not just the people who will photograph it. Every banquette is a seating plan. Every corridor is a labour cost. Every ceiling height is an acoustic budget.", video: "/videos/2.webm", z: 4, align: "right" },
+  { type: "statement", id: "statement-2", z: 5, lines: ["A rendering is a promise.", "What we deliver", "is proof."] },
+  { type: "section", id: "build", number: "03", title: "Build", desc: "Procurement and project management under one roof. Single-point accountability for timelines, budgets, and quality. We coordinate MEP, joinery, and finishes — everything required to turn a drawing into a standing asset.", video: "/videos/3.webm", z: 6, align: "left" },
   { type: "statement", id: "statement-3", z: 7, lines: ["Precision is not a detail.", "It is the entire process", "made visible."] },
-  { type: "section", id: "completion", number: "04", title: "Completion", desc: "Precision in every joint, every edge, every finish. The space is refined until intention and execution are indistinguishable.", video: "/videos/4.webm", z: 8 },
-  { type: "statement", id: "statement-4", z: 9, lines: ["We finish what we start.", "Not because we must,", "but because we care."] },
-  { type: "section", id: "realization", number: "05", title: "Realization", desc: "The culmination of every decision made manifest. A space that stands as both statement and service to those who inhabit it.", video: "/videos/5.webm", z: 10 },
-  { type: "statement", id: "statement-5", z: 11, lines: ["A great space is never complete.", "It evolves with every person", "who walks through it."] },
-  { type: "section", id: "operate", number: "06", title: "Operate", desc: "Real becomes running. We stay to make it perform. We don't hand over the keys and walk away.", video: "/videos/6.webm", z: 12 },
+  { type: "section", id: "operate", number: "04", title: "Operate", desc: "This is what makes us different. We run what we build. Pre-opening, staffing, systems, launch — and every service after. We don't hand over the keys and walk away.", video: "/videos/4.webm", z: 8 },
+  { type: "statement", id: "statement-4", z: 9, lines: ["A space doesn't end at opening night.", "It begins."] },
+  { type: "section", id: "founders", number: "05", title: "Founders", desc: "Bachar Chazbek — 10+ years delivering luxury interiors. Bassem Fayad — 15+ years operating elite venues across the region. Rayan Abdulbaki — 10+ years delivering construction on programme. One team, three disciplines, full coverage.", video: "/videos/5.webm", z: 10 },
   { type: "contact", id: "contact" },
   { type: "footer", id: "footer" },
 ]
