@@ -8,6 +8,7 @@ import StatementSection from "@/components/StatementSection"
 import ContactSection from "@/components/ContactSection"
 import FooterSection from "@/components/FooterSection"
 import { smoothScrollTo } from "@/lib/scrollAnimate"
+import gsap from "gsap"
 
 const slides = [
   { type: "section", id: "concept", number: "01", title: "Concept", desc: "Atmosphere before furniture. The direction is set before anything is built. Rooted in guest flow, emotion, and operating logic.", video: "/videos/1.webm", z: 2 },
@@ -51,7 +52,11 @@ export default function About() {
     setCurrent(targetIdx)
     const el = containerRef.current
     if (!el) return
-    requestAnimationFrame(() => smoothScrollTo(el, targetIdx * window.innerHeight, 900))
+    gsap.to(el, {
+      scrollTop: targetIdx * window.innerHeight,
+      duration: 1.2,
+      ease: "power2.inOut",
+    })
   }, [])
 
   const footerGoTo = useCallback((targetIdx: number) => {
