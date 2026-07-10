@@ -5,9 +5,16 @@ import { useRouter } from "next/navigation"
 import Navbar from "@/components/Navbar"
 import Section from "@/components/Section"
 import StatementSection from "@/components/StatementSection"
+import TeamMotionSection from "@/components/TeamMotionSection"
 import ContactSection from "@/components/ContactSection"
 import FooterSection from "@/components/FooterSection"
 import { smoothScrollTo } from "@/lib/scrollAnimate"
+
+const team = [
+  { name: "Bachar Chazbek", role: "Director · Architect & Urban Planner", years: "10+ Years Design", desc: "10+ years delivering luxury interiors across the region.", image: "/images/teams/bashar.png" },
+  { name: "Bassem Fayad", role: "Director · Operations Manager", years: "15+ Years Ops", desc: "15+ years operating elite venues across the Middle East and Africa.", image: "/images/teams/bassem.png" },
+  { name: "Rayan Abdulbaki", role: "Director · Project Manager", years: "10+ Years Build", desc: "10+ years delivering construction projects on programme.", image: "/images/teams/ryan.png" },
+]
 
 const slides = [
   { type: "section", id: "who-we-are", number: "01", title: "Who we are", desc: "One team. One contract. Full accountability from first sketch to opening night and beyond. We design, build and operate luxury hospitality spaces under a single agreement. No handovers. No excuses.", video: "/videos/1.webm", image: "/images/about-who-we-are.png", z: 2 },
@@ -16,9 +23,9 @@ const slides = [
   { type: "statement", id: "statement-2", z: 5, lines: ["A rendering is a promise.", "What we deliver", "is proof."] },
   { type: "section", id: "build", number: "03", title: "Build", desc: "Procurement and project management under one roof. Single-point accountability for timelines, budgets, and quality. We coordinate MEP, joinery, and finishes through every stage required to turn a drawing into a standing asset.", video: "/videos/3.webm", z: 6, align: "left" },
   { type: "statement", id: "statement-3", z: 7, lines: ["Precision is not a detail.", "It is the entire process", "made visible."] },
-  { type: "section", id: "operate", number: "04", title: "Operate", desc: "This is what makes us different. We run what we build. Pre-opening, staffing, systems, launch and every service after. We don't hand over the keys and walk away.", video: "/videos/4.webm", z: 8 },
+  { type: "section", id: "operate", number: "04", title: "Operate", desc: "This is what makes us different. We run what we build. Pre-opening, staffing, systems, launch and every service after. We don't hand over the keys and walk away.", video: "/videos/6.webm", z: 8 },
   { type: "statement", id: "statement-4", z: 9, lines: ["A space doesn't end at opening night.", "It begins."] },
-  { type: "section", id: "founders", number: "05", title: "Founders", desc: "Bachar Chazbek. 10+ years delivering luxury interiors. Bassem Fayad. 15+ years operating elite venues across the region. Rayan Abdulbaki. 10+ years delivering construction on programme. One team, three disciplines, full coverage.", video: "/videos/5.webm", z: 10 },
+  { type: "team-motion", id: "founders" },
   { type: "contact", id: "contact" },
   { type: "footer", id: "footer" },
 ]
@@ -98,6 +105,8 @@ export default function About() {
                 zIndex={slide.z!}
                 active={i === current}
               />
+            ) : slide.type === "team-motion" ? (
+              <TeamMotionSection members={team} active={Math.abs(i - current) <= 1} />
             ) : slide.type === "contact" ? (
               <ContactSection active={Math.abs(i - current) <= 1} />
             ) : (

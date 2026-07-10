@@ -321,7 +321,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
       <div className="hero-text-center" style={{
         position: "absolute",
         top: "50%",
-        left: "2rem",
+        right: "2rem",
         zIndex: 2,
         maxWidth: "520px",
         pointerEvents: "none",
@@ -377,8 +377,8 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
         pointerEvents: "none",
         textAlign: "left",
         opacity: topRightEntered ? 1 : 0,
-        transform: topRightEntered ? "translateY(0)" : "translateY(20px)",
-        transition: "opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s",
+        transform: topRightEntered ? "translateX(0)" : "translateX(-80px)",
+        transition: "opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.2s, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.2s",
       }}>
         <p style={{
           fontSize: "14px",
@@ -397,8 +397,8 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
             <div key={i} style={{
               flex: 1,
               opacity: topRightEntered ? 1 : 0,
-              transform: topRightEntered ? "translateY(0)" : "translateY(20px)",
-              transition: `opacity 0.5s ease ${0.3 + i * 0.1}s, transform 0.5s ease ${0.3 + i * 0.1}s`,
+              transform: topRightEntered ? "translateX(0)" : "translateX(-80px)",
+              transition: `opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1) ${0.3 + i * 0.12}s, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1) ${0.3 + i * 0.12}s`,
             }}>
               <p style={{
                 fontSize: "22px",
@@ -429,8 +429,8 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
           margin: "1rem 0 0 0",
           textShadow: "0 2px 8px rgba(0,0,0,0.6)",
           opacity: topRightEntered ? 1 : 0,
-          transform: topRightEntered ? "translateY(0)" : "translateY(20px)",
-          transition: "opacity 0.5s ease 0.6s, transform 0.5s ease 0.6s",
+          transform: topRightEntered ? "translateX(0)" : "translateX(-80px)",
+          transition: "opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.66s, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.66s",
         }}>
           One contract. One accountable party.
         </p>
