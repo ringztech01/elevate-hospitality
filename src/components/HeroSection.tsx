@@ -370,10 +370,10 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
       </div>
       <div className="hero-text-right" style={{
         position: "absolute",
-        bottom: "45vh",
+        bottom: "40vh",
         right: "2rem",
         zIndex: 2,
-        maxWidth: "620px",
+        maxWidth: "700px",
         pointerEvents: "none",
         textAlign: "left",
         opacity: topRightEntered ? 1 : 0,
@@ -385,13 +385,13 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
           letterSpacing: "0.4em",
           textTransform: "uppercase",
           color: "rgba(255,255,255,0.3)",
-          margin: "0 0 1rem 0",
+          margin: "0 0 1.25rem 0",
         }}>
           Our process
         </p>
         <div style={{
           display: "flex",
-          gap: "2rem",
+          gap: "2.5rem",
         }}>
           {processColumns.map((col, i) => (
             <div key={i} style={{
@@ -401,18 +401,18 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
               transition: `opacity 0.5s ease ${0.3 + i * 0.1}s, transform 0.5s ease ${0.3 + i * 0.1}s`,
             }}>
               <p style={{
-                fontSize: "18px",
+                fontSize: "22px",
                 fontWeight: 500,
                 color: "#fff",
-                margin: "0 0 0.3rem 0",
+                margin: "0 0 0.4rem 0",
                 textShadow: "0 2px 8px rgba(0,0,0,0.6)",
               }}>
                 {col.title}
               </p>
               <p style={{
-                fontSize: "13px",
+                fontSize: "16px",
                 fontWeight: 300,
-                lineHeight: 1.6,
+                lineHeight: 1.5,
                 color: "rgba(255,255,255,0.65)",
                 margin: 0,
                 textShadow: "0 2px 8px rgba(0,0,0,0.6)",
@@ -423,7 +423,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
           ))}
         </div>
         <p style={{
-          fontSize: "15px",
+          fontSize: "18px",
           fontWeight: 400,
           color: "rgba(255,255,255,0.8)",
           margin: "1rem 0 0 0",

@@ -11,9 +11,9 @@ Wheel and touch events on the container feed scroll deltas into `accumulateScrol
 ### 3. Smooth Interpolation
 A `requestAnimationFrame` loop lerps the display value toward the raw target each frame:
 ```
-smoothProgress += (rawProgress - smoothProgress) * 0.1
+smoothProgress += (rawProgress - smoothProgress) * 0.4
 ```
-The 0.1 factor creates natural easing — catches up quickly then settles smoothly.
+The 0.4 factor catches up in ~5 frames (~80ms) — responsive without visible stepping.
 
 ### 4. Video Scrubbing
 `video.currentTime = progress * video.duration` on each tick. A seek deadzone (0.015s) avoids redundant decoder calls.
