@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 
 interface HeroSectionProps {
   containerRef: React.RefObject<HTMLDivElement | null>
@@ -32,6 +32,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
   const pinFrameRef = useRef(pinFrame)
   const wasCurrentRef = useRef(false)
   const readyFiredRef = useRef(false)
+  const lastDisplayRef = useRef(-1)
   pinFrameRef.current = pinFrame
 
   useEffect(() => {
@@ -167,7 +168,13 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
         : pinFrameRef.current ? 1 : Math.min(1, el.scrollTop / window.innerHeight)
 
       smoothProgressRef.current += (target - smoothProgressRef.current) * 0.1
-      if (isCurrent) setDisplayProgress(smoothProgressRef.current)
+      if (isCurrent) {
+        const val = smoothProgressRef.current
+        if (Math.abs(val - lastDisplayRef.current) > 0.002) {
+          setDisplayProgress(val)
+          lastDisplayRef.current = val
+        }
+      }
 
       if (video.duration && isFinite(video.duration)) {
         const seekTo = target * video.duration
@@ -183,6 +190,14 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
     rafIdRef.current = requestAnimationFrame(tick)
     return () => { cancelAnimationFrame(rafIdRef.current); lastVideoTimeRef.current = -1 }
   }, [containerRef, isCurrent])
+
+  const problemLines = useMemo(() => ["Most projects change hands three times.", "Architect to contractor. Contractor to operator.", "Something is lost at every handover."], [])
+  const designLines = useMemo(() => ["A banquette is a seating plan.", "A service corridor is a labour cost.", "A ceiling height is an acoustic budget."], [])
+  const processColumns = useMemo(() => [
+    { title: "Design.", desc: "Concept, interior architecture, fit-out documentation." },
+    { title: "Build.", desc: "Procurement, main works, MEP coordination, snagging, handover." },
+    { title: "Operate.", desc: "Pre-opening, staffing, systems, launch, ongoing performance." },
+  ], [])
 
   useEffect(() => {
     const shouldRightEnter = displayProgress >= 0.279 && displayProgress < 0.488
@@ -238,7 +253,6 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
           lineHeight: 1.4,
           color: "#fff",
           margin: "0 0 0.5rem 0",
-          textWrap: "balance",
           textShadow: "0 2px 8px rgba(0,0,0,0.6)",
         }}>
           We design, build and operate luxury hospitality spaces.
@@ -249,7 +263,6 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
           lineHeight: 1.5,
           color: "rgba(255,255,255,0.65)",
           margin: 0,
-          textWrap: "balance",
           textShadow: "0 2px 8px rgba(0,0,0,0.6)",
         }}>
           One team from first sketch to first service — and long after.
@@ -276,7 +289,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
         }}>
           The problem we solve
         </p>
-        {["Most projects change hands three times.", "Architect to contractor. Contractor to operator.", "Something is lost at every handover."].map((line, i) => (
+        {problemLines.map((line, i) => (
           <p key={i} style={{
             fontSize: "22px",
             fontWeight: 300,
@@ -326,7 +339,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
         }}>
           Where design meets service
         </p>
-        {["A banquette is a seating plan.", "A service corridor is a labour cost.", "A ceiling height is an acoustic budget."].map((line, i) => (
+        {designLines.map((line, i) => (
           <p key={i} style={{
             fontSize: "22px",
             fontWeight: 300,
@@ -380,11 +393,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
           display: "flex",
           gap: "2rem",
         }}>
-          {[
-            { title: "Design.", desc: "Concept, interior architecture, fit-out documentation." },
-            { title: "Build.", desc: "Procurement, main works, MEP coordination, snagging, handover." },
-            { title: "Operate.", desc: "Pre-opening, staffing, systems, launch, ongoing performance." },
-          ].map((col, i) => (
+          {processColumns.map((col, i) => (
             <div key={i} style={{
               flex: 1,
               opacity: topRightEntered ? 1 : 0,
