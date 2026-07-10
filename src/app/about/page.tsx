@@ -23,7 +23,7 @@ const slides = [
   { type: "statement", id: "statement-2", z: 5, lines: ["A rendering is a promise.", "What we deliver", "is proof."] },
   { type: "section", id: "build", number: "03", title: "Build", desc: "Procurement and project management under one roof. Single-point accountability for timelines, budgets, and quality. We coordinate MEP, joinery, and finishes through every stage required to turn a drawing into a standing asset.", video: "/videos/3.webm", z: 6, align: "left" },
   { type: "statement", id: "statement-3", z: 7, lines: ["Precision is not a detail.", "It is the entire process", "made visible."] },
-  { type: "section", id: "operate", number: "04", title: "Operate", desc: "This is what makes us different. We run what we build. Pre-opening, staffing, systems, launch and every service after. We don't hand over the keys and walk away.", video: "/videos/6.webm", z: 8 },
+  { type: "section", id: "operate", number: "04", title: "Operate", desc: "This is what makes us different. We run what we build. Pre-opening, staffing, systems, launch and every service after. We don't hand over the keys and walk away.", video: "/videos/6.webm", z: 8, align: "right" },
   { type: "statement", id: "statement-4", z: 9, lines: ["A space doesn't end at opening night.", "It begins."] },
   { type: "team-motion", id: "founders" },
   { type: "contact", id: "contact" },
