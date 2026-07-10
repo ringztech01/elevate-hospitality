@@ -7,7 +7,7 @@ interface SectionProps {
   id: string
   number: string
   title: string
-  desc: string
+  desc: string | string[]
   video: string
   image?: string
   zIndex: number
@@ -172,7 +172,7 @@ export default function Section({ id, number, title, desc, video, image, zIndex,
         undefined
       }>
         <h2 className="section-title">{title}</h2>
-        <p className="section-desc">{desc}</p>
+        {Array.isArray(desc) ? desc.map((line, i) => <p key={i} className="section-desc">{line}</p>) : <p className="section-desc">{desc}</p>}
       </div>
     </section>
   )
