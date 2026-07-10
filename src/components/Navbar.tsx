@@ -14,7 +14,7 @@ interface NavbarProps {
 const navItems = [
   { label: "Home", index: 0 },
   { label: "About Us", index: 1 },
-  { label: "Portfolio", index: 13 },
+  { label: "Project", index: 13 },
 ]
 
 const homeIndices: Record<string, number> = {
@@ -35,7 +35,7 @@ export default function Navbar({ current, slides, onClick, page }: NavbarProps) 
       } else {
         router.push("/about")
       }
-    } else if (label === "Portfolio") {
+    } else if (label === "Project") {
       if (page === "home") {
         router.push("/portfolio")
       } else if (page === "portfolio") {
@@ -76,7 +76,7 @@ export default function Navbar({ current, slides, onClick, page }: NavbarProps) 
             className={
               (page === "home" && current === item.index) ||
               (page === "about" && item.label === "About Us") ||
-              (page === "portfolio" && item.label === "Portfolio")
+              (page === "portfolio" && item.label === "Project")
                 ? "active"
                 : ""
             }
