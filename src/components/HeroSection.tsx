@@ -321,7 +321,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
       <div className="hero-text-center" style={{
         position: "absolute",
         top: "50%",
-        right: "2rem",
+        left: "2rem",
         zIndex: 2,
         maxWidth: "520px",
         pointerEvents: "none",
@@ -371,13 +371,13 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
       <div className="hero-text-right" style={{
         position: "absolute",
         bottom: "40vh",
-        right: "2rem",
+        left: "2rem",
         zIndex: 2,
         maxWidth: "700px",
         pointerEvents: "none",
         textAlign: "left",
         opacity: topRightEntered ? 1 : 0,
-        transform: topRightEntered ? "translateX(0)" : "translateX(-120px)",
+        transform: topRightEntered ? "translateX(0)" : "translateX(120px)",
         transition: "opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.2s, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.2s",
       }}>
         <p style={{
@@ -397,7 +397,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
             <div key={i} style={{
               flex: 1,
               opacity: topRightEntered ? 1 : 0,
-              transform: topRightEntered ? "translateX(0)" : "translateX(-200px)",
+              transform: topRightEntered ? "translateX(0)" : "translateX(200px)",
               transition: `opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1) ${0.35 + i * 0.15}s, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1) ${0.35 + i * 0.15}s`,
             }}>
               <p style={{
@@ -429,7 +429,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
           margin: "1.5rem 0 0 0",
           textShadow: "0 2px 8px rgba(0,0,0,0.6)",
           opacity: topRightEntered ? 1 : 0,
-          transform: topRightEntered ? "translateX(0)" : "translateX(-120px)",
+          transform: topRightEntered ? "translateX(0)" : "translateX(120px)",
           transition: "opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.8s, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.8s",
         }}>
           One contract. One accountable party.
