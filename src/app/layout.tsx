@@ -9,7 +9,7 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: "Elevate — Hospitality. Design. Build. Operate.",
+  title: "Elevate. Hospitality. Design. Build. Operate.",
   description: "We take hospitality projects from first idea to last table turned.",
   icons: {
     icon: [

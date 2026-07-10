@@ -130,7 +130,7 @@ export default function ContactSection({ active }: ContactSectionProps) {
           margin: "0 0 2.5rem 0",
           maxWidth: "420px",
         }}>
-          A finished concept or a first thought — we&apos;d like to hear it. Every Elevate project starts with a conversation.
+          A finished concept or a first thought. We&apos;d like to hear it. Every Elevate project starts with a conversation.
         </p>
 
         {/* Contact details */}
@@ -280,12 +280,12 @@ export default function ContactSection({ active }: ContactSectionProps) {
 
           {status === "success" && (
             <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "clamp(0.75rem, 0.8vw, 0.85rem)", margin: 0 }}>
-              Message sent — we&apos;ll be in touch soon.
+              Message sent. We&apos;ll be in touch soon.
             </p>
           )}
           {status === "error" && (
             <p style={{ color: "rgba(255,100,100,0.8)", fontSize: "clamp(0.75rem, 0.8vw, 0.85rem)", margin: 0 }}>
-              Something went wrong — try again or email us directly.
+              Something went wrong. Try again or email us directly.
             </p>
           )}
 

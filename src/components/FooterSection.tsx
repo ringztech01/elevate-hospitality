@@ -94,7 +94,7 @@ export default function FooterSection({ active, onClick, slideCount }: FooterSec
           margin: "0 auto 3rem",
           maxWidth: "520px",
         }}>
-          A three-person team that takes hospitality projects from the first idea to the last table turned. Architecture, engineering, and 16 years of operations — under one roof.
+          A three-person team that takes hospitality projects from the first idea to the last table turned. Architecture, engineering, and 16 years of operations, under one roof.
         </p>
 
         {/* Nav links */}
