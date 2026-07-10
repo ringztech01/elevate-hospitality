@@ -382,9 +382,10 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
       <div className="hero-text-right" style={{
         position: "absolute",
         bottom: "40vh",
-        left: "2rem",
+        left: "0",
+        right: "0",
         zIndex: 2,
-        maxWidth: "700px",
+        padding: "0 4rem",
         pointerEvents: "none",
         textAlign: "left",
         opacity: topRightEntered ? 1 : 0,
@@ -402,7 +403,8 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
         </p>
         <div style={{
           display: "flex",
-          gap: "2.5rem",
+          justifyContent: "space-between",
+          gap: "4rem",
         }}>
           {processColumns.map((col, i) => (
             <div key={i} style={{
