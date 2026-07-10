@@ -15,7 +15,14 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Elevate — Hospitality. Design. Build. Operate.",
   description: "We take hospitality projects from first idea to last table turned.",
-  icons: { icon: "/ELEVATE.png" },
+  icons: {
+    icon: [
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: "/apple-touch-icon.png",
+  },
 }
 
 export default function RootLayout({
@@ -26,7 +33,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
       <head>
-        <link rel="icon" href="/ELEVATE.png" type="image/png" />
+        <link rel="icon" href="/favicon.png" type="image/png" sizes="512x512" />
+        <link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />
+        <link rel="icon" href="/favicon-16x16.png" type="image/png" sizes="16x16" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="preload" href="/videos/hero.webm" as="video" type="video/webm" />
         <link rel="preconnect" href="https://elevateng.co" />
       </head>
