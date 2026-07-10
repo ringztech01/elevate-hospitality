@@ -9,6 +9,7 @@ interface SectionProps {
   title: string
   desc: string
   video: string
+  image?: string
   zIndex: number
   active: boolean
   isCurrent: boolean
@@ -17,7 +18,7 @@ interface SectionProps {
   loop?: boolean
 }
 
-export default function Section({ id, number, title, desc, video, zIndex, active, isCurrent, align, delay }: SectionProps) {
+export default function Section({ id, number, title, desc, video, image, zIndex, active, isCurrent, align, delay }: SectionProps) {
   const sectionRef = useRef<HTMLDivElement>(null)
   const revealRef = useRef<HTMLDivElement>(null)
   const videoWrapRef = useRef<HTMLDivElement>(null)
@@ -104,48 +105,54 @@ export default function Section({ id, number, title, desc, video, zIndex, active
     <section id={id} ref={sectionRef} className="section" style={{ zIndex }}>
       <div className="section-video-wrap">
         <div ref={videoWrapRef} style={{ position: "absolute", inset: 0, willChange: "transform" }}>
-          <video
-            ref={videoRefA}
-            muted
-            playsInline
-            loop={false}
-            preload={active ? "auto" : "metadata"}
-            onError={() => {
-              retryCount.current++
-              if (retryCount.current < 3) {
-                retryTimer.current = setTimeout(() => {
-                  videoRefA.current?.load()
-                  videoRefB.current?.load()
-                }, 2000 * retryCount.current)
-              } else {
-                setVideoFailed(true)
-              }
-            }}
-            style={{ width: "100%", height: "100%", objectFit: "cover", opacity: showing === 0 ? 1 : 0, transition: "opacity 0.5s ease" }}
-          >
-            <source src={video} type="video/webm" />
-          </video>
-          <video
-            ref={videoRefB}
-            muted
-            playsInline
-            loop={false}
-            preload={active ? "auto" : "metadata"}
-            onError={() => {
-              retryCount.current++
-              if (retryCount.current < 3) {
-                retryTimer.current = setTimeout(() => {
-                  videoRefA.current?.load()
-                  videoRefB.current?.load()
-                }, 2000 * retryCount.current)
-              } else {
-                setVideoFailed(true)
-              }
-            }}
-            style={{ width: "100%", height: "100%", objectFit: "cover", opacity: showing === 1 ? 1 : 0, transition: "opacity 0.5s ease", position: "absolute", inset: 0 }}
-          >
-            <source src={video} type="video/webm" />
-          </video>
+          {image ? (
+            <img src={image} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          ) : (
+            <>
+              <video
+                ref={videoRefA}
+                muted
+                playsInline
+                loop={false}
+                preload={active ? "auto" : "metadata"}
+                onError={() => {
+                  retryCount.current++
+                  if (retryCount.current < 3) {
+                    retryTimer.current = setTimeout(() => {
+                      videoRefA.current?.load()
+                      videoRefB.current?.load()
+                    }, 2000 * retryCount.current)
+                  } else {
+                    setVideoFailed(true)
+                  }
+                }}
+                style={{ width: "100%", height: "100%", objectFit: "cover", opacity: showing === 0 ? 1 : 0, transition: "opacity 0.5s ease" }}
+              >
+                <source src={video} type="video/webm" />
+              </video>
+              <video
+                ref={videoRefB}
+                muted
+                playsInline
+                loop={false}
+                preload={active ? "auto" : "metadata"}
+                onError={() => {
+                  retryCount.current++
+                  if (retryCount.current < 3) {
+                    retryTimer.current = setTimeout(() => {
+                      videoRefA.current?.load()
+                      videoRefB.current?.load()
+                    }, 2000 * retryCount.current)
+                  } else {
+                    setVideoFailed(true)
+                  }
+                }}
+                style={{ width: "100%", height: "100%", objectFit: "cover", opacity: showing === 1 ? 1 : 0, transition: "opacity 0.5s ease", position: "absolute", inset: 0 }}
+              >
+                <source src={video} type="video/webm" />
+              </video>
+            </>
+          )}
         </div>
         {videoFailed && (
           <div style={{
