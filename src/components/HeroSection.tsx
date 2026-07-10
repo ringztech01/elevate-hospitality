@@ -171,16 +171,12 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
   }, [containerRef, accumulateScroll])
 
   useEffect(() => {
-    const el = containerRef?.current
-    if (!el) return
     const video = videoRef.current
     if (!video) return
     const SEEK_DEADZONE = 0.015
 
     const tick = () => {
-      const target = !completedRef.current
-        ? rawProgressRef.current
-        : pinFrameRef.current ? 1 : Math.min(1, el.scrollTop / window.innerHeight)
+      const target = completedRef.current ? 1 : rawProgressRef.current
 
       smoothProgressRef.current += (target - smoothProgressRef.current) * 0.4
       if (isCurrent) {
