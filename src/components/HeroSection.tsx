@@ -321,7 +321,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
       <div className="hero-text-center" style={{
         position: "absolute",
         top: "50%",
-        left: "2rem",
+        right: "2rem",
         zIndex: 2,
         maxWidth: "520px",
         pointerEvents: "none",
