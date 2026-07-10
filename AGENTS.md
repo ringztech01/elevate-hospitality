@@ -19,18 +19,17 @@ The 0.1 factor creates natural easing — catches up quickly then settles smooth
 `video.currentTime = progress * video.duration` on each tick. A seek deadzone (0.015s) avoids redundant decoder calls.
 
 ### 5. Key requirements for smoothness
-- **All-keyframes video** — keyframe every ~0.5s so seeking is instant
+- **Short-GOP video** — keyframe every 3 frames (0.125s) so max 2-frame decode per seek
 - **H.264 MP4** — hardware-decoded on all devices
 - **requestAnimationFrame** — syncs to display refresh
 - **passive: false** — prevents page scroll while scrubbing
 
-## Hero video spec
-- File: `public/hero.mp4`
-- Size: ~9.6 MB
-- Resolution: 1920×1080
-- Frame rate: 24 fps
-- Duration: ~15s
-- Codec: H.264, CRF 29, keyframe every 3 frames (g=3, 0.125s interval)
+## Hero video files
+Two versions, auto-switched via `matchMedia("(max-width: 767px)")`:
+- **Desktop** (`public/hero-desktop.mp4`): 11.7 MB, H.264 CRF 27, g=3 (0.125s keyframes)
+- **Mobile** (`public/hero-mobile.mp4`): 4.9 MB, H.264 CRF 36, g=3 (0.125s keyframes)
+- **Fallback** (`public/hero.mp4`): copy of desktop version
+All: 1920×1080, 24 fps, ~15s duration
 
 ## Text animation triggers
 Text groups fade in/out at specific `displayProgress` thresholds:
