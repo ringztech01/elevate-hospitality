@@ -265,7 +265,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
           margin: 0,
           textShadow: "0 2px 8px rgba(0,0,0,0.6)",
         }}>
-          One team from first sketch to first service, and long after.
+          One team from first sketch to first service and beyond.
         </p>
       </div>
       <div className="hero-text-right" style={{
@@ -365,7 +365,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
           transform: centerEntered ? "translateY(0)" : "translateY(20px)",
           transition: "opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s",
         }}>
-          We design spaces the way we run them, because we run them.
+          We design spaces the way we run them.
         </p>
       </div>
       <div className="hero-text-right" style={{

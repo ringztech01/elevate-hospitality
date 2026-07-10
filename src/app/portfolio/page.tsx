@@ -11,7 +11,7 @@ import { smoothScrollTo } from "@/lib/scrollAnimate"
 const projects = [
   { name: "The Cage", category: "Nightclub · Full Scope", desc: "A nightlife venue where raw steel cage architecture became the entire concept.", image: "/images/projects/cage.webp" },
   { name: "Sora", category: "Restaurant · Full Scope", desc: "Japanese precision meets local soul in a refined dining experience.", image: "/images/projects/sora1.webp" },
-  { name: "The Future", category: "Lounge · Full Scope", desc: "A forward-facing social venue where design anticipates what's next.", image: "/images/projects/FUTUREPresentation4.webp" },
+  { name: "The Future", category: "Lounge · Full Scope", desc: "A social venue where design anticipates what's next.", image: "/images/projects/FUTUREPresentation4.webp" },
   { name: "Tokyo", category: "Restaurant · Full Scope", desc: "Authentic Japanese cuisine in a space that balances energy and intimacy.", image: "/images/projects/tokyo.webp" },
   { name: "Klay", category: "Restaurant · Full Scope", desc: "A clay-fired concept built around earth, fire, and honest ingredients.", image: "/images/projects/klay.webp" },
   { name: "4Guys", category: "Casual Dining · Full Scope", desc: "A bold casual dining concept built for repeat visits and high energy.", image: "/images/projects/4guys.webp" },
