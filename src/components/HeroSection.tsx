@@ -1,6 +1,7 @@
 "use client"
 
 import { useCallback, useEffect, useRef, useState } from "react"
+import gsap from "gsap"
 
 interface HeroSectionProps {
   containerRef: React.RefObject<HTMLDivElement | null>
@@ -16,10 +17,10 @@ const COMPLETE_AT = 0.999
 export default function HeroSection({ containerRef, isCurrent, pinFrame, replayArmed, onComplete, onReady }: HeroSectionProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const completedRef = useRef(false)
-  const rawProgressRef = useRef(0)
-  const smoothProgressRef = useRef(0)
+  const targetRef = useRef(0)
+  const progressProxy = useRef({ value: 0 })
+  const gsapTween = useRef<gsap.core.Tween | null>(null)
   const touchStartRef = useRef(0)
-  const lastVideoTimeRef = useRef(-1)
   const [displayProgress, setDisplayProgress] = useState(0)
   const [scrubbing, setScrubbing] = useState(true)
   const [rightEntered, setRightEntered] = useState(false)
@@ -27,7 +28,6 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
   const [centerEntered, setCenterEntered] = useState(false)
   const [centerExited, setCenterExited] = useState(false)
   const [topRightEntered, setTopRightEntered] = useState(false)
-  const rafIdRef = useRef(0)
   const pinFrameRef = useRef(pinFrame)
   const wasCurrentRef = useRef(false)
   const readyFiredRef = useRef(false)
@@ -63,9 +63,9 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
   const resetHeroPlayback = () => {
     completedRef.current = false
     setScrubbing(true)
-    rawProgressRef.current = 0
-    smoothProgressRef.current = 0
-    lastVideoTimeRef.current = -1
+    targetRef.current = 0
+    progressProxy.current.value = 0
+    if (gsapTween.current) { gsapTween.current.kill(); gsapTween.current = null }
     setRightEntered(false)
     setRightExited(false)
     setCenterEntered(false)
@@ -74,21 +74,39 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
     if (videoRef.current) videoRef.current.currentTime = 0
   }
 
+  const animateTo = useCallback((target: number) => {
+    targetRef.current = target
+    if (gsapTween.current) { gsapTween.current.kill(); gsapTween.current = null }
+    gsapTween.current = gsap.to(progressProxy.current, {
+      value: target,
+      duration: 0.6,
+      ease: "power2.out",
+      overwrite: "auto",
+      onUpdate: () => {
+        const val = progressProxy.current.value
+        setDisplayProgress(val)
+        if (videoRef.current?.duration && isFinite(videoRef.current.duration)) {
+          videoRef.current.currentTime = val * videoRef.current.duration
+        }
+      },
+      onComplete: () => {
+        gsapTween.current = null
+        if (target >= COMPLETE_AT && !completedRef.current) {
+          completedRef.current = true
+          setScrubbing(false)
+          pinFrameRef.current = true
+          onComplete?.()
+        }
+      },
+    })
+  }, [onComplete])
+
   const accumulateScroll = useCallback((delta: number) => {
     if (completedRef.current) return
     const vh = window.innerHeight
-    rawProgressRef.current = Math.max(0, Math.min(1, rawProgressRef.current + delta / vh))
-    if (rawProgressRef.current >= COMPLETE_AT && !completedRef.current) {
-      rawProgressRef.current = 1
-      smoothProgressRef.current = 1
-      lastVideoTimeRef.current = -1
-      if (videoRef.current) videoRef.current.currentTime = videoRef.current.duration
-      completedRef.current = true
-      setScrubbing(false)
-      pinFrameRef.current = true
-      onComplete?.()
-    }
-  }, [onComplete])
+    const raw = Math.max(0, Math.min(1, targetRef.current + delta / vh))
+    animateTo(raw)
+  }, [animateTo])
 
   useEffect(() => {
     const el = containerRef?.current
@@ -105,7 +123,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
       }
 
       if (completedRef.current && !pinFrameRef.current) return
-      if (e.deltaY < 0 && rawProgressRef.current <= 0) return
+      if (e.deltaY < 0 && targetRef.current <= 0) return
       e.preventDefault()
       if (completedRef.current) return
       accumulateScroll(e.deltaY)
@@ -128,7 +146,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
 
       if (completedRef.current && !pinFrameRef.current) return
       const delta = touchStartRef.current - e.touches[0].clientY
-      if (delta < 0 && rawProgressRef.current <= 0) return
+      if (delta < 0 && targetRef.current <= 0) return
       e.preventDefault()
       if (completedRef.current) return
       touchStartRef.current = e.touches[0].clientY
@@ -144,36 +162,6 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
       el.removeEventListener("touchmove", onTouchMove)
     }
   }, [containerRef, accumulateScroll])
-
-  useEffect(() => {
-    const el = containerRef?.current
-    if (!el) return
-    const video = videoRef.current
-    if (!video) return
-    const SEEK_DEADZONE = 0.015
-
-    const tick = () => {
-      const target = !completedRef.current
-        ? rawProgressRef.current
-        : pinFrameRef.current ? 1 : Math.min(1, el.scrollTop / window.innerHeight)
-
-      smoothProgressRef.current += (target - smoothProgressRef.current) * 0.1
-      if (isCurrent) setDisplayProgress(smoothProgressRef.current)
-
-      if (video.duration && isFinite(video.duration)) {
-        const seekTo = smoothProgressRef.current * video.duration
-        if (Math.abs(seekTo - lastVideoTimeRef.current) > SEEK_DEADZONE) {
-          video.currentTime = seekTo
-          lastVideoTimeRef.current = seekTo
-        }
-      }
-
-      rafIdRef.current = requestAnimationFrame(tick)
-    }
-
-    rafIdRef.current = requestAnimationFrame(tick)
-    return () => { cancelAnimationFrame(rafIdRef.current); lastVideoTimeRef.current = -1 }
-  }, [containerRef, isCurrent])
 
   useEffect(() => {
     const shouldRightEnter = displayProgress >= 0.279 && displayProgress < 0.488
