@@ -13,7 +13,7 @@ interface SectionProps {
   zIndex: number
   active: boolean
   isCurrent: boolean
-  align?: "left" | "right"
+  align?: "left" | "right" | "right-block"
   delay?: number
   loop?: boolean
 }
@@ -168,6 +168,7 @@ export default function Section({ id, number, title, desc, video, image, zIndex,
       </div>
       <div className={`section-content${entered ? " entered" : ""}`} style={
         align === "right" ? { textAlign: "right", marginLeft: "30%" } :
+        align === "right-block" ? { textAlign: "left", marginLeft: "auto", paddingRight: "2rem" } :
         align === "left" ? { textAlign: "left", marginRight: "auto", paddingLeft: "8rem" } :
         undefined
       }>
