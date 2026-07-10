@@ -345,8 +345,9 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
           fontSize: "14px",
           letterSpacing: "0.4em",
           textTransform: "uppercase",
-          color: "rgba(255,255,255,0.3)",
+          color: "rgba(255,255,255,0.5)",
           margin: "0 0 0.75rem 0",
+          textShadow: "0 2px 12px rgba(0,0,0,0.95)",
         }}>
           Where design meets service
         </p>
@@ -357,7 +358,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
             lineHeight: 1.6,
             color: "#fff",
             margin: 0,
-            textShadow: "0 2px 12px rgba(0,0,0,0.7)",
+            textShadow: "0 2px 16px rgba(0,0,0,0.95), 0 4px 32px rgba(0,0,0,0.8)",
             opacity: centerEntered ? 1 : 0,
             transform: centerEntered ? "translateY(0)" : "translateY(20px)",
             transition: `opacity 0.5s ease ${i * 0.05}s, transform 0.5s ease ${i * 0.05}s`,
@@ -371,7 +372,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
           lineHeight: 1.6,
           color: "#fff",
           margin: "0.5rem 0 0 0",
-          textShadow: "0 2px 12px rgba(0,0,0,0.7)",
+          textShadow: "0 2px 16px rgba(0,0,0,0.95), 0 4px 32px rgba(0,0,0,0.8)",
           opacity: centerEntered ? 1 : 0,
           transform: centerEntered ? "translateY(0)" : "translateY(20px)",
           transition: "opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s",
