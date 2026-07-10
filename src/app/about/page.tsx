@@ -17,7 +17,7 @@ const team = [
 ]
 
 const slides = [
-  { type: "section", id: "who-we-are", number: "01", title: "Who we are", desc: ["One team. One contract. Full accountability from first sketch to opening night and beyond.", "We design, build and operate luxury hospitality spaces under a single agreement.", "No handovers. No excuses."], video: "/videos/1.webm", image: "/images/about-who-we-are.png", z: 2, align: "left" },
+  { type: "section", id: "who-we-are", number: "01", title: "Who we are", desc: ["One team. One contract. Full accountability from first sketch to opening night and beyond.", "We design, build and operate luxury hospitality spaces under a single agreement.", "No handovers. No excuses."], video: "/videos/1.webm", image: "/images/about-who-we-are.png", z: 2, align: "right" },
   { type: "statement", id: "statement-1", z: 3, lines: ["We don't hand over drawings and walk away.", "We design what we build,", "build what we operate,", "and operate what we design."] },
   { type: "section", id: "design", number: "02", title: "Design", desc: "We design for the people who will work the space, not just the people who will photograph it. Every banquette is a seating plan. Every corridor is a labour cost. Every ceiling height is an acoustic budget.", video: "/videos/2.webm", z: 4, align: "left" },
   { type: "statement", id: "statement-2", z: 5, lines: ["A rendering is a promise.", "What we deliver", "is proof."] },
