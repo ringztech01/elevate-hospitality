@@ -119,7 +119,7 @@ export default function ContactSection({ active }: ContactSectionProps) {
           margin: "0 0 1rem 0",
           lineHeight: 1.2,
         }}>
-          You have the vision.<br />We elevate it.
+          You have the vision.<br />We build it.
         </h2>
 
         <p style={{

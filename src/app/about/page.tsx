@@ -15,7 +15,7 @@ const slides = [
   { type: "section", id: "design", number: "02", title: "Design", desc: "Direction becomes detail. Materials, lighting, and joinery resolved into one complete visual system. Every surface aligned before execution begins.", video: "/videos/2.webm", z: 4, align: "right" },
   { type: "statement", id: "statement-2", z: 5, lines: ["Every element is a decision.", "Every decision shapes", "how a space feels."] },
   { type: "section", id: "build", number: "03", title: "Build", desc: "Drawings become real. Structure and finishes assembled with sequencing, precision, and control. Every install decision protects the final result.", video: "/videos/3.webm", z: 6, align: "left", loop: true },
-  { type: "statement", id: "statement-3", z: 7, lines: ["Craft is not a detail.", "It is the entire process", "made visible."] },
+  { type: "statement", id: "statement-3", z: 7, lines: ["Precision is not a detail.", "It is the entire process", "made visible."] },
   { type: "section", id: "completion", number: "04", title: "Completion", desc: "Precision in every joint, every edge, every finish. The space is refined until intention and execution are indistinguishable.", video: "/videos/4.webm", z: 8 },
   { type: "statement", id: "statement-4", z: 9, lines: ["We finish what we start.", "Not because we must,", "but because we care."] },
   { type: "section", id: "realization", number: "05", title: "Realization", desc: "The culmination of every decision made manifest. A space that stands as both statement and service to those who inhabit it.", video: "/videos/5.webm", z: 10 },

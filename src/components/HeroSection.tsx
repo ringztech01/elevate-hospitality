@@ -218,7 +218,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
       <div style={{
         position: "absolute",
         inset: 0,
-        background: "linear-gradient(to bottom, transparent 70%, rgba(0,0,0,0.15) 85%, #000 100%)",
+        background: "linear-gradient(to top, rgba(0,0,0,0.65), transparent 60%)",
         pointerEvents: "none",
         zIndex: 1,
       }} />
@@ -227,7 +227,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
         bottom: "12vh",
         left: "2rem",
         zIndex: 2,
-        maxWidth: "520px",
+        maxWidth: "580px",
         pointerEvents: "none",
         opacity: Math.min(1, Math.max(0, (0.279 - displayProgress) / 0.1)),
         transition: "opacity 0.2s ease",
@@ -235,32 +235,51 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
         <p style={{
           fontSize: "36px",
           fontWeight: 300,
-          textTransform: "capitalize",
-          lineHeight: 1.6,
+          lineHeight: 1.4,
           color: "#fff",
-          margin: 0,
+          margin: "0 0 0.5rem 0",
+          textWrap: "balance",
           textShadow: "0 2px 8px rgba(0,0,0,0.6)",
         }}>
-          they build space,<br />we elevate experiences.
+          We design, build and operate luxury hospitality spaces.
+        </p>
+        <p style={{
+          fontSize: "20px",
+          fontWeight: 300,
+          lineHeight: 1.5,
+          color: "rgba(255,255,255,0.65)",
+          margin: 0,
+          textWrap: "balance",
+          textShadow: "0 2px 8px rgba(0,0,0,0.6)",
+        }}>
+          One team from first sketch to first service — and long after.
         </p>
       </div>
       <div className="hero-text-right" style={{
         position: "absolute",
-        bottom: "42vh",
-        right: "2rem",
+        bottom: "40vh",
+        left: "2rem",
         zIndex: 2,
         maxWidth: "520px",
         pointerEvents: "none",
-        textAlign: "right",
+        textAlign: "left",
         opacity: rightExited ? 0 : (rightEntered ? 1 : 0),
         transform: rightEntered ? "translateY(0)" : "translateY(20px)",
         transition: rightExited ? "opacity 0.4s ease" : "opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s",
       }}>
-        {["every surface tells a story,", "every corner holds intent.", "craft is the thread", "that ties vision to space."].map((line, i) => (
+        <p style={{
+          fontSize: "14px",
+          letterSpacing: "0.4em",
+          textTransform: "uppercase",
+          color: "rgba(255,255,255,0.3)",
+          margin: "0 0 0.75rem 0",
+        }}>
+          The problem we solve
+        </p>
+        {["Most projects change hands three times.", "Architect to contractor. Contractor to operator.", "Something is lost at every handover."].map((line, i) => (
           <p key={i} style={{
-            fontSize: "24px",
+            fontSize: "22px",
             fontWeight: 300,
-            textTransform: "capitalize",
             lineHeight: 1.6,
             color: "#fff",
             margin: 0,
@@ -272,25 +291,45 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
             {line}
           </p>
         ))}
+        <p style={{
+          fontSize: "22px",
+          fontWeight: 400,
+          lineHeight: 1.6,
+          color: "#fff",
+          margin: "0.5rem 0 0 0",
+          textShadow: "0 2px 8px rgba(0,0,0,0.6)",
+          opacity: rightEntered ? 1 : 0,
+          transform: rightEntered ? "translateY(0)" : "translateY(20px)",
+          transition: "opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s",
+        }}>
+          We never hand over.
+        </p>
       </div>
       <div className="hero-text-center" style={{
         position: "absolute",
         top: "50%",
-        left: "50%",
+        left: "2rem",
         zIndex: 2,
-        maxWidth: "360px",
-        width: "20%",
+        maxWidth: "520px",
         pointerEvents: "none",
-        textAlign: "center",
+        textAlign: "left",
         opacity: centerExited ? 0 : (centerEntered ? 1 : 0),
-        transform: centerEntered ? "translate(-50%, -50%)" : "translate(-50%, calc(-50% + 20px))",
+        transform: centerEntered ? "translateY(-50%)" : "translateY(calc(-50% + 20px))",
         transition: centerExited ? "opacity 0.4s ease" : "opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s",
       }}>
-        {["we design, build and operate", "luxury hospitality spaces."].map((line, i) => (
+        <p style={{
+          fontSize: "14px",
+          letterSpacing: "0.4em",
+          textTransform: "uppercase",
+          color: "rgba(255,255,255,0.3)",
+          margin: "0 0 0.75rem 0",
+        }}>
+          Where design meets service
+        </p>
+        {["A banquette is a seating plan.", "A service corridor is a labour cost.", "A ceiling height is an acoustic budget."].map((line, i) => (
           <p key={i} style={{
-            fontSize: "24px",
+            fontSize: "22px",
             fontWeight: 300,
-            textTransform: "capitalize",
             lineHeight: 1.6,
             color: "#fff",
             margin: 0,
@@ -302,29 +341,89 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
             {line}
           </p>
         ))}
+        <p style={{
+          fontSize: "22px",
+          fontWeight: 400,
+          lineHeight: 1.6,
+          color: "#fff",
+          margin: "0.5rem 0 0 0",
+          textShadow: "0 2px 12px rgba(0,0,0,0.7)",
+          opacity: centerEntered ? 1 : 0,
+          transform: centerEntered ? "translateY(0)" : "translateY(20px)",
+          transition: "opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s",
+        }}>
+          We design spaces the way we run them — because we run them.
+        </p>
       </div>
       <div className="hero-text-right" style={{
         position: "absolute",
-        bottom: "48vh",
+        bottom: "45vh",
         right: "2rem",
         zIndex: 2,
-        maxWidth: "520px",
+        maxWidth: "620px",
         pointerEvents: "none",
-        textAlign: "right",
+        textAlign: "left",
         opacity: topRightEntered ? 1 : 0,
         transform: topRightEntered ? "translateY(0)" : "translateY(20px)",
         transition: "opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s",
       }}>
         <p style={{
-          fontSize: "24px",
-          fontWeight: 300,
-          textTransform: "capitalize",
-          lineHeight: 1.6,
-          color: "#fff",
-          margin: 0,
-          textShadow: "0 2px 8px rgba(0,0,0,0.6)",
+          fontSize: "14px",
+          letterSpacing: "0.4em",
+          textTransform: "uppercase",
+          color: "rgba(255,255,255,0.3)",
+          margin: "0 0 1rem 0",
         }}>
-          from first concept to final handover,<br />every decision is intentional,<br />every detail deliberate.
+          Our process
+        </p>
+        <div style={{
+          display: "flex",
+          gap: "2rem",
+        }}>
+          {[
+            { title: "Design.", desc: "Concept, interior architecture, fit-out documentation." },
+            { title: "Build.", desc: "Procurement, main works, MEP coordination, snagging, handover." },
+            { title: "Operate.", desc: "Pre-opening, staffing, systems, launch, ongoing performance." },
+          ].map((col, i) => (
+            <div key={i} style={{
+              flex: 1,
+              opacity: topRightEntered ? 1 : 0,
+              transform: topRightEntered ? "translateY(0)" : "translateY(20px)",
+              transition: `opacity 0.5s ease ${0.3 + i * 0.1}s, transform 0.5s ease ${0.3 + i * 0.1}s`,
+            }}>
+              <p style={{
+                fontSize: "18px",
+                fontWeight: 500,
+                color: "#fff",
+                margin: "0 0 0.3rem 0",
+                textShadow: "0 2px 8px rgba(0,0,0,0.6)",
+              }}>
+                {col.title}
+              </p>
+              <p style={{
+                fontSize: "13px",
+                fontWeight: 300,
+                lineHeight: 1.6,
+                color: "rgba(255,255,255,0.65)",
+                margin: 0,
+                textShadow: "0 2px 8px rgba(0,0,0,0.6)",
+              }}>
+                {col.desc}
+              </p>
+            </div>
+          ))}
+        </div>
+        <p style={{
+          fontSize: "15px",
+          fontWeight: 400,
+          color: "rgba(255,255,255,0.8)",
+          margin: "1rem 0 0 0",
+          textShadow: "0 2px 8px rgba(0,0,0,0.6)",
+          opacity: topRightEntered ? 1 : 0,
+          transform: topRightEntered ? "translateY(0)" : "translateY(20px)",
+          transition: "opacity 0.5s ease 0.6s, transform 0.5s ease 0.6s",
+        }}>
+          One contract. One accountable party.
         </p>
       </div>
       <div style={{
