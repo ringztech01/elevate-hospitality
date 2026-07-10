@@ -33,6 +33,8 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
   const wasCurrentRef = useRef(false)
   const readyFiredRef = useRef(false)
   const lastDisplayRef = useRef(-1)
+  const completionPendingRef = useRef(false)
+  const cooldownTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   pinFrameRef.current = pinFrame
 
   useEffect(() => {
@@ -64,6 +66,12 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
   }, [onReady])
 
   useEffect(() => {
+    return () => {
+      if (cooldownTimerRef.current) clearTimeout(cooldownTimerRef.current)
+    }
+  }, [])
+
+  useEffect(() => {
     if (isCurrent && completedRef.current && !wasCurrentRef.current) {
       resetHeroPlayback()
     }
@@ -72,6 +80,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
 
   const resetHeroPlayback = () => {
     completedRef.current = false
+    completionPendingRef.current = false
     setScrubbing(true)
     rawProgressRef.current = 0
     smoothProgressRef.current = 0
@@ -88,15 +97,19 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
     if (completedRef.current) return
     const vh = window.innerHeight
     rawProgressRef.current = Math.max(0, Math.min(1, rawProgressRef.current + delta / vh))
-    if (rawProgressRef.current >= COMPLETE_AT && !completedRef.current) {
+    if (rawProgressRef.current >= COMPLETE_AT && !completedRef.current && !completionPendingRef.current) {
       rawProgressRef.current = 1
       smoothProgressRef.current = 1
-      lastVideoTimeRef.current = -1
-      if (videoRef.current) videoRef.current.currentTime = videoRef.current.duration
-      completedRef.current = true
-      setScrubbing(false)
-      pinFrameRef.current = true
-      onComplete?.()
+      completionPendingRef.current = true
+      cooldownTimerRef.current = setTimeout(() => {
+        lastVideoTimeRef.current = -1
+        if (videoRef.current) videoRef.current.currentTime = videoRef.current.duration
+        completedRef.current = true
+        setScrubbing(false)
+        pinFrameRef.current = true
+        onComplete?.()
+      }, 500)
+      return
     }
   }, [onComplete])
 
@@ -115,6 +128,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
       }
 
       if (completedRef.current && !pinFrameRef.current) return
+      if (completionPendingRef.current) { e.preventDefault(); return }
       if (e.deltaY < 0 && rawProgressRef.current <= 0) return
       e.preventDefault()
       if (completedRef.current) return
@@ -137,6 +151,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
       }
 
       if (completedRef.current && !pinFrameRef.current) return
+      if (completionPendingRef.current) { e.preventDefault(); return }
       const delta = touchStartRef.current - e.touches[0].clientY
       if (delta < 0 && rawProgressRef.current <= 0) return
       e.preventDefault()
