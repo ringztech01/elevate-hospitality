@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Elevate — Hospitality. Design. Build. Operate.",
   description: "We take hospitality projects from first idea to last table turned.",
-  icons: { icon: "/favicon.ico" },
+  icons: { icon: "/ELEVATE.png" },
 }
 
 export default function RootLayout({
@@ -26,6 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
       <head>
+        <link rel="icon" href="/ELEVATE.png" type="image/png" />
         <link rel="preload" href="/videos/hero.webm" as="video" type="video/webm" />
         <link rel="preconnect" href="https://elevateng.co" />
       </head>
