@@ -27,11 +27,20 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
   const [centerEntered, setCenterEntered] = useState(false)
   const [centerExited, setCenterExited] = useState(false)
   const [topRightEntered, setTopRightEntered] = useState(false)
+  const [videoSrc, setVideoSrc] = useState("/hero-desktop.mp4")
   const rafIdRef = useRef(0)
   const pinFrameRef = useRef(pinFrame)
   const wasCurrentRef = useRef(false)
   const readyFiredRef = useRef(false)
   pinFrameRef.current = pinFrame
+
+  useEffect(() => {
+    const mql = window.matchMedia("(max-width: 767px)")
+    const update = () => setVideoSrc(mql.matches ? "/hero-mobile.mp4" : "/hero-desktop.mp4")
+    update()
+    mql.addEventListener("change", update)
+    return () => mql.removeEventListener("change", update)
+  }, [])
 
   useEffect(() => {
     const video = videoRef.current
@@ -199,7 +208,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
     <section style={{ position: "relative", height: "100vh", overflow: "hidden", touchAction: scrubbing ? "none" : "auto", background: "radial-gradient(ellipse at 50% 50%, #0a0a0a 0%, #050505 100%)" }}>
       <video
         ref={videoRef}
-        src="/hero.mp4"
+        src={videoSrc}
         muted
         playsInline
         preload="auto"
