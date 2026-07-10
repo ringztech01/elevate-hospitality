@@ -167,7 +167,7 @@ export default function Section({ id, number, title, desc, video, image, zIndex,
         <div className="section-reveal-overlay" />
       </div>
       <div className={`section-content${entered ? " entered" : ""}`} style={
-        align === "right" ? { textAlign: "right", marginLeft: "auto", paddingRight: "4rem" } :
+        align === "right" ? { textAlign: "right", marginLeft: "auto", paddingRight: "2rem" } :
         align === "left" ? { textAlign: "left", marginRight: "auto", paddingLeft: "8rem" } :
         undefined
       }>
