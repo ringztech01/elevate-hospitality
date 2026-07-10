@@ -7,7 +7,6 @@ import PortfolioSection from "@/components/PortfolioSection"
 import ContactSection from "@/components/ContactSection"
 import FooterSection from "@/components/FooterSection"
 import { smoothScrollTo } from "@/lib/scrollAnimate"
-import gsap from "gsap"
 
 const projects = [
   { name: "The Cage", category: "Nightclub · Full Scope", desc: "A nightlife venue where raw steel cage architecture became the entire concept.", image: "/images/projects/cage.webp" },
@@ -40,11 +39,7 @@ export default function Portfolio() {
     setCurrent(targetIdx)
     const el = containerRef.current
     if (!el) return
-    gsap.to(el, {
-      scrollTop: targetIdx * window.innerHeight,
-      duration: 1.2,
-      ease: "power2.inOut",
-    })
+    requestAnimationFrame(() => smoothScrollTo(el, targetIdx * window.innerHeight, 900))
   }, [])
 
   const footerGoTo = useCallback((targetIdx: number) => {

@@ -161,7 +161,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
       if (isCurrent) setDisplayProgress(smoothProgressRef.current)
 
       if (video.duration && isFinite(video.duration)) {
-        const seekTo = target * video.duration
+        const seekTo = smoothProgressRef.current * video.duration
         if (Math.abs(seekTo - lastVideoTimeRef.current) > SEEK_DEADZONE) {
           video.currentTime = seekTo
           lastVideoTimeRef.current = seekTo
