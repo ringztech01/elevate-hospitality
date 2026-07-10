@@ -377,8 +377,8 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
         pointerEvents: "none",
         textAlign: "left",
         opacity: topRightEntered ? 1 : 0,
-        transform: topRightEntered ? "translateX(0)" : "translateX(120px)",
-        transition: "opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.2s, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.2s",
+        transform: topRightEntered ? "translateY(0)" : "translateY(20px)",
+        transition: "opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s",
       }}>
         <p style={{
           fontSize: "14px",
@@ -397,8 +397,8 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
             <div key={i} style={{
               flex: 1,
               opacity: topRightEntered ? 1 : 0,
-              transform: topRightEntered ? "translateX(0)" : "translateX(200px)",
-              transition: `opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1) ${0.35 + i * 0.15}s, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1) ${0.35 + i * 0.15}s`,
+              transform: topRightEntered ? "translateY(0)" : "translateY(20px)",
+              transition: `opacity 0.5s ease ${0.3 + i * 0.1}s, transform 0.5s ease ${0.3 + i * 0.1}s`,
             }}>
               <p style={{
                 fontSize: "22px",
@@ -429,8 +429,8 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
           margin: "1.5rem 0 0 0",
           textShadow: "0 2px 8px rgba(0,0,0,0.6)",
           opacity: topRightEntered ? 1 : 0,
-          transform: topRightEntered ? "translateX(0)" : "translateX(120px)",
-          transition: "opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.8s, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.8s",
+          transform: topRightEntered ? "translateY(0)" : "translateY(20px)",
+          transition: "opacity 0.5s ease 0.6s, transform 0.5s ease 0.6s",
         }}>
           One contract. One accountable party.
         </p>
