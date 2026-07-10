@@ -377,7 +377,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
         pointerEvents: "none",
         textAlign: "left",
         opacity: topRightEntered ? 1 : 0,
-        transform: topRightEntered ? "translateX(0)" : "translateX(-80px)",
+        transform: topRightEntered ? "translateX(0)" : "translateX(-120px)",
         transition: "opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.2s, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.2s",
       }}>
         <p style={{
@@ -397,8 +397,8 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
             <div key={i} style={{
               flex: 1,
               opacity: topRightEntered ? 1 : 0,
-              transform: topRightEntered ? "translateX(0)" : "translateX(-80px)",
-              transition: `opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1) ${0.3 + i * 0.12}s, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1) ${0.3 + i * 0.12}s`,
+              transform: topRightEntered ? "translateX(0)" : "translateX(-200px)",
+              transition: `opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1) ${0.35 + i * 0.15}s, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1) ${0.35 + i * 0.15}s`,
             }}>
               <p style={{
                 fontSize: "22px",
@@ -426,11 +426,11 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
           fontSize: "18px",
           fontWeight: 400,
           color: "rgba(255,255,255,0.8)",
-          margin: "1rem 0 0 0",
+          margin: "1.5rem 0 0 0",
           textShadow: "0 2px 8px rgba(0,0,0,0.6)",
           opacity: topRightEntered ? 1 : 0,
-          transform: topRightEntered ? "translateX(0)" : "translateX(-80px)",
-          transition: "opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.66s, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.66s",
+          transform: topRightEntered ? "translateX(0)" : "translateX(-120px)",
+          transition: "opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.8s, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.8s",
         }}>
           One contract. One accountable party.
         </p>
