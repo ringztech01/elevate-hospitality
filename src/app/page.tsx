@@ -43,21 +43,7 @@ function HomeContent() {
   const handleHeroComplete = useCallback(() => {
     setReplayArmed(false)
     setHeroDone(true)
-    setPinFrame(true)
-    const el = containerRef.current
-    if (el) {
-      gsap.to(el, {
-        scrollTop: window.innerHeight,
-        duration: 1.15,
-        ease: "power2.inOut",
-        overwrite: true,
-        onComplete: () => {
-          setPinFrame(false)
-        },
-      })
-    } else {
-      setPinFrame(false)
-    }
+    setPinFrame(false)
   }, [])
 
   const handleHeroReady = useCallback(() => setHeroReady(true), [])
