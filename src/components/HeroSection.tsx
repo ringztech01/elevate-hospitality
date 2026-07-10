@@ -167,7 +167,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
         ? rawProgressRef.current
         : pinFrameRef.current ? 1 : Math.min(1, el.scrollTop / window.innerHeight)
 
-      smoothProgressRef.current += (target - smoothProgressRef.current) * 0.1
+      smoothProgressRef.current += (target - smoothProgressRef.current) * 0.4
       if (isCurrent) {
         const val = smoothProgressRef.current
         if (Math.abs(val - lastDisplayRef.current) > 0.002) {
