@@ -336,7 +336,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
         zIndex: 2,
         maxWidth: "520px",
         pointerEvents: "none",
-        textAlign: "right",
+        textAlign: "left",
         opacity: centerExited ? 0 : (centerEntered ? 1 : 0),
         transform: centerEntered ? "translateY(-50%)" : "translateY(calc(-50% + 20px))",
         transition: centerExited ? "opacity 0.4s ease" : "opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s",
