@@ -284,11 +284,10 @@ body {
 .statement-content {
   position: relative;
   z-index: 1;
-  text-align: left;
+  text-align: center;
   color: #fff;
-  padding: 0 2rem 0 8rem;
-  max-width: 700px;
-  width: 100%;
+  padding: 0 2rem;
+  max-width: 100%;
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s;
@@ -302,6 +301,7 @@ body {
   font-size: 28px;
   font-weight: 400;
   line-height: 1.5;
+  white-space: nowrap;
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.5s ease, transform 0.5s ease;
@@ -438,7 +438,7 @@ body {
   .navbar-links button { font-size: 0.7rem; padding: 0.4rem 0.5rem; }
 
   .statement { height: 35vh; margin: 32.5vh 0; }
-  .statement-content { max-width: 88vw; padding: 0 1.25rem; }
+  .statement-content { max-width: 100%; padding: 0 1rem; }
   .statement-line { font-size: 20px; }
 
   section[id] { padding-left: 1.25rem !important; padding-right: 1.25rem !important; }
