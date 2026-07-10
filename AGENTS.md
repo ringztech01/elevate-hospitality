@@ -26,11 +26,11 @@ The 0.1 factor creates natural easing — catches up quickly then settles smooth
 
 ## Hero video spec
 - File: `public/hero.mp4`
-- Size: ~14.8 MB
+- Size: ~9.6 MB
 - Resolution: 1920×1080
 - Frame rate: 24 fps
 - Duration: ~15s
-- Codec: H.264, CRF 28, all-keyframes (g=1, 361 keyframes)
+- Codec: H.264, CRF 29, keyframe every 3 frames (g=3, 0.125s interval)
 
 ## Text animation triggers
 Text groups fade in/out at specific `displayProgress` thresholds:
