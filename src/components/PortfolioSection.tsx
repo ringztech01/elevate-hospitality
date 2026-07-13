@@ -255,8 +255,8 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
         }}>
           {currentImages.map((src, imgIdx) => (
             <button key={imgIdx} onClick={() => setProjectImgIndex(imgIdx)} style={{
-              width: "48px",
-              height: "32px",
+              width: "80px",
+              height: "52px",
               border: imgIdx === projectImgIndex ? "1.5px solid #fff" : "1.5px solid rgba(255,255,255,0.15)",
               borderRadius: "2px",
               padding: 0,
@@ -271,7 +271,7 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
             }}
               onMouseEnter={e => { (e.currentTarget as HTMLElement).style.opacity = "1" }}
               onMouseLeave={e => { (e.currentTarget as HTMLElement).style.opacity = imgIdx === projectImgIndex ? "1" : "0.35" }}>
-              <Image src={src} alt="" fill sizes="48px" style={{ objectFit: "cover" }} />
+              <Image src={src} alt="" fill sizes="80px" style={{ objectFit: "cover" }} />
             </button>
           ))}
         </div>
