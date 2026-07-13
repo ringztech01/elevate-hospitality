@@ -236,54 +236,64 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
         }}>
           {project.desc}
         </p>
-        {hasMultipleImages && (
-          <div style={{
-            display: "flex",
-            gap: "0.5rem",
-            marginTop: "1.5rem",
-            alignItems: "center",
-          }}>
-            <button onClick={prevImage} style={{
-              background: "none",
-              border: "1px solid rgba(255,255,255,0.2)",
-              color: "#fff",
-              padding: "0.25rem 0.6rem",
-              cursor: "pointer",
-              borderRadius: "2px",
-              fontSize: "0.7rem",
-              opacity: 0.5,
-              transition: "opacity 0.2s",
-            }} onMouseEnter={e => (e.currentTarget.style.opacity = "1")} onMouseLeave={e => (e.currentTarget.style.opacity = "0.5")}>
-              ←
-            </button>
-            {currentImages.map((_, imgIdx) => (
-              <button key={imgIdx} onClick={() => setProjectImgIndex(imgIdx)} style={{
-                width: "8px",
-                height: "8px",
-                borderRadius: "50%",
-                border: "none",
-                padding: 0,
-                cursor: "pointer",
-                background: imgIdx === projectImgIndex ? "#fff" : "rgba(255,255,255,0.25)",
-                transition: "background 0.3s",
-              }} />
-            ))}
-            <button onClick={nextImage} style={{
-              background: "none",
-              border: "1px solid rgba(255,255,255,0.2)",
-              color: "#fff",
-              padding: "0.25rem 0.6rem",
-              cursor: "pointer",
-              borderRadius: "2px",
-              fontSize: "0.7rem",
-              opacity: 0.5,
-              transition: "opacity 0.2s",
-            }} onMouseEnter={e => (e.currentTarget.style.opacity = "1")} onMouseLeave={e => (e.currentTarget.style.opacity = "0.5")}>
-              →
-            </button>
-          </div>
-        )}
       </div>
+
+      {/* Vertical image navigation for multi-image projects */}
+      {hasMultipleImages && (
+        <div style={{
+          position: "absolute",
+          right: "4rem",
+          top: "50%",
+          transform: "translateY(-50%)",
+          zIndex: 3,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "0.6rem",
+          opacity: entered ? 1 : 0,
+          transition: "opacity 0.6s ease 0.5s",
+        }}>
+          <button onClick={prevImage} style={{
+            background: "none",
+            border: "none",
+            color: "rgba(255,255,255,0.4)",
+            cursor: "pointer",
+            padding: 0,
+            fontSize: "0.6rem",
+            letterSpacing: "0.15em",
+            writingMode: "vertical-rl",
+            transition: "color 0.2s",
+          }} onMouseEnter={e => (e.currentTarget.style.color = "#fff")} onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.4)")}>
+            prev
+          </button>
+          {currentImages.map((_, imgIdx) => (
+            <button key={imgIdx} onClick={() => setProjectImgIndex(imgIdx)} style={{
+              width: "10px",
+              height: "10px",
+              borderRadius: "50%",
+              border: imgIdx === projectImgIndex ? "1.5px solid #fff" : "1.5px solid rgba(255,255,255,0.2)",
+              padding: 0,
+              cursor: "pointer",
+              background: imgIdx === projectImgIndex ? "#fff" : "transparent",
+              transition: "all 0.3s",
+              flexShrink: 0,
+            }} />
+          ))}
+          <button onClick={nextImage} style={{
+            background: "none",
+            border: "none",
+            color: "rgba(255,255,255,0.4)",
+            cursor: "pointer",
+            padding: 0,
+            fontSize: "0.6rem",
+            letterSpacing: "0.15em",
+            writingMode: "vertical-rl",
+            transition: "color 0.2s",
+          }} onMouseEnter={e => (e.currentTarget.style.color = "#fff")} onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.4)")}>
+            next
+          </button>
+        </div>
+      )}
 
       {/* Thumbnail strip */}
       <div className="portfolio-thumbnails" style={{
