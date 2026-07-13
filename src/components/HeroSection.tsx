@@ -269,7 +269,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
         background: "linear-gradient(to left, rgba(0,0,0,0.92) 0%, transparent 100%)",
         pointerEvents: "none",
         zIndex: 1,
-        opacity: displayProgress >= 0.510 && displayProgress < 0.665 ? Math.min((displayProgress - 0.510) / 0.05, (0.665 - displayProgress) / 0.05, 1) : 0,
+        opacity: displayProgress < 0.279 ? Math.min(displayProgress / 0.1, (0.279 - displayProgress) / 0.1, 1) : displayProgress >= 0.510 && displayProgress < 0.665 ? Math.min((displayProgress - 0.510) / 0.05, (0.665 - displayProgress) / 0.05, 1) : 0,
         transition: "opacity 0.3s ease",
       }} />
       <div className="hero-text-left" style={{
