@@ -416,9 +416,21 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
           We design spaces the way we run them.
         </p>
       </div>
+      <div style={{
+        position: "absolute",
+        left: 0,
+        right: 0,
+        bottom: 0,
+        height: "55%",
+        background: "linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 40%, transparent 100%)",
+        pointerEvents: "none",
+        zIndex: 1,
+        opacity: topRightEntered ? 1 : 0,
+        transition: "opacity 0.6s ease 0.3s",
+      }} />
       <div className="hero-text-right" style={{
         position: "absolute",
-        bottom: "35vh",
+        bottom: "25vh",
         left: "0",
         right: "0",
         zIndex: 2,
@@ -433,7 +445,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
           fontSize: "14px",
           letterSpacing: "0.4em",
           textTransform: "uppercase",
-          color: "rgba(255,255,255,0.3)",
+          color: "rgba(255,255,255,0.5)",
           margin: "0 0 1.25rem 0",
         }}>
           Our process
