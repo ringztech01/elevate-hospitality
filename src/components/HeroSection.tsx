@@ -250,18 +250,6 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
       }} />
       <div style={{
         position: "absolute",
-        left: 0,
-        top: 0,
-        bottom: 0,
-        width: "55%",
-        background: "linear-gradient(to right, rgba(0,0,0,0.92) 0%, transparent 100%)",
-        pointerEvents: "none",
-        zIndex: 1,
-        opacity: displayProgress < 0.488 ? Math.min(displayProgress / 0.1, (0.488 - displayProgress) / 0.1, 1) : 0,
-        transition: "opacity 0.3s ease",
-      }} />
-      <div style={{
-        position: "absolute",
         right: 0,
         top: 0,
         bottom: 0,
@@ -279,6 +267,9 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
         zIndex: 2,
         maxWidth: "580px",
         pointerEvents: "none",
+        padding: "1.5rem 2.5rem",
+        background: "linear-gradient(to right, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.8) 65%, transparent 100%)",
+        borderRadius: "10px",
         opacity: Math.min(1, Math.max(0, (0.279 - displayProgress) / 0.1)),
         transition: "opacity 0.2s ease",
       }}>
@@ -311,6 +302,9 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
         maxWidth: "520px",
         pointerEvents: "none",
         textAlign: "left",
+        padding: "1.5rem 2.5rem",
+        background: "linear-gradient(to right, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.8) 65%, transparent 100%)",
+        borderRadius: "10px",
         opacity: rightExited ? 0 : (rightEntered ? 1 : 0),
         transform: rightEntered ? "translateY(0)" : "translateY(20px)",
         transition: rightExited ? "opacity 0.4s ease" : "opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s",
@@ -350,7 +344,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
           transform: rightEntered ? "translateY(0)" : "translateY(20px)",
           transition: "opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s",
         }}>
-          We never hand over.
+          Handoffs cost time, money and quality.
         </p>
       </div>
       <div className="hero-text-center" style={{
@@ -361,6 +355,9 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
         maxWidth: "520px",
         pointerEvents: "none",
         textAlign: "left",
+        padding: "1.5rem 2.5rem",
+        background: "linear-gradient(to left, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.8) 65%, transparent 100%)",
+        borderRadius: "10px",
         opacity: centerExited ? 0 : (centerEntered ? 1 : 0),
         transform: centerEntered ? "translateY(-50%)" : "translateY(calc(-50% + 20px))",
         transition: centerExited ? "opacity 0.4s ease" : "opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s",
