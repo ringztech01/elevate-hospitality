@@ -17,7 +17,7 @@ const projects = [
   { name: "4Guys", category: "Casual Dining · Full Scope", desc: "A bold casual dining concept built for repeat visits and high energy.", images: ["/images/projects/4guys.webp"] },
   { name: "Fes", category: "Restaurant · Full Scope", desc: "North African hospitality reimagined through modern design and warm textures.", images: ["/images/projects/fes.webp"] },
   { name: "Wheatbaker Hotel", category: "Hotel · Hospitality", desc: "Luxury hotel hospitality refined through operational precision and design.", images: ["/images/projects/whitebeaker1.webp"] },
-  { name: "Grey Lounge", category: "Lounge · Full Scope", desc: "A monochrome lounge concept where texture and tone create atmosphere.", images: ["/images/projects/gray1.webp"] },
+  { name: "Grey Lounge", category: "Lounge · Full Scope", desc: "A monochrome lounge concept where texture and tone create atmosphere.", images: ["/images/projects/gray1.webp", "/images/projects/gray-2.webp", "/images/projects/gray-3.webp"] },
 ]
 
 const slides = [
