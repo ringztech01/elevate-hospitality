@@ -17,11 +17,11 @@ const team = [
 ]
 
 const slides = [
-  { type: "section", id: "who-we-are", number: "01", title: "Who we are", desc: ["One team. One contract. Full accountability from first sketch to opening night and beyond.", "We design, build and operate luxury hospitality spaces under a single agreement.", "No handovers. No excuses."], video: "/videos/1.webm", image: "/images/about-who-we-are.png", z: 2, align: "right-block" },
-  { type: "statement", id: "statement-1", z: 3, lines: ["We don't hand over drawings and walk away.", "We design what we build,", "build what we operate,", "and operate what we design."] },
-  { type: "section", id: "design", number: "02", title: "Design", desc: "We design for the people who will work the space, not just the people who will photograph it. Every banquette is a seating plan. Every corridor is a labour cost. Every ceiling height is an acoustic budget.", video: "/videos/2.webm", z: 4, align: "left" },
+  { type: "section", id: "who-we-are", number: "01", title: "Who we are", desc: ["One team. One contract. Full accountability from first sketch to opening night and beyond.", "We design, build and operate luxury hospitality spaces under a single agreement."], video: "/videos/1.webm", image: "/images/about-who-we-are.png", z: 2, align: "right-block" },
+  { type: "statement", id: "statement-1", z: 3, lines: ["We don't hand over drawings and walk away.", "We design what we build, build what we operate,", "and operate what we design."] },
+  { type: "section", id: "design", number: "02", title: "Design", desc: "We design for the people who will work the space, not just the people who will photograph it. Every banquette is a seating plan. Every ceiling height is an acoustic budget.", video: "/videos/2.webm", z: 4, align: "left" },
   { type: "statement", id: "statement-2", z: 5, lines: ["A rendering is a promise.", "What we deliver", "is proof."] },
-  { type: "section", id: "build", number: "03", title: "Build", desc: "Procurement and project management under one roof. Single-point accountability for timelines, budgets, and quality. We coordinate MEP, joinery, and finishes through every stage required to turn a drawing into a standing asset.", video: "/videos/3.webm", z: 6, align: "left" },
+  { type: "section", id: "build", number: "03", title: "Build", desc: "Procurement and project management under one roof. One point of accountability for timelines, budgets, and quality — MEP, joinery, and finishes coordinated through every stage. A drawing is a promise. We're the ones who keep it.", video: "/videos/3.webm", z: 6, align: "left" },
   { type: "statement", id: "statement-3", z: 7, lines: ["Precision is not a detail.", "It is the entire process", "made visible."] },
   { type: "section", id: "operate", number: "04", title: "Operate", desc: "This is what makes us different. We run what we build. Pre-opening, staffing, systems, launch and every service after. We don't hand over the keys and walk away.", video: "/videos/6.webm", z: 8, align: "right-block" },
   { type: "statement", id: "statement-4", z: 9, lines: ["A space doesn't end at opening night.", "It begins."] },
