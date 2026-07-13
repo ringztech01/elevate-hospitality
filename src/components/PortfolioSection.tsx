@@ -40,11 +40,23 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
     setTimeout(() => setAnimating(false), 700)
   }, [active, animating, projects.length])
 
-  const next = useCallback(() => goTo((active + 1) % projects.length), [goTo, active, projects.length])
-
   const project = projects[active]
   const currentImages = project?.images || []
   const hasMultipleImages = currentImages.length > 1
+
+  const advance = useCallback(() => {
+    if (hasMultipleImages && projectImgIndex < currentImages.length - 1) {
+      setProjectImgIndex(prev => prev + 1)
+    } else {
+      setProjectImgIndex(0)
+      const nextIdx = (active + 1) % projects.length
+      if (animating || nextIdx === active) return
+      setDirection(nextIdx > active ? 1 : -1)
+      setAnimating(true)
+      setActive(nextIdx)
+      setTimeout(() => setAnimating(false), 700)
+    }
+  }, [hasMultipleImages, projectImgIndex, currentImages.length, active, projects.length, animating])
 
   const nextImage = useCallback(() => {
     if (!hasMultipleImages) return
@@ -61,9 +73,9 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
       if (timerRef.current) clearInterval(timerRef.current)
       return
     }
-    timerRef.current = setInterval(next, 5000)
+    timerRef.current = setInterval(advance, 5000)
     return () => { if (timerRef.current) clearInterval(timerRef.current) }
-  }, [isCurrent, next])
+  }, [isCurrent, advance])
 
   return (
     <section style={{
