@@ -262,7 +262,7 @@ body {
 
 #design .section-content,
 #build .section-content {
-  margin-top: 15vh;
+  margin-top: 32vh !important;
 }
 
 /* ===== Statement ===== */
