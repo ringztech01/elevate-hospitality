@@ -430,7 +430,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
       }} />
       <div className="hero-text-right" style={{
         position: "absolute",
-        bottom: "25vh",
+        bottom: "18vh",
         left: "0",
         right: "0",
         zIndex: 2,
