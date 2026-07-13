@@ -302,7 +302,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
           margin: "0 0 0.5rem 0",
           textShadow: "0 2px 8px rgba(0,0,0,0.6)",
         }}>
-          We never hand over. Because we never leave.
+          We never hand over. <span className="serif-accent">Because we never leave.</span>
         </p>
         <p style={{
           fontSize: "20px",
@@ -494,7 +494,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
           transform: topRightEntered ? "translateY(0)" : "translateY(20px)",
           transition: "opacity 0.5s ease 0.6s, transform 0.5s ease 0.6s",
         }}>
-          One contract. One accountable party.
+          <span className="serif-accent">One contract.</span> One accountable party.
         </p>
       </div>
       <div style={{

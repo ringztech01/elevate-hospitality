@@ -1,11 +1,18 @@
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
+import { Hanken_Grotesk, Cormorant_Garamond } from "next/font/google"
 import "./globals.css"
 
-const inter = Inter({
-  variable: "--font-inter",
+const hanken = Hanken_Grotesk({
+  variable: "--font-hanken",
   subsets: ["latin"],
-  axes: ["opsz"],
+  weight: ["400", "500", "600"],
+})
+
+const cormorant = Cormorant_Garamond({
+  variable: "--font-cormorant",
+  subsets: ["latin"],
+  weight: ["500", "600"],
+  style: ["italic"],
 })
 
 export const metadata: Metadata = {
@@ -27,7 +34,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} antialiased`}>
+    <html lang="en" className={`${hanken.variable} ${cormorant.variable} antialiased`}>
       <head>
         <link rel="icon" href="/favicon.png" type="image/png" sizes="512x512" />
         <link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />

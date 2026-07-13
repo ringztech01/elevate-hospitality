@@ -18,13 +18,19 @@ html {
 }
 
 body {
-  font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
+  font-family: var(--font-hanken), system-ui, -apple-system, sans-serif;
   background: #000;
   color: #fff;
   overflow: hidden;
   height: 100%;
   width: 100%;
   position: fixed;
+}
+
+.serif-accent {
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-style: italic;
+  font-weight: 500;
 }
 
 /* ===== Navbar ===== */
