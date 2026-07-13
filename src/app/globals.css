@@ -260,9 +260,13 @@ body {
   margin: 0 auto;
 }
 
-#design .section-content,
 #build .section-content {
   margin-top: 32vh !important;
+}
+
+#design .section-content {
+  margin-top: 26vh !important;
+  padding-left: 12rem !important;
 }
 
 /* ===== Statement ===== */
