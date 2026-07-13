@@ -286,7 +286,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
       }} />
       <div className="hero-text-left" style={{
         position: "absolute",
-        bottom: "22vh",
+        bottom: "17vh",
         left: "2rem",
         zIndex: 2,
         maxWidth: "580px",
@@ -317,7 +317,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
       </div>
       <div className="hero-text-right" style={{
         position: "absolute",
-        bottom: "40vh",
+        bottom: "35vh",
         left: "2rem",
         zIndex: 2,
         maxWidth: "520px",
@@ -418,7 +418,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
       </div>
       <div className="hero-text-right" style={{
         position: "absolute",
-        bottom: "40vh",
+        bottom: "35vh",
         left: "0",
         right: "0",
         zIndex: 2,
