@@ -266,7 +266,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
           margin: "0 0 0.5rem 0",
           textShadow: "0 2px 8px rgba(0,0,0,0.6)",
         }}>
-          We design, build and operate luxury hospitality spaces.
+          We never hand over. Because we never leave.
         </p>
         <p style={{
           fontSize: "20px",
@@ -276,7 +276,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
           margin: 0,
           textShadow: "0 2px 8px rgba(0,0,0,0.6)",
         }}>
-          One team from first sketch to first service and beyond.
+          Design, build and operate — one team from first sketch to first service and beyond.
         </p>
       </div>
       <div className="hero-text-right" style={{
