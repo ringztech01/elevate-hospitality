@@ -260,10 +260,9 @@ body {
   margin: 0 auto;
 }
 
-#design,
-#build {
-  align-items: flex-start;
-  padding-top: 18vh;
+#design .section-content,
+#build .section-content {
+  margin-top: 15vh;
 }
 
 /* ===== Statement ===== */
