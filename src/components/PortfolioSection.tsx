@@ -7,7 +7,7 @@ interface Project {
   name: string
   category: string
   desc: string
-  image: string
+  images: string[]
 }
 
 interface PortfolioSectionProps {
@@ -18,9 +18,10 @@ interface PortfolioSectionProps {
 export default function PortfolioSection({ projects, isCurrent }: PortfolioSectionProps) {
   const [entered, setEntered] = useState(false)
   const [active, setActive] = useState(0)
+  const [projectImgIndex, setProjectImgIndex] = useState(0)
   const [direction, setDirection] = useState<1 | -1>(1)
   const [animating, setAnimating] = useState(false)
-  const [imagesLoaded, setImagesLoaded] = useState<Record<number, boolean>>({})
+  const [imagesLoaded, setImagesLoaded] = useState<Record<string, boolean>>({})
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
   useEffect(() => {
@@ -35,10 +36,25 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
     setDirection(i > active ? 1 : -1)
     setAnimating(true)
     setActive(i)
+    setProjectImgIndex(0)
     setTimeout(() => setAnimating(false), 700)
   }, [active, animating, projects.length])
 
   const next = useCallback(() => goTo((active + 1) % projects.length), [goTo, active, projects.length])
+
+  const project = projects[active]
+  const currentImages = project?.images || []
+  const hasMultipleImages = currentImages.length > 1
+
+  const nextImage = useCallback(() => {
+    if (!hasMultipleImages) return
+    setProjectImgIndex(prev => (prev + 1) % currentImages.length)
+  }, [hasMultipleImages, currentImages.length])
+
+  const prevImage = useCallback(() => {
+    if (!hasMultipleImages) return
+    setProjectImgIndex(prev => (prev - 1 + currentImages.length) % currentImages.length)
+  }, [hasMultipleImages, currentImages.length])
 
   useEffect(() => {
     if (!isCurrent) {
@@ -48,8 +64,6 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
     timerRef.current = setInterval(next, 5000)
     return () => { if (timerRef.current) clearInterval(timerRef.current) }
   }, [isCurrent, next])
-
-  const project = projects[active]
 
   return (
     <section style={{
@@ -74,13 +88,13 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
             }}
           >
             <Image
-              src={p.image}
+              src={i === active ? p.images[projectImgIndex] : p.images[0]}
               alt={p.name}
               fill
               sizes="100vw"
               priority={i === 0}
               loading={i <= 1 ? undefined : "lazy"}
-              onLoad={() => setImagesLoaded(prev => ({ ...prev, [i]: true }))}
+              onLoad={() => setImagesLoaded(prev => ({ ...prev, [`${i}-${i === active ? projectImgIndex : 0}`]: true }))}
               style={{ objectFit: "cover" }}
             />
           </div>
@@ -93,7 +107,7 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
       </div>
 
       {/* Loading skeleton for images not yet loaded */}
-      {!imagesLoaded[active] && (
+      {!imagesLoaded[`${active}-${projectImgIndex}`] && (
         <div style={{
           position: "absolute",
           inset: 0,
@@ -210,6 +224,53 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
         }}>
           {project.desc}
         </p>
+        {hasMultipleImages && (
+          <div style={{
+            display: "flex",
+            gap: "0.5rem",
+            marginTop: "1.5rem",
+            alignItems: "center",
+          }}>
+            <button onClick={prevImage} style={{
+              background: "none",
+              border: "1px solid rgba(255,255,255,0.2)",
+              color: "#fff",
+              padding: "0.25rem 0.6rem",
+              cursor: "pointer",
+              borderRadius: "2px",
+              fontSize: "0.7rem",
+              opacity: 0.5,
+              transition: "opacity 0.2s",
+            }} onMouseEnter={e => (e.currentTarget.style.opacity = "1")} onMouseLeave={e => (e.currentTarget.style.opacity = "0.5")}>
+              ←
+            </button>
+            {currentImages.map((_, imgIdx) => (
+              <button key={imgIdx} onClick={() => setProjectImgIndex(imgIdx)} style={{
+                width: "8px",
+                height: "8px",
+                borderRadius: "50%",
+                border: "none",
+                padding: 0,
+                cursor: "pointer",
+                background: imgIdx === projectImgIndex ? "#fff" : "rgba(255,255,255,0.25)",
+                transition: "background 0.3s",
+              }} />
+            ))}
+            <button onClick={nextImage} style={{
+              background: "none",
+              border: "1px solid rgba(255,255,255,0.2)",
+              color: "#fff",
+              padding: "0.25rem 0.6rem",
+              cursor: "pointer",
+              borderRadius: "2px",
+              fontSize: "0.7rem",
+              opacity: 0.5,
+              transition: "opacity 0.2s",
+            }} onMouseEnter={e => (e.currentTarget.style.opacity = "1")} onMouseLeave={e => (e.currentTarget.style.opacity = "0.5")}>
+              →
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Thumbnail strip */}
@@ -250,7 +311,7 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
             onMouseLeave={e => { (e.currentTarget as HTMLElement).style.opacity = i === active ? "1" : "0.35" }}
             aria-label={`Go to ${p.name}`}
           >
-            <Image src={p.image} alt={p.name} fill sizes="60px" style={{ objectFit: "cover" }} />
+            <Image src={p.images[0]} alt={p.name} fill sizes="60px" style={{ objectFit: "cover" }} />
           </button>
         ))}
       </div>
