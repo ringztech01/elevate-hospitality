@@ -9,7 +9,7 @@ import FooterSection from "@/components/FooterSection"
 import { smoothScrollTo } from "@/lib/scrollAnimate"
 
 const projects = [
-  { name: "The Cage", category: "Nightclub · Full Scope", desc: "A nightlife venue where raw steel cage architecture became the entire concept.", images: ["/images/projects/cage.webp", "/images/projects/cage-2.webp"] },
+  { name: "The Cage", category: "Nightclub · Full Scope", desc: "A nightlife venue where raw steel cage architecture became the entire concept.", images: ["/images/projects/cage.webp", "/images/projects/cage-2.webp", "/images/projects/cage-3.webp"] },
   { name: "Sora", category: "Restaurant · Full Scope", desc: "Japanese precision meets local soul in a refined dining experience.", images: ["/images/projects/sora1.webp"] },
   { name: "The Future", category: "Lounge · Full Scope", desc: "A social venue where design anticipates what's next.", images: ["/images/projects/FUTUREPresentation4.webp"] },
   { name: "Tokyo", category: "Restaurant · Full Scope", desc: "Authentic Japanese cuisine in a space that balances energy and intimacy.", images: ["/images/projects/tokyo.webp"] },
