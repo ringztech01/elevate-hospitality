@@ -260,6 +260,12 @@ body {
   margin: 0 auto;
 }
 
+#design,
+#build {
+  align-items: flex-start;
+  padding-top: 18vh;
+}
+
 /* ===== Statement ===== */
 .statement {
   position: relative;
