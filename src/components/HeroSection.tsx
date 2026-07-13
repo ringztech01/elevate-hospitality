@@ -248,9 +248,33 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
         pointerEvents: "none",
         zIndex: 1,
       }} />
+      <div style={{
+        position: "absolute",
+        left: 0,
+        top: 0,
+        bottom: 0,
+        width: "45%",
+        background: "linear-gradient(to right, rgba(0,0,0,0.55) 0%, transparent 100%)",
+        pointerEvents: "none",
+        zIndex: 1,
+        opacity: displayProgress < 0.488 ? Math.min(displayProgress / 0.1, (0.488 - displayProgress) / 0.1, 1) : 0,
+        transition: "opacity 0.3s ease",
+      }} />
+      <div style={{
+        position: "absolute",
+        right: 0,
+        top: 0,
+        bottom: 0,
+        width: "45%",
+        background: "linear-gradient(to left, rgba(0,0,0,0.55) 0%, transparent 100%)",
+        pointerEvents: "none",
+        zIndex: 1,
+        opacity: displayProgress >= 0.510 && displayProgress < 0.665 ? Math.min((displayProgress - 0.510) / 0.05, (0.665 - displayProgress) / 0.05, 1) : 0,
+        transition: "opacity 0.3s ease",
+      }} />
       <div className="hero-text-left" style={{
         position: "absolute",
-        bottom: "12vh",
+        bottom: "22vh",
         left: "2rem",
         zIndex: 2,
         maxWidth: "580px",
