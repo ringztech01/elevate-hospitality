@@ -104,18 +104,15 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
             inset: 0,
             animation: "pfFadeOut 0.7s ease forwards",
           }}>
-            <Image src={prevUrl} alt="" fill sizes="100vw" style={{ objectFit: "cover" }} />
+            <img src={prevUrl} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
           </div>
         )}
         {/* Current image */}
-        <Image
+        <img
           key={imageUrl}
           src={imageUrl}
           alt={project.name}
-          fill
-          sizes="100vw"
-          priority
-          style={{ objectFit: "cover" }}
+          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
         />
         <div style={{
           position: "absolute",
