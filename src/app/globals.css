@@ -368,6 +368,11 @@ body {
   100% { background-position: -200% 0; }
 }
 
+@keyframes pfFadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
 /* ===== Responsive ===== */
 @media (max-width: 1023px) {
   .navbar-links button {

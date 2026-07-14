@@ -21,7 +21,6 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
   const [projectImgIndex, setProjectImgIndex] = useState(0)
   const [direction, setDirection] = useState<1 | -1>(1)
   const [animating, setAnimating] = useState(false)
-  const [imagesLoaded, setImagesLoaded] = useState<Record<string, boolean>>({})
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
   useEffect(() => {
@@ -43,6 +42,17 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
   const project = projects[active]
   const currentImages = project?.images || []
   const hasMultipleImages = currentImages.length > 1
+  const imageUrl = project.images[projectImgIndex]
+
+  // Track previous image for crossfade
+  const prevUrlRef = useRef<string | null>(null)
+  const [prevUrl, setPrevUrl] = useState<string | null>(null)
+  useEffect(() => {
+    if (prevUrlRef.current && prevUrlRef.current !== imageUrl) {
+      setPrevUrl(prevUrlRef.current)
+    }
+    prevUrlRef.current = imageUrl
+  }, [imageUrl])
 
   const advance = useCallback(() => {
     if (hasMultipleImages && projectImgIndex < currentImages.length - 1) {
@@ -85,56 +95,33 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
       overflow: "hidden",
       background: "#000",
     }}>
-      {/* Background images with crossfade */}
+      {/* Background image with crossfade */}
       <div style={{ position: "absolute", inset: 0 }}>
-        {projects.map((p, i) => (
-          <div
-            key={p.name}
-            style={{
-              position: "absolute",
-              inset: 0,
-              opacity: i === active ? 1 : 0,
-              transform: i === active ? "scale(1)" : "scale(1.05)",
-              transition: "opacity 0.7s ease, transform 0.7s ease",
-              willChange: "opacity, transform",
-            }}
-          >
-            <Image
-              src={i === active ? p.images[projectImgIndex] : p.images[0]}
-              alt={p.name}
-              fill
-              sizes="100vw"
-              priority={i === 0}
-              loading={i <= 1 ? undefined : "lazy"}
-              onLoad={() => setImagesLoaded(prev => ({ ...prev, [`${i}-${i === active ? projectImgIndex : 0}`]: true }))}
-              style={{ objectFit: "cover" }}
-            />
+        {/* Previous image fading out */}
+        {prevUrl && prevUrl !== imageUrl && (
+          <div style={{
+            position: "absolute",
+            inset: 0,
+            animation: "pfFadeOut 0.7s ease forwards",
+          }}>
+            <Image src={prevUrl} alt="" fill sizes="100vw" style={{ objectFit: "cover" }} />
           </div>
-        ))}
+        )}
+        {/* Current image */}
+        <Image
+          src={imageUrl}
+          alt={project.name}
+          fill
+          sizes="100vw"
+          priority
+          style={{ objectFit: "cover" }}
+        />
         <div style={{
           position: "absolute",
           inset: 0,
           background: "linear-gradient(to right, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.4) 100%)",
         }} />
       </div>
-
-      {/* Loading skeleton for images not yet loaded */}
-      {!imagesLoaded[`${active}-${projectImgIndex}`] && (
-        <div style={{
-          position: "absolute",
-          inset: 0,
-          background: "#0a0a0a",
-          zIndex: 1,
-        }}>
-          <div style={{
-            position: "absolute",
-            inset: 0,
-            background: "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.03) 50%, transparent 100%)",
-            backgroundSize: "200% 100%",
-            animation: "shimmer 1.5s ease-in-out infinite",
-          }} />
-        </div>
-      )}
 
       {/* Subtle grain overlay */}
       <div style={{
@@ -175,8 +162,8 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
         }} />
       </div>
 
-      {/* Project counter */}
-      <div className="portfolio-counter" style={{
+      {/* Project category (visible label) */}
+      <div className="portfolio-category" style={{
         position: "absolute",
         bottom: "5rem",
         left: "4rem",
@@ -184,15 +171,23 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
         opacity: entered ? 1 : 0,
         transition: "opacity 0.6s ease 0.4s",
       }}>
-        <p style={{
-          fontSize: "clamp(0.55rem, 0.6vw, 0.65rem)",
-          letterSpacing: "0.3em",
-          color: "rgba(255,255,255,0.25)",
-          margin: 0,
-          fontVariantNumeric: "tabular-nums",
+        <div style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "0.15rem",
         }}>
-          {String(active + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}
-        </p>
+          {project.category.split(" · ")[1].split(/[,&]\s*/).map((part, i) => (
+            <span key={i} style={{
+              fontSize: "clamp(1rem, 1.4vw, 1.6rem)",
+              fontWeight: 100,
+              letterSpacing: "0.02em",
+              color: "rgba(255,255,255,0.4)",
+              lineHeight: 1.2,
+            }}>
+              {part.trim()}
+            </span>
+          ))}
+        </div>
       </div>
 
       {/* Project info */}
@@ -212,9 +207,9 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
           letterSpacing: "0.35em",
           textTransform: "uppercase",
           color: "rgba(255,255,255,0.4)",
-          marginBottom: "0.75rem",
+          margin: "0 0 0.75rem 0",
         }}>
-          {project.category}
+          {project.category.split(" · ")[0]}
         </p>
         <h2 style={{
           fontSize: "clamp(2rem, 4vw, 3.5rem)",
@@ -255,8 +250,8 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
         }}>
           {currentImages.map((src, imgIdx) => (
             <button key={imgIdx} onClick={() => setProjectImgIndex(imgIdx)} style={{
-              width: "160px",
-              height: "104px",
+              width: "100px",
+              height: "65px",
               border: imgIdx === projectImgIndex ? "1.5px solid #fff" : "1.5px solid rgba(255,255,255,0.15)",
               borderRadius: "2px",
               padding: 0,
@@ -264,14 +259,14 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
               position: "relative",
               overflow: "hidden",
               background: "#111",
-              opacity: imgIdx === projectImgIndex ? 1 : 0.35,
+              opacity: imgIdx === projectImgIndex ? 1 : 0.5,
               transition: "opacity 0.3s, border-color 0.3s, transform 0.3s",
               transform: imgIdx === projectImgIndex ? "scale(1.1)" : "scale(1)",
               flexShrink: 0,
             }}
               onMouseEnter={e => { (e.currentTarget as HTMLElement).style.opacity = "1" }}
-              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.opacity = imgIdx === projectImgIndex ? "1" : "0.35" }}>
-              <Image src={src} alt="" fill sizes="160px" style={{ objectFit: "cover" }} />
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.opacity = imgIdx === projectImgIndex ? "1" : "0.5" }}>
+              <Image src={src} alt="" fill sizes="100px" style={{ objectFit: "cover" }} />
             </button>
           ))}
         </div>
@@ -315,7 +310,7 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
             onMouseLeave={e => { (e.currentTarget as HTMLElement).style.opacity = i === active ? "1" : "0.35" }}
             aria-label={`Go to ${p.name}`}
           >
-            <Image src={p.images[0]} alt={p.name} fill sizes="60px" style={{ objectFit: "cover" }} />
+            <Image src={p.images[0]} alt={p.name} fill sizes="60px" style={{ objectFit: "cover" }} loading="eager" />
           </button>
         ))}
       </div>
