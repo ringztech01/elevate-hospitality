@@ -109,6 +109,7 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
         )}
         {/* Current image */}
         <Image
+          key={imageUrl}
           src={imageUrl}
           alt={project.name}
           fill
@@ -231,7 +232,7 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
             }}
               onMouseEnter={e => { (e.currentTarget as HTMLElement).style.opacity = "1" }}
               onMouseLeave={e => { (e.currentTarget as HTMLElement).style.opacity = imgIdx === projectImgIndex ? "1" : "0.5" }}>
-              <Image src={src} alt="" fill sizes="100px" style={{ objectFit: "cover" }} />
+              <Image key={src} src={src} alt="" fill sizes="100px" style={{ objectFit: "cover" }} />
             </button>
           ))}
         </div>
@@ -275,7 +276,7 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
             onMouseLeave={e => { (e.currentTarget as HTMLElement).style.opacity = i === active ? "1" : "0.35" }}
             aria-label={`Go to ${p.name}`}
           >
-            <Image src={p.images[0]} alt={p.name} fill sizes="60px" style={{ objectFit: "cover" }} loading="eager" />
+            <Image key={p.images[0]} src={p.images[0]} alt={p.name} fill sizes="60px" style={{ objectFit: "cover" }} loading="eager" />
           </button>
         ))}
       </div>
