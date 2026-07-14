@@ -53,16 +53,6 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
   const hasMultipleImages = currentImages.length > 1
   const imageUrl = currentImages[projectImgIndex] || currentImages[0]
 
-  // Track previous image for crossfade
-  const prevUrlRef = useRef<string | null>(null)
-  const [prevUrl, setPrevUrl] = useState<string | null>(null)
-  useEffect(() => {
-    if (prevUrlRef.current && prevUrlRef.current !== imageUrl) {
-      setPrevUrl(prevUrlRef.current)
-    }
-    prevUrlRef.current = imageUrl
-  }, [imageUrl])
-
   useEffect(() => {
     setProjectImgIndex(0)
   }, [active])
@@ -108,23 +98,14 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
       overflow: "hidden",
       background: "#000",
     }}>
-      {/* Background image with crossfade */}
+      {/* Background image */}
       <div style={{ position: "absolute", inset: 0 }}>
-        {/* Previous image fading out */}
-        {prevUrl && prevUrl !== imageUrl && (
-          <div style={{
-            position: "absolute",
-            inset: 0,
-            animation: "pfFadeOut 0.7s ease forwards",
-          }}>
-            <img src={prevUrl} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
-          </div>
-        )}
-        {/* Current image */}
         <img
           key={imageUrl}
           src={imageUrl}
           alt={project.name}
+          loading="eager"
+          decoding="async"
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
         />
         <div style={{
