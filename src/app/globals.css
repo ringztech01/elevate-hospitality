@@ -473,6 +473,7 @@ body {
   .hero-text-right p { font-size: 18px !important; }
   .hero-text-center { width: 55% !important; max-width: 260px !important; }
   .hero-text-center p { font-size: 18px !important; }
+  .process-columns { flex-direction: column !important; gap: 1rem !important; }
 
   .team-motion-section {
     justify-content: flex-start !important;

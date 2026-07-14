@@ -237,7 +237,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
         src={videoSrc}
         muted
         playsInline
-        preload="auto"
+        preload="metadata"
         style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", pointerEvents: "none" }}
       />
       <div className="hero-overlay" />
@@ -450,7 +450,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
         }}>
           Our process
         </p>
-        <div style={{
+        <div className="process-columns" style={{
           display: "flex",
           justifyContent: "space-between",
           gap: "4rem",
