@@ -5,7 +5,6 @@ import { useSearchParams } from "next/navigation"
 import Navbar from "@/components/Navbar"
 import SplashScreen from "@/components/SplashScreen"
 import HeroSection from "@/components/HeroSection"
-import TeamMotionSection from "@/components/TeamMotionSection"
 import ContactSection from "@/components/ContactSection"
 import FooterSection from "@/components/FooterSection"
 import gsap from "gsap"
@@ -14,17 +13,9 @@ let splashSeen = false
 
 const slides = [
   { type: "hero" },
-  { type: "team-motion", id: "team" },
   { type: "contact", id: "contact" },
   { type: "footer", id: "footer" },
 ]
-
-const team = [
-  { name: "Bachar Chazbek", role: "Director · Architect & Urban Planner", years: "10+ Years Design", desc: "10+ years delivering luxury interiors across the region.", image: "/images/teams/bashar.png" },
-  { name: "Bassem Fayad", role: "Director · Operations Manager", years: "15+ Years Ops", desc: "15+ years operating elite venues across the Middle East and Africa.", image: "/images/teams/bassem.png" },
-  { name: "Rayan Abdulbaki", role: "Director · Project Manager", years: "10+ Years Build", desc: "10+ years delivering construction projects on programme.", image: "/images/teams/ryan.png" },
-]
-
 function HomeContent() {
   const [splashDone, setSplashDone] = useState(splashSeen)
   const [current, setCurrent] = useState(0)
@@ -104,8 +95,6 @@ function HomeContent() {
           <div key={i} className="slide">
             {slide.type === "hero" ? (
               <HeroSection containerRef={containerRef} isCurrent={i === current} pinFrame={pinFrame} replayArmed={replayArmed} onComplete={handleHeroComplete} onReady={handleHeroReady} />
-            ) : slide.type === "team-motion" ? (
-              <TeamMotionSection members={team} active={Math.abs(i - current) <= 1} />
             ) : slide.type === "contact" ? (
               <ContactSection active={Math.abs(i - current) <= 1} />
             ) : slide.type === "footer" ? (

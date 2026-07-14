@@ -135,33 +135,6 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
         zIndex: 2,
       }} />
 
-      {/* Portfolio label */}
-      <div className="portfolio-label" style={{
-        position: "absolute",
-        top: "6rem",
-        left: "4rem",
-        zIndex: 3,
-        opacity: entered ? 1 : 0,
-        transform: entered ? "translateY(0)" : "translateY(-10px)",
-        transition: "opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s",
-      }}>
-        <p style={{
-          fontSize: "clamp(0.65rem, 0.7vw, 0.75rem)",
-          letterSpacing: "0.45em",
-          textTransform: "uppercase",
-          color: "rgba(255,255,255,0.3)",
-          margin: 0,
-        }}>
-          Portfolio
-        </p>
-        <div style={{
-          width: "24px",
-          height: "1px",
-          background: "rgba(255,255,255,0.2)",
-          marginTop: "0.75rem",
-        }} />
-      </div>
-
       {/* Project category (visible label) */}
       <div className="portfolio-category" style={{
         position: "absolute",
@@ -171,23 +144,15 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
         opacity: entered ? 1 : 0,
         transition: "opacity 0.6s ease 0.4s",
       }}>
-        <div style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "0.15rem",
+        <p style={{
+          fontSize: "clamp(0.75rem, 0.9vw, 0.95rem)",
+          letterSpacing: "0.45em",
+          textTransform: "uppercase",
+          color: "rgba(212, 175, 55, 0.8)",
+          margin: 0,
         }}>
-          {project.category.split(" · ")[1].split(/[,&]\s*/).map((part, i) => (
-            <span key={i} style={{
-              fontSize: "clamp(1rem, 1.4vw, 1.6rem)",
-              fontWeight: 100,
-              letterSpacing: "0.02em",
-              color: "rgba(255,255,255,0.4)",
-              lineHeight: 1.2,
-            }}>
-              {part.trim()}
-            </span>
-          ))}
-        </div>
+          {project.category.split(" · ")[1].split(/[,&]\s*/).map(s => s.trim()).join(" · ")}
+        </p>
       </div>
 
       {/* Project info */}
@@ -275,7 +240,7 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
       {/* Thumbnail strip */}
       <div className="portfolio-thumbnails" style={{
         position: "absolute",
-        bottom: "3rem",
+        bottom: "1.5rem",
         left: "50%",
         transform: "translateX(-50%)",
         zIndex: 3,
