@@ -21,6 +21,7 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
   const [projectImgIndex, setProjectImgIndex] = useState(0)
   const [direction, setDirection] = useState<1 | -1>(1)
   const [animating, setAnimating] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
   useEffect(() => {
@@ -29,6 +30,14 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
       return () => clearTimeout(t)
     }
   }, [isCurrent, entered])
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 768px)")
+    setIsMobile(mq.matches)
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches)
+    mq.addEventListener("change", handler)
+    return () => mq.removeEventListener("change", handler)
+  }, [])
 
   const goTo = useCallback((i: number) => {
     if (animating || i === active || i < 0 || i >= projects.length) return
@@ -198,23 +207,19 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
 
       {/* Vertical thumbnail strip for multi-image projects */}
       {hasMultipleImages && (
-        <div className="portfolio-thumbnails-right" style={{
+        <div style={{
           position: "absolute",
-          right: "3rem",
-          top: "50%",
-          transform: "translateY(-50%)",
+          ...(isMobile ? { top: "1rem", left: "50%", transform: "translateX(-50%)", flexDirection: "row" as const, gap: "0.35rem" } : { right: "3rem", top: "50%", transform: "translateY(-50%)", flexDirection: "column" as const, gap: "0.5rem" }),
           zIndex: 3,
           display: "flex",
-          flexDirection: "column",
           alignItems: "center",
-          gap: "0.5rem",
           opacity: entered ? 1 : 0,
           transition: "opacity 0.6s ease 0.5s",
         }}>
           {currentImages.map((src, imgIdx) => (
             <button key={imgIdx} onClick={() => setProjectImgIndex(imgIdx)} style={{
-              width: "100px",
-              height: "65px",
+              width: isMobile ? "70px" : "100px",
+              height: isMobile ? "46px" : "65px",
               border: imgIdx === projectImgIndex ? "1.5px solid #fff" : "1.5px solid rgba(255,255,255,0.15)",
               borderRadius: "2px",
               padding: 0,
@@ -229,7 +234,7 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
             }}
               onMouseEnter={e => { (e.currentTarget as HTMLElement).style.opacity = "1" }}
               onMouseLeave={e => { (e.currentTarget as HTMLElement).style.opacity = imgIdx === projectImgIndex ? "1" : "0.5" }}>
-              <Image key={src} src={src} alt="" fill sizes="100px" style={{ objectFit: "cover" }} />
+              <Image key={src} src={src} alt="" fill sizes="100px" style={{ objectFit: "cover" }} loading="eager" />
             </button>
           ))}
         </div>
