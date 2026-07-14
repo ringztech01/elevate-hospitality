@@ -9,15 +9,15 @@ import FooterSection from "@/components/FooterSection"
 import { smoothScrollTo } from "@/lib/scrollAnimate"
 
 const projects = [
-  { name: "The Cage", category: "Nightclub · Full Scope", desc: "A nightlife venue where raw steel cage architecture became the entire concept.", images: ["/images/projects/cage.webp", "/images/projects/cage-2.webp", "/images/projects/cage-3.webp", "/images/projects/cage-4.webp"] },
-  { name: "Sora", category: "Restaurant · Full Scope", desc: "Japanese precision meets local soul in a refined dining experience.", images: ["/images/projects/sora1.webp"] },
-  { name: "The Future", category: "Lounge · Full Scope", desc: "A social venue where design anticipates what's next.", images: ["/images/projects/FUTUREPresentation4.webp"] },
+  { name: "The Cage", category: "Nightclub · Design, Execution & Operation", desc: "A nightlife venue where raw steel cage architecture became the entire concept.", images: ["/images/projects/cage.webp", "/images/projects/cage-2.webp", "/images/projects/cage-3.webp", "/images/projects/cage-4.webp"] },
+  { name: "Sora", category: "Restaurant · Design & Execution", desc: "Japanese precision meets local soul in a refined dining experience.", images: ["/images/projects/sora1.webp"] },
+  { name: "The Future", category: "Lounge · Design, Execution & Consultancy", desc: "A social venue where design anticipates what's next.", images: ["/images/projects/FUTUREPresentation4.webp"] },
   { name: "Tokyo", category: "Restaurant · Full Scope", desc: "Authentic Japanese cuisine in a space that balances energy and intimacy.", images: ["/images/projects/tokyo.webp"] },
-  { name: "Klay", category: "Restaurant · Full Scope", desc: "A clay-fired concept built around earth, fire, and honest ingredients.", images: ["/images/projects/klay-1.webp", "/images/projects/klay-2.webp"] },
-  { name: "4Guys", category: "Casual Dining · Full Scope", desc: "A bold casual dining concept built for repeat visits and high energy.", images: ["/images/projects/4guys.webp", "/images/projects/4guys-2.webp", "/images/projects/4guys-3.webp", "/images/projects/4guys-4.webp"] },
-  { name: "Fes", category: "Restaurant · Full Scope", desc: "North African hospitality reimagined through modern design and warm textures.", images: ["/images/projects/fes.webp"] },
+  { name: "Klay", category: "Restaurant · Design & Execution", desc: "A clay-fired concept built around earth, fire, and honest ingredients.", images: ["/images/projects/klay-1.webp", "/images/projects/klay-2.webp"] },
+  { name: "4Guys", category: "Casual Dining · Operation", desc: "A bold casual dining concept built for repeat visits and high energy.", images: ["/images/projects/4guys.webp", "/images/projects/4guys-2.webp", "/images/projects/4guys-3.webp", "/images/projects/4guys-4.webp"] },
+  { name: "Fes", category: "Restaurant · Design & Construction", desc: "North African hospitality reimagined through modern design and warm textures.", images: ["/images/projects/fes.webp"] },
   { name: "Wheatbaker Hotel", category: "Hotel · Hospitality", desc: "Luxury hotel hospitality refined through operational precision and design.", images: ["/images/projects/whitebeaker1.webp"] },
-  { name: "Grey Lounge", category: "Lounge · Full Scope", desc: "A monochrome lounge concept where texture and tone create atmosphere.", images: ["/images/projects/gray1.webp", "/images/projects/gray-2.webp", "/images/projects/gray-3.webp", "/images/projects/gray-4.webp"] },
+  { name: "Grey Lounge", category: "Lounge · Operation & Design", desc: "A monochrome lounge concept where texture and tone create atmosphere.", images: ["/images/projects/gray1.webp", "/images/projects/gray-2.webp", "/images/projects/gray-3.webp", "/images/projects/gray-4.webp"] },
 ]
 
 const slides = [
