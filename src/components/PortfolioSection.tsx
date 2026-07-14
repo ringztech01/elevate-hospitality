@@ -198,7 +198,7 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
 
       {/* Vertical thumbnail strip for multi-image projects */}
       {hasMultipleImages && (
-        <div style={{
+        <div className="portfolio-thumbnails-right" style={{
           position: "absolute",
           right: "3rem",
           top: "50%",
