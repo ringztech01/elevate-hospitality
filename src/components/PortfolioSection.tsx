@@ -51,7 +51,7 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
   const project = projects[active]
   const currentImages = project?.images || []
   const hasMultipleImages = currentImages.length > 1
-  const imageUrl = project.images[projectImgIndex]
+  const imageUrl = currentImages[projectImgIndex] || currentImages[0]
 
   // Track previous image for crossfade
   const prevUrlRef = useRef<string | null>(null)
@@ -62,6 +62,10 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
     }
     prevUrlRef.current = imageUrl
   }, [imageUrl])
+
+  useEffect(() => {
+    setProjectImgIndex(0)
+  }, [active])
 
   const advance = useCallback(() => {
     if (hasMultipleImages && projectImgIndex < currentImages.length - 1) {
