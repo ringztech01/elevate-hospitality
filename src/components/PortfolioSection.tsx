@@ -194,7 +194,9 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
       {hasMultipleImages && (
         <div style={{
           position: "absolute",
-          ...(isMobile ? { top: "1rem", left: "50%", transform: "translateX(-50%)", flexDirection: "row" as const, gap: "0.35rem" } : { right: "3rem", top: "50%", transform: "translateY(-50%)", flexDirection: "column" as const, gap: "0.5rem" }),
+          ...(isMobile
+            ? { top: "8rem", left: "50%", transform: "translateX(-50%)", flexDirection: "row" as const, gap: "0.5rem", maxWidth: "88vw", overflowX: "auto" as const, padding: "0.25rem" }
+            : { right: "3rem", top: "50%", transform: "translateY(-50%)", flexDirection: "column" as const, gap: "0.5rem" }),
           zIndex: 3,
           display: "flex",
           alignItems: "center",
@@ -203,8 +205,8 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
         }}>
           {currentImages.map((src, imgIdx) => (
             <button key={imgIdx} onClick={() => setProjectImgIndex(imgIdx)} style={{
-              width: isMobile ? "70px" : "100px",
-              height: isMobile ? "46px" : "65px",
+              width: isMobile ? "90px" : "100px",
+              height: isMobile ? "60px" : "65px",
               border: imgIdx === projectImgIndex ? "1.5px solid #fff" : "1.5px solid rgba(255,255,255,0.15)",
               borderRadius: "2px",
               padding: 0,
@@ -212,13 +214,13 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
               position: "relative",
               overflow: "hidden",
               background: "#111",
-              opacity: imgIdx === projectImgIndex ? 1 : 0.5,
+              opacity: imgIdx === projectImgIndex ? 1 : 0.45,
               transition: "opacity 0.3s, border-color 0.3s, transform 0.3s",
-              transform: imgIdx === projectImgIndex ? "scale(1.1)" : "scale(1)",
+              transform: imgIdx === projectImgIndex ? "scale(1.08)" : "scale(1)",
               flexShrink: 0,
             }}
               onMouseEnter={e => { (e.currentTarget as HTMLElement).style.opacity = "1" }}
-              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.opacity = imgIdx === projectImgIndex ? "1" : "0.5" }}>
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.opacity = imgIdx === projectImgIndex ? "1" : "0.45" }}>
               <Image key={src} src={src} alt="" fill sizes="100px" style={{ objectFit: "cover" }} loading="eager" />
             </button>
           ))}
@@ -236,7 +238,7 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
         gap: "0.5rem",
         opacity: entered ? 1 : 0,
         transition: "opacity 0.6s ease 0.5s",
-        maxWidth: "80vw",
+        maxWidth: isMobile ? "88vw" : "80vw",
         overflowX: "auto",
         padding: "0.25rem",
       }}>
@@ -246,8 +248,8 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
             onClick={() => goTo(i)}
             style={{
               flexShrink: 0,
-              width: "60px",
-              height: "40px",
+              width: isMobile ? "78px" : "60px",
+              height: isMobile ? "52px" : "40px",
               border: i === active ? "1.5px solid #fff" : "1.5px solid rgba(255,255,255,0.15)",
               borderRadius: "2px",
               padding: 0,
@@ -255,15 +257,15 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
               position: "relative",
               overflow: "hidden",
               background: "#111",
-              opacity: i === active ? 1 : 0.35,
+              opacity: i === active ? 1 : 0.45,
               transition: "opacity 0.4s ease, border-color 0.4s ease, transform 0.4s ease",
-              transform: i === active ? "scale(1.05)" : "scale(1)",
+              transform: i === active ? "scale(1.08)" : "scale(1)",
             }}
             onMouseEnter={e => { (e.currentTarget as HTMLElement).style.opacity = "1" }}
-            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.opacity = i === active ? "1" : "0.35" }}
+            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.opacity = i === active ? "1" : "0.45" }}
             aria-label={`Go to ${p.name}`}
           >
-            <Image key={p.images[0]} src={p.images[0]} alt={p.name} fill sizes="60px" style={{ objectFit: "cover" }} loading="eager" />
+            <Image key={p.images[0]} src={p.images[0]} alt={p.name} fill sizes={isMobile ? "78px" : "60px"} style={{ objectFit: "cover" }} loading="eager" />
           </button>
         ))}
       </div>

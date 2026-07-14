@@ -54,13 +54,11 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
       onReady?.()
     }
     video.addEventListener("canplaythrough", fireReady)
-    video.addEventListener("loadeddata", fireReady)
-    if (video.readyState >= 3) fireReady()
+    if (video.readyState >= 4) fireReady()
     video.load()
     const fallbackTimer = setTimeout(fireReady, 5000)
     return () => {
       video.removeEventListener("canplaythrough", fireReady)
-      video.removeEventListener("loadeddata", fireReady)
       clearTimeout(fallbackTimer)
     }
   }, [onReady])
@@ -174,11 +172,16 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
     const video = videoRef.current
     if (!video) return
     const SEEK_DEADZONE = 0.015
+    const SMOOTHING_TAU = 0.18
+    let lastTime = 0
 
-    const tick = () => {
+    const tick = (time: number) => {
+      const dt = lastTime ? Math.min((time - lastTime) / 1000, 0.1) : 1 / 60
+      lastTime = time
       const target = completedRef.current ? 1 : rawProgressRef.current
 
-      smoothProgressRef.current += (target - smoothProgressRef.current) * 0.4
+      const alpha = 1 - Math.exp(-dt / SMOOTHING_TAU)
+      smoothProgressRef.current += (target - smoothProgressRef.current) * alpha
       if (isCurrent) {
         const val = smoothProgressRef.current
         if (Math.abs(val - lastDisplayRef.current) > 0.002) {
@@ -188,7 +191,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
       }
 
       if (video.duration && isFinite(video.duration)) {
-        const seekTo = target * video.duration
+        const seekTo = smoothProgressRef.current * video.duration
         if (Math.abs(seekTo - lastVideoTimeRef.current) > SEEK_DEADZONE) {
           video.currentTime = seekTo
           lastVideoTimeRef.current = seekTo
@@ -237,7 +240,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
         src={videoSrc}
         muted
         playsInline
-        preload="metadata"
+        preload="auto"
         style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", pointerEvents: "none" }}
       />
       <div className="hero-overlay" />
@@ -250,11 +253,8 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
       }} />
       <div style={{
         position: "absolute",
-        left: 0,
-        bottom: 0,
-        width: "75%",
-        height: "90%",
-        background: "linear-gradient(to top right, rgba(0,0,0,0.97) 0%, rgba(0,0,0,0.85) 35%, rgba(0,0,0,0.35) 60%, transparent 80%)",
+        inset: 0,
+        background: "radial-gradient(ellipse 62% 55% at 18% 82%, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.45) 38%, rgba(0,0,0,0.15) 62%, transparent 82%)",
         pointerEvents: "none",
         zIndex: 1,
         opacity: Math.min(1, Math.max(0, (0.279 - displayProgress) / 0.1)),
@@ -428,7 +428,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
         opacity: topRightEntered ? 1 : 0,
         transition: "opacity 0.6s ease 0.3s",
       }} />
-      <div className="hero-text-right" style={{
+      <div className="hero-process" style={{
         position: "absolute",
         bottom: "18vh",
         left: "0",
@@ -441,7 +441,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
         transform: topRightEntered ? "translateY(0)" : "translateY(20px)",
         transition: "opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s",
       }}>
-        <p style={{
+        <p className="hero-process-label" style={{
           fontSize: "14px",
           letterSpacing: "0.4em",
           textTransform: "uppercase",
@@ -462,7 +462,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
               transform: topRightEntered ? "translateY(0)" : "translateY(20px)",
               transition: `opacity 0.5s ease ${0.3 + i * 0.1}s, transform 0.5s ease ${0.3 + i * 0.1}s`,
             }}>
-              <p style={{
+              <p className="hero-process-title" style={{
                 fontSize: "22px",
                 fontWeight: 500,
                 color: "#fff",
@@ -471,7 +471,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
               }}>
                 {col.title}
               </p>
-              <p style={{
+              <p className="hero-process-desc" style={{
                 fontSize: "16px",
                 fontWeight: 300,
                 lineHeight: 1.5,
@@ -484,7 +484,7 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
             </div>
           ))}
         </div>
-        <p style={{
+        <p className="hero-process-footer" style={{
           fontSize: "18px",
           fontWeight: 400,
           color: "rgba(255,255,255,0.8)",
