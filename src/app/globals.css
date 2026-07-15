@@ -450,6 +450,8 @@ body {
 @media (max-width: 768px) {
   .slide { overflow-y: auto; -webkit-overflow-scrolling: touch; }
 
+  .hero-overlay { display: none !important; }
+
   .nav-dots { display: none; }
 
   .navbar { padding: 0.6rem 1rem; }
