@@ -41,9 +41,6 @@ function animate() {
       if (t.content) {
         t.content.style.transform = `translateX(${exitP * dir * offset}px)`
       }
-      if (t.edge) {
-        t.edge.style.opacity = `${exitP}`
-      }
     } else if (t.video) {
       t.video.style.transform = `scale(${scale})`
     }

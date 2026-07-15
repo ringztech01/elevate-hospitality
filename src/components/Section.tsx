@@ -171,10 +171,11 @@ export default function Section({ id, number, title, desc, video, image, zIndex,
       <div ref={edgeRef} style={{
         position: "absolute",
         inset: 0,
-        background: exitDir === "left"
-          ? "linear-gradient(to left, black 0%, transparent 30%)"
-          : "linear-gradient(to right, black 0%, transparent 30%)",
-        opacity: 0,
+        background: [
+          "linear-gradient(to right, black 0%, transparent 14%, transparent 86%, black 100%)",
+          "linear-gradient(to bottom, black 0%, transparent 14%, transparent 86%, black 100%)",
+        ].join(", "),
+        opacity: 1,
         pointerEvents: "none",
         zIndex: 1,
       }} />
