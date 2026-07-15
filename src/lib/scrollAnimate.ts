@@ -8,6 +8,7 @@ type AnimationTargets = {
   video: HTMLElement | null
   content: HTMLElement | null
   edge: HTMLElement | null
+  currentX?: number
   isStatement: boolean
   slide?: { el: HTMLElement; exitDir: "left" | "right"; offset?: number }
 }
@@ -37,9 +38,11 @@ function animate() {
       const exitP = clamp(-r.top / wh, 0, 1)
       const offset = t.slide.offset ?? 500
       const dir = t.slide.exitDir === "right" ? 1 : -1
-      t.slide.el.style.transform = `translateX(${exitP * dir * offset}px) scale(${scale})`
+      const targetX = exitP * dir * offset
+      t.currentX = (t.currentX ?? targetX) + (targetX - (t.currentX ?? targetX)) * 0.16
+      t.slide.el.style.transform = `translate3d(${t.currentX}px, 0, 0) scale(${scale})`
       if (t.content) {
-        t.content.style.transform = `translateX(${exitP * dir * offset}px)`
+        t.content.style.setProperty("--slide-x", `${t.currentX}px`)
       }
     } else if (t.video) {
       t.video.style.transform = `scale(${scale})`
