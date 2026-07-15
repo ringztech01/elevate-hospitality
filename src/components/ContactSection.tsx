@@ -72,7 +72,7 @@ export default function ContactSection({ active }: ContactSectionProps) {
   }
 
   return (
-    <section style={{
+    <section className="contact-section" style={{
       position: "relative",
       height: "100vh",
       width: "100%",

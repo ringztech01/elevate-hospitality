@@ -500,6 +500,7 @@ body {
   .team-motion-section .team-grid > div > div:first-child + p + h3 { margin-bottom: 0.15rem !important; }
   .team-motion-section .team-grid > div > div:first-child + p { margin-bottom: 0.15rem !important; }
 
+  .contact-section { padding: 0 1.25rem !important; }
   .contact-inner { flex-direction: column !important; gap: 2.5rem !important; }
   .contact-info { flex: 0 0 100% !important; padding-right: 0 !important; text-align: center !important; }
   .contact-details { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 1.25rem !important; text-align: left !important; justify-items: center !important; }
