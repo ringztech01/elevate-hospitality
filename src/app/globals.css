@@ -512,7 +512,7 @@ body {
   .portfolio-bg-img { object-fit: contain !important; }
   .portfolio-category { left: 1.25rem !important; bottom: 7rem !important; }
   .portfolio-info { left: 1.25rem !important; max-width: 80vw !important; top: 55% !important; }
-  .portfolio-info h2 { font-size: 1.8rem !important; }
+  .portfolio-info h2 { font-size: 1.8rem !important; margin-bottom: 0.6rem !important; }
   .portfolio-info p { font-size: 0.8rem !important; max-width: 55vw !important; }
 }
 
