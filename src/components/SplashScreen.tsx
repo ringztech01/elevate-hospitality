@@ -88,9 +88,11 @@ export default function SplashScreen({ onDone, ready }: { onDone: () => void; re
           <video
             ref={videoRef}
             src="/splash-video.mp4"
+            poster="/splash-image.webp"
             muted
             playsInline
             preload="auto"
+            loading="eager"
             style={{
               width: "clamp(160px, 28vw, 340px)",
               height: "auto",
