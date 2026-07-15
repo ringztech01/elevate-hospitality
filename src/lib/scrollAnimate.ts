@@ -6,6 +6,7 @@ type AnimationTargets = {
   section: HTMLElement
   reveal: HTMLElement | null
   video: HTMLElement | null
+  content: HTMLElement | null
   isStatement: boolean
   slide?: { el: HTMLElement; exitDir: "left" | "right"; offset?: number }
 }
@@ -39,6 +40,9 @@ function animate() {
       const offset = t.slide.offset ?? 500
       const dir = t.slide.exitDir === "right" ? 1 : -1
       t.slide.el.style.transform = `translateX(${exitP * dir * offset}px)`
+      if (t.content) {
+        t.content.style.transform = `translateX(${exitP * dir * offset}px)`
+      }
     }
   }
 }

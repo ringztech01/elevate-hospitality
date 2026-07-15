@@ -23,6 +23,7 @@ export default function Section({ id, number, title, desc, video, image, zIndex,
   const sectionRef = useRef<HTMLDivElement>(null)
   const revealRef = useRef<HTMLDivElement>(null)
   const videoWrapRef = useRef<HTMLDivElement>(null)
+  const contentRef = useRef<HTMLDivElement>(null)
   const videoRefA = useRef<HTMLVideoElement>(null)
   const videoRefB = useRef<HTMLVideoElement>(null)
   const timerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
@@ -46,6 +47,7 @@ export default function Section({ id, number, title, desc, video, image, zIndex,
       section: el,
       reveal: revealRef.current,
       video: videoWrapRef.current,
+      content: contentRef.current,
       isStatement: false,
       slide: {
         el: videoWrapRef.current!,
@@ -154,6 +156,14 @@ export default function Section({ id, number, title, desc, video, image, zIndex,
               </video>
             </>
           )}
+          <div style={{
+            position: "absolute",
+            inset: 0,
+            background: exitDir === "left"
+              ? "linear-gradient(to left, black 0%, transparent 30%)"
+              : "linear-gradient(to right, black 0%, transparent 30%)",
+            pointerEvents: "none",
+          }} />
         </div>
         {videoFailed && (
           <div style={{
@@ -167,7 +177,7 @@ export default function Section({ id, number, title, desc, video, image, zIndex,
       <div ref={revealRef} className="section-reveal" style={{ clipPath: "circle(0% at 50% 50%)", willChange: "clip-path" }}>
         <div className="section-reveal-overlay" />
       </div>
-      <div className={`section-content${entered ? " entered" : ""}`} style={
+      <div ref={contentRef} className={`section-content${entered ? " entered" : ""}`} style={
         align === "right" ? { textAlign: "right", marginLeft: "30%" } :
         align === "right-block" ? { textAlign: "left", marginLeft: "auto", paddingRight: "2rem" } :
         align === "left" ? { textAlign: "left", marginRight: "auto", paddingLeft: "8rem" } :
