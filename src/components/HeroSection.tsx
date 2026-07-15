@@ -119,6 +119,8 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
 
     const onWheel = (e: WheelEvent) => {
       if (!isCurrentRef.current) return
+      const container = containerRef.current
+      if (container && container.scrollTop > 5) return
 
       if (replayArmed && completedRef.current && !pinFrameRef.current) {
         const atTop = containerRef.current ? containerRef.current.scrollTop <= 1 : false
@@ -143,6 +145,8 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
 
     const onTouchMove = (e: TouchEvent) => {
       if (!isCurrentRef.current) return
+      const container = containerRef.current
+      if (container && container.scrollTop > 5) return
 
       if (replayArmed && completedRef.current && !pinFrameRef.current) {
         const atTop = containerRef.current ? containerRef.current.scrollTop <= 1 : false
