@@ -8,6 +8,7 @@ interface Project {
   category: string
   desc: string
   images: string[]
+  comingSoon?: boolean
 }
 
 interface PortfolioSectionProps {
@@ -190,6 +191,44 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
           {project.desc}
         </p>
       </div>
+
+      {/* Under Construction badge */}
+      {project.comingSoon && (
+        <div className="portfolio-under-construction" style={{
+          position: "absolute",
+          bottom: isMobile ? "7rem" : "5rem",
+          left: isMobile ? "1.25rem" : "4rem",
+          zIndex: 3,
+          opacity: entered ? 1 : 0,
+          transition: "opacity 0.6s ease 0.6s",
+          pointerEvents: "none",
+        }}>
+          <div style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "0.5rem",
+            background: "rgba(212, 175, 55, 0.12)",
+            border: "1px solid rgba(212, 175, 55, 0.35)",
+            borderRadius: "4px",
+            padding: "0.45rem 0.85rem",
+          }}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(212, 175, 55, 0.9)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="8" x2="12" y2="12"/>
+              <line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            <span style={{
+              fontSize: "0.65rem",
+              letterSpacing: "0.2em",
+              textTransform: "uppercase",
+              color: "rgba(212, 175, 55, 0.9)",
+              fontWeight: 500,
+            }}>
+              Under Construction
+            </span>
+          </div>
+        </div>
+      )}
 
       {/* Vertical thumbnail strip for multi-image projects */}
       {hasMultipleImages && (
