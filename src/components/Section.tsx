@@ -107,7 +107,7 @@ export default function Section({ id, number, title, desc, video, image, zIndex,
       <div className="section-video-wrap">
         <div ref={videoWrapRef} style={{ position: "absolute", inset: 0, willChange: "transform" }}>
           {image ? (
-            <img src={image} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+            <img src={image} alt="" loading="eager" decoding="async" fetchPriority="high" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
           ) : (
             <>
               <video

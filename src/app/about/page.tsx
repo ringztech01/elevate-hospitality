@@ -32,10 +32,10 @@ const sections = [
 
 export default function About() {
   useEffect(() => {
-    const links = ["/videos/1.webm", "/videos/2.webm"].map(src => {
+    const links = ["/videos/1.webm", "/videos/2.webm", "/images/about-who-we-are.png"].map(src => {
       const link = document.createElement("link")
       link.rel = "preload"
-      link.as = "video"
+      link.as = src.endsWith(".png") ? "image" : "video"
       link.href = src
       link.setAttribute("fetchpriority", "high")
       document.head.appendChild(link)
