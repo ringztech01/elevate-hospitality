@@ -17,7 +17,7 @@ const team = [
 ]
 
 const sections = [
-  { type: "section", id: "who-we-are", number: "01", title: "Who we are", desc: ["One team. One contract. Full accountability from first sketch to opening night and beyond.", "We design, build and operate luxury hospitality spaces under a single agreement."], video: "/videos/1.webm", image: "/images/about-who-we-are.png", z: 2, align: "right-block", exitDir: "left" as const },
+  { type: "section", id: "who-we-are", number: "01", title: "Who we are", desc: ["One team. One contract. Full accountability from first sketch to opening night and beyond.", "We design, build and operate luxury hospitality spaces under a single agreement."], video: "/videos/1.webm",   image: "/images/about-who-we-are.webp", z: 2, align: "right-block", exitDir: "left" as const },
   { type: "statement", id: "statement-1", z: 3, lines: ["We don't hand over drawings and walk away.", "We design what we build, build what we operate,", "and operate what we design."] },
   { type: "section", id: "design", number: "02", title: "Design", desc: "We design for the people who will work the space, not just the people who will photograph it. Every banquette is a seating plan. Every ceiling height is an acoustic budget.", video: "/videos/2.webm", z: 4, align: "left", exitDir: "right" as const },
   { type: "statement", id: "statement-2", z: 5, lines: ["A rendering is a promise.", "What we deliver", "is proof."] },
@@ -32,10 +32,10 @@ const sections = [
 
 export default function About() {
   useEffect(() => {
-    const links = ["/videos/1.webm", "/videos/2.webm", "/images/about-who-we-are.png"].map(src => {
+    const links = ["/videos/1.webm", "/videos/2.webm", "/images/about-who-we-are.webp"].map(src => {
       const link = document.createElement("link")
       link.rel = "preload"
-      link.as = src.endsWith(".png") ? "image" : "video"
+      link.as = src.endsWith(".webp") ? "image" : "video"
       link.href = src
       link.setAttribute("fetchpriority", "high")
       document.head.appendChild(link)
