@@ -107,11 +107,6 @@ body {
   overflow: hidden;
 }
 
-.splash-canvas {
-  position: absolute;
-  inset: 0;
-}
-
 .splash-video-wrap {
   position: relative;
   display: inline-flex;
@@ -121,7 +116,7 @@ body {
   overflow: visible;
 }
 
-.splash-video-wrap video {
+.splash-video-wrap img {
   display: block;
   mask-image: radial-gradient(circle at center, black 58%, transparent 100%);
   -webkit-mask-image: radial-gradient(circle at center, black 58%, transparent 100%);
