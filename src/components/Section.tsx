@@ -156,14 +156,6 @@ export default function Section({ id, number, title, desc, video, image, zIndex,
               </video>
             </>
           )}
-          <div style={{
-            position: "absolute",
-            inset: 0,
-            background: exitDir === "left"
-              ? "linear-gradient(to left, black 0%, transparent 30%)"
-              : "linear-gradient(to right, black 0%, transparent 30%)",
-            pointerEvents: "none",
-          }} />
         </div>
         {videoFailed && (
           <div style={{
@@ -174,6 +166,15 @@ export default function Section({ id, number, title, desc, video, image, zIndex,
           </div>
         )}
       </div>
+      <div style={{
+        position: "absolute",
+        inset: 0,
+        background: exitDir === "left"
+          ? "linear-gradient(to left, black 0%, transparent 30%)"
+          : "linear-gradient(to right, black 0%, transparent 30%)",
+        pointerEvents: "none",
+        zIndex: 1,
+      }} />
       <div ref={revealRef} className="section-reveal" style={{ clipPath: "circle(0% at 50% 50%)", willChange: "clip-path" }}>
         <div className="section-reveal-overlay" />
       </div>
