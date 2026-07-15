@@ -508,6 +508,7 @@ body {
 
   .footer-nav-links { gap: 1rem !important; }
   .footer-nav-links button { font-size: 0.6rem !important; }
+  .footer-section { padding: 0 1.25rem !important; }
 
   /* Portfolio mobile */
   .portfolio-bg-img { object-fit: contain !important; }

@@ -30,7 +30,7 @@ export default function FooterSection({ active, onClick, slideCount }: FooterSec
   }, [active, entered])
 
   return (
-    <section style={{
+    <section className="footer-section" style={{
       position: "relative",
       height: "100vh",
       width: "100%",
