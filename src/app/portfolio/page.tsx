@@ -15,7 +15,6 @@ const projects = [
   { name: "The Future", category: "Lounge · Design, Execution & Consultancy", desc: "A social venue where design anticipates what's next.", images: ["/images/projects/FUTUREPresentation4.webp"] },
   { name: "Tokyo", category: "Nightclub · Renovation", desc: "A complete nightclub renovation reimagining the space for elevated nightlife.", images: ["/images/projects/TOKYO1.webp"] },
   { name: "Klay", category: "Restaurant · Design & Execution", desc: "A clay-fired concept built around earth, fire, and honest ingredients.", images: ["/images/projects/klay-1.webp", "/images/projects/klay-2.webp"] },
-  { name: "4Guys", category: "Casual Dining · Operation", desc: "A bold casual dining concept built for repeat visits and high energy.", images: ["/images/projects/4guys-2.webp", "/images/projects/4guys-3.webp", "/images/projects/4guys-4.webp"] },
   { name: "Fes", category: "Commercial · Fasad Execution", desc: "A commercial building facade execution bringing bold architectural vision to life.", images: ["/images/projects/FES1.webp"] },
   { name: "Wheatbaker Hotel", category: "Hotel · Design Module", desc: "A luxury hotel design module crafted to redefine hospitality standards.", images: ["/images/projects/WHEATBEAKER.jpeg"] },
 ]
