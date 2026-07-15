@@ -35,7 +35,9 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
   const lastDisplayRef = useRef(-1)
   const completionPendingRef = useRef(false)
   const cooldownTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const isCurrentRef = useRef(isCurrent)
   pinFrameRef.current = pinFrame
+  isCurrentRef.current = isCurrent
 
   useEffect(() => {
     const mql = window.matchMedia("(max-width: 767px)")
@@ -116,6 +118,8 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
     if (!el) return
 
     const onWheel = (e: WheelEvent) => {
+      if (!isCurrentRef.current) return
+
       if (replayArmed && completedRef.current && !pinFrameRef.current) {
         const atTop = containerRef.current ? containerRef.current.scrollTop <= 1 : false
         if (atTop && e.deltaY > 0) {
@@ -138,6 +142,8 @@ export default function HeroSection({ containerRef, isCurrent, pinFrame, replayA
     }
 
     const onTouchMove = (e: TouchEvent) => {
+      if (!isCurrentRef.current) return
+
       if (replayArmed && completedRef.current && !pinFrameRef.current) {
         const atTop = containerRef.current ? containerRef.current.scrollTop <= 1 : false
         if (atTop && e.touches[0].clientY < touchStartRef.current) {
