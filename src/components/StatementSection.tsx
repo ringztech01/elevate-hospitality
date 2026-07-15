@@ -30,6 +30,8 @@ export default function StatementSection({ id, lines, zIndex, active }: Statemen
       section: el,
       reveal: bgRef.current,
       video: null,
+      content: null,
+      edge: null,
       isStatement: true,
     })
     return cleanup

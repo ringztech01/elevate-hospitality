@@ -24,6 +24,7 @@ export default function Section({ id, number, title, desc, video, image, zIndex,
   const revealRef = useRef<HTMLDivElement>(null)
   const videoWrapRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
+  const edgeRef = useRef<HTMLDivElement>(null)
   const videoRefA = useRef<HTMLVideoElement>(null)
   const videoRefB = useRef<HTMLVideoElement>(null)
   const timerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
@@ -48,6 +49,7 @@ export default function Section({ id, number, title, desc, video, image, zIndex,
       reveal: revealRef.current,
       video: videoWrapRef.current,
       content: contentRef.current,
+      edge: edgeRef.current,
       isStatement: false,
       slide: {
         el: videoWrapRef.current!,
@@ -166,12 +168,13 @@ export default function Section({ id, number, title, desc, video, image, zIndex,
           </div>
         )}
       </div>
-      <div style={{
+      <div ref={edgeRef} style={{
         position: "absolute",
         inset: 0,
         background: exitDir === "left"
           ? "linear-gradient(to left, black 0%, transparent 30%)"
           : "linear-gradient(to right, black 0%, transparent 30%)",
+        opacity: 0,
         pointerEvents: "none",
         zIndex: 1,
       }} />

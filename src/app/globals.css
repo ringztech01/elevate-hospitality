@@ -196,8 +196,6 @@ body {
   position: absolute;
   inset: 0;
   background: #0a0a0a;
-  mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
 }
 
 .section-video-wrap video {
@@ -212,8 +210,6 @@ body {
   position: absolute;
   inset: 0;
   z-index: 1;
-  mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
 }
 
 .section-reveal-overlay {

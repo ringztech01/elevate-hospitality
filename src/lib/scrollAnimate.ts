@@ -7,6 +7,7 @@ type AnimationTargets = {
   reveal: HTMLElement | null
   video: HTMLElement | null
   content: HTMLElement | null
+  edge: HTMLElement | null
   isStatement: boolean
   slide?: { el: HTMLElement; exitDir: "left" | "right"; offset?: number }
 }
@@ -28,10 +29,7 @@ function animate() {
       t.reveal.style.clipPath = `circle(${clamp(progress * 150, 0, 100)}% at 50% 50%)`
     }
 
-    if (t.video) {
-      const scale = 1.08 - progress * 0.08
-      t.video.style.transform = `scale(${scale})`
-    }
+    const scale = 1.08 - progress * 0.08
 
     if (t.slide) {
       const wh = window.innerHeight
@@ -39,10 +37,15 @@ function animate() {
       const exitP = clamp(-r.top / wh, 0, 1)
       const offset = t.slide.offset ?? 500
       const dir = t.slide.exitDir === "right" ? 1 : -1
-      t.slide.el.style.transform = `translateX(${exitP * dir * offset}px)`
+      t.slide.el.style.transform = `translateX(${exitP * dir * offset}px) scale(${scale})`
       if (t.content) {
         t.content.style.transform = `translateX(${exitP * dir * offset}px)`
       }
+      if (t.edge) {
+        t.edge.style.opacity = `${exitP}`
+      }
+    } else if (t.video) {
+      t.video.style.transform = `scale(${scale})`
     }
   }
 }
