@@ -106,6 +106,7 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
           alt={project.name}
           loading="eager"
           decoding="async"
+          className="portfolio-bg-img"
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
         />
         <div style={{
