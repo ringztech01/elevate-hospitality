@@ -16,14 +16,14 @@ const team = [
   { name: "Rayan Abdulbaki", role: "Director · Project Manager", years: "10+ Years Build", desc: "10+ years delivering construction projects on programme.", image: "/images/teams/ryan.png" },
 ]
 
-const slides = [
-  { type: "section", id: "who-we-are", number: "01", title: "Who we are", desc: ["One team. One contract. Full accountability from first sketch to opening night and beyond.", "We design, build and operate luxury hospitality spaces under a single agreement."], video: "/videos/1.webm", image: "/images/about-who-we-are.png", z: 2, align: "right-block" },
+const sections = [
+  { type: "section", id: "who-we-are", number: "01", title: "Who we are", desc: ["One team. One contract. Full accountability from first sketch to opening night and beyond.", "We design, build and operate luxury hospitality spaces under a single agreement."], video: "/videos/1.webm", image: "/images/about-who-we-are.png", z: 2, align: "right-block", exitDir: "left" as const },
   { type: "statement", id: "statement-1", z: 3, lines: ["We don't hand over drawings and walk away.", "We design what we build, build what we operate,", "and operate what we design."] },
-  { type: "section", id: "design", number: "02", title: "Design", desc: "We design for the people who will work the space, not just the people who will photograph it. Every banquette is a seating plan. Every ceiling height is an acoustic budget.", video: "/videos/2.webm", z: 4, align: "left" },
+  { type: "section", id: "design", number: "02", title: "Design", desc: "We design for the people who will work the space, not just the people who will photograph it. Every banquette is a seating plan. Every ceiling height is an acoustic budget.", video: "/videos/2.webm", z: 4, align: "left", exitDir: "right" as const },
   { type: "statement", id: "statement-2", z: 5, lines: ["A rendering is a promise.", "What we deliver", "is proof."] },
-  { type: "section", id: "build", number: "03", title: "Build", desc: "Procurement and project management under one roof. One point of accountability for timelines, budgets, and quality — MEP, joinery, and finishes coordinated through every stage. A drawing is a promise. We're the ones who keep it.", video: "/videos/3.webm", z: 6, align: "left" },
+  { type: "section", id: "build", number: "03", title: "Build", desc: "Procurement and project management under one roof. One point of accountability for timelines, budgets, and quality — MEP, joinery, and finishes coordinated through every stage. A drawing is a promise. We're the ones who keep it.", video: "/videos/3.webm", z: 6, align: "left", exitDir: "left" as const },
   { type: "statement", id: "statement-3", z: 7, lines: ["Precision is not a detail.", "It is the entire process", "made visible."] },
-  { type: "section", id: "operate", number: "04", title: "Operate", desc: "This is what makes us different. We run what we build. Pre-opening, staffing, systems, launch and every service after. We don't hand over the keys and walk away.", video: "/videos/6.webm", z: 8, align: "right-block" },
+  { type: "section", id: "operate", number: "04", title: "Operate", desc: "This is what makes us different. We run what we build. Pre-opening, staffing, systems, launch and every service after. We don't hand over the keys and walk away.", video: "/videos/6.webm", z: 8, align: "right-block", exitDir: "right" as const },
   { type: "statement", id: "statement-4", z: 9, lines: ["A space doesn't end at opening night.", "It begins."] },
   { type: "team-motion", id: "founders" },
   { type: "contact", id: "contact" },
@@ -52,7 +52,7 @@ export default function About() {
   currentRef.current = current
 
   const goTo = useCallback((targetIdx: number) => {
-    if (targetIdx < 0 || targetIdx >= slides.length) return
+    if (targetIdx < 0 || targetIdx >= sections.length) return
     setCurrent(targetIdx)
     const el = containerRef.current
     if (!el) return
@@ -69,7 +69,7 @@ export default function About() {
 
     const onScroll = () => {
       const idx = Math.round(container.scrollTop / window.innerHeight)
-      if (idx >= 0 && idx < slides.length && idx !== currentRef.current) {
+      if (idx >= 0 && idx < sections.length && idx !== currentRef.current) {
         setCurrent(idx)
       }
     }
@@ -80,9 +80,9 @@ export default function About() {
 
   return (
     <>
-      <Navbar current={current} slides={slides} onClick={goTo} page="about" />
+      <Navbar current={current} slides={sections} onClick={goTo} page="about" />
       <div ref={containerRef} className="slide-container entered">
-        {slides.map((slide, i) => (
+        {sections.map((slide, i) => (
           <div key={i} className="slide">
             {slide.type === "section" ? (
               <Section
@@ -97,6 +97,7 @@ export default function About() {
                 isCurrent={i === current}
                 align={slide.align as "left" | "right" | undefined}
                 loop={(slide as any).loop}
+                exitDir={(slide as any).exitDir}
               />
             ) : slide.type === "statement" ? (
               <StatementSection
@@ -110,7 +111,7 @@ export default function About() {
             ) : slide.type === "contact" ? (
               <ContactSection active={Math.abs(i - current) <= 1} />
             ) : (
-              <FooterSection active={Math.abs(i - current) <= 1} onClick={footerGoTo} slideCount={slides.length} />
+              <FooterSection active={Math.abs(i - current) <= 1} onClick={footerGoTo} slideCount={sections.length} />
             )}
           </div>
         ))}

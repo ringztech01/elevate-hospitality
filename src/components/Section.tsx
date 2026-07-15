@@ -16,9 +16,10 @@ interface SectionProps {
   align?: "left" | "right" | "right-block"
   delay?: number
   loop?: boolean
+  exitDir?: "left" | "right"
 }
 
-export default function Section({ id, number, title, desc, video, image, zIndex, active, isCurrent, align, delay }: SectionProps) {
+export default function Section({ id, number, title, desc, video, image, zIndex, active, isCurrent, align, delay, exitDir = "left" }: SectionProps) {
   const sectionRef = useRef<HTMLDivElement>(null)
   const revealRef = useRef<HTMLDivElement>(null)
   const videoWrapRef = useRef<HTMLDivElement>(null)
@@ -48,7 +49,7 @@ export default function Section({ id, number, title, desc, video, image, zIndex,
       isStatement: false,
       slide: {
         el: videoWrapRef.current!,
-        exitDir: "left",
+        exitDir,
         offset: 600,
       },
     })
