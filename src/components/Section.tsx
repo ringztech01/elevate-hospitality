@@ -172,7 +172,7 @@ export default function Section({ id, number, title, desc, video, image, zIndex,
         position: "absolute",
         inset: 0,
         background: [
-          "linear-gradient(to right, black 0%, transparent 14%, transparent 86%, black 100%)",
+          "linear-gradient(to right, black 0%, rgba(0,0,0,0.9) 6%, rgba(0,0,0,0.45) 18%, transparent 32%, transparent 68%, rgba(0,0,0,0.45) 82%, rgba(0,0,0,0.9) 94%, black 100%)",
           "linear-gradient(to bottom, black 0%, transparent 14%, transparent 86%, black 100%)",
         ].join(", "),
         opacity: 1,
