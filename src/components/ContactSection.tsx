@@ -134,7 +134,7 @@ export default function ContactSection({ active }: ContactSectionProps) {
         </p>
 
         {/* Contact details */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+        <div className="contact-details" style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
           <div>
             <p style={{
               fontSize: "clamp(0.5rem, 0.55vw, 0.6rem)",

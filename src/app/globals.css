@@ -502,6 +502,7 @@ body {
 
   .contact-inner { flex-direction: column !important; gap: 2.5rem !important; }
   .contact-info { flex: 0 0 100% !important; padding-right: 0 !important; }
+  .contact-details { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 1.25rem !important; }
   .contact-form { flex: 0 0 100% !important; }
 
   .footer-nav-links { gap: 1rem !important; }
