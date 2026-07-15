@@ -9,7 +9,7 @@ import FooterSection from "@/components/FooterSection"
 import { smoothScrollTo } from "@/lib/scrollAnimate"
 
 const projects = [
-  { name: "CAGE", category: "Nightclub · Design, Execution & Operation", desc: "A nightlife venue where raw steel cage architecture became the entire concept.", images: ["/images/projects/cage.webp", "/images/projects/cage-2.webp", "/images/projects/cage-3.webp", "/images/projects/cage-4.webp"] },
+  { name: "CAGE", category: "Nightclub · Design, Execution & Operation", desc: "A nightlife venue where raw steel cage architecture became the entire concept.", images: ["/images/projects/cage-2.webp", "/images/projects/cage.webp", "/images/projects/cage-3.webp", "/images/projects/cage-4.webp"] },
   { name: "Grey Lounge", category: "Lounge · Operation & Design", desc: "A monochrome lounge concept where texture and tone create atmosphere.", images: ["/images/projects/gray-4.webp", "/images/projects/gray-3.webp", "/images/projects/gray-2.webp"] },
   { name: "Sora 2.0", category: "Restaurant · Design & Execution", desc: "Japanese precision meets local soul in a refined dining experience.", images: ["/images/projects/SORA.jpeg"] },
   { name: "The Future", category: "Lounge · Design, Execution & Consultancy", desc: "A social venue where design anticipates what's next.", images: ["/images/projects/FUTUREPresentation4.webp"] },
