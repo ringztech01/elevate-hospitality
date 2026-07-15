@@ -490,15 +490,15 @@ body {
     overflow-y: auto !important;
   }
 
-  .team-grid { grid-template-columns: 1fr !important; gap: 1.25rem !important; max-width: 320px !important; }
+  .team-grid { grid-template-columns: 1fr !important; gap: 1rem !important; max-width: 100% !important; padding: 0 1rem !important; }
   .team-motion-section .team-grid { margin-top: 0.5rem !important; }
-  .team-motion-section .team-grid > div > div:first-child { width: 100px !important; height: 100px !important; }
-  .team-motion-section .team-grid > div h3 { font-size: 1.1rem !important; }
-  .team-motion-section .team-grid > div > p { font-size: 0.7rem !important; }
-  .team-motion-section .team-grid > div > p:first-of-type { font-size: 0.45rem !important; }
-  .team-motion-section .team-grid > div > p:nth-of-type(3) { font-size: 0.75rem !important; }
-  .team-motion-section .team-grid > div > div:first-child + p + h3 { margin-bottom: 0.2rem !important; }
-  .team-motion-section .team-grid > div > div:first-child + p { margin-bottom: 0.25rem !important; }
+  .team-motion-section .team-grid > div > div:first-child { width: 80px !important; height: 80px !important; }
+  .team-motion-section .team-grid > div h3 { font-size: 1rem !important; }
+  .team-motion-section .team-grid > div > p { font-size: 0.65rem !important; }
+  .team-motion-section .team-grid > div > p:first-of-type { font-size: 0.4rem !important; }
+  .team-motion-section .team-grid > div > p:nth-of-type(3) { font-size: 0.7rem !important; max-width: 100% !important; }
+  .team-motion-section .team-grid > div > div:first-child + p + h3 { margin-bottom: 0.15rem !important; }
+  .team-motion-section .team-grid > div > div:first-child + p { margin-bottom: 0.15rem !important; }
 
   .contact-inner { flex-direction: column !important; gap: 2.5rem !important; }
   .contact-info { flex: 0 0 100% !important; padding-right: 0 !important; text-align: center !important; }
