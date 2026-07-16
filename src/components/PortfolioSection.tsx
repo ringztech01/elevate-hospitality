@@ -19,11 +19,15 @@ interface PortfolioSectionProps {
 export default function PortfolioSection({ projects, isCurrent }: PortfolioSectionProps) {
   const [entered, setEntered] = useState(false)
   const [active, setActive] = useState(0)
+  const [prevActive, setPrevActive] = useState(-1)
   const [projectImgIndex, setProjectImgIndex] = useState(0)
   const [direction, setDirection] = useState<1 | -1>(1)
-  const [animating, setAnimating] = useState(false)
+  const [transitioning, setTransitioning] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
+  const [textPhase, setTextPhase] = useState<"visible" | "exit" | "enter">("visible")
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const transitionTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const textTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
     if (isCurrent && !entered) {
@@ -40,19 +44,48 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
     return () => mq.removeEventListener("change", handler)
   }, [])
 
-  const goTo = useCallback((i: number) => {
-    if (animating || i === active || i < 0 || i >= projects.length) return
+  useEffect(() => {
+    return () => {
+      if (transitionTimerRef.current) clearTimeout(transitionTimerRef.current)
+      if (textTimerRef.current) clearTimeout(textTimerRef.current)
+    }
+  }, [])
+
+  const switchProject = useCallback((i: number) => {
+    if (i < 0 || i >= projects.length || i === active) return
+
     setDirection(i > active ? 1 : -1)
-    setAnimating(true)
-    setActive(i)
-    setProjectImgIndex(0)
-    setTimeout(() => setAnimating(false), 700)
-  }, [active, animating, projects.length])
+    setPrevActive(active)
+    setTransitioning(true)
+    setTextPhase("exit")
+
+    textTimerRef.current = setTimeout(() => {
+      setActive(i)
+      setProjectImgIndex(0)
+      setTextPhase("enter")
+
+      textTimerRef.current = setTimeout(() => {
+        setTextPhase("visible")
+      }, 60)
+    }, 300)
+
+    transitionTimerRef.current = setTimeout(() => {
+      setTransitioning(false)
+      setPrevActive(-1)
+    }, 900)
+  }, [active, projects.length])
+
+  const goTo = useCallback((i: number) => {
+    if (transitioning) return
+    switchProject(i)
+  }, [transitioning, switchProject])
 
   const project = projects[active]
+  const prevProject = prevActive >= 0 ? projects[prevActive] : null
   const currentImages = project?.images || []
   const hasMultipleImages = currentImages.length > 1
   const imageUrl = currentImages[projectImgIndex] || currentImages[0]
+  const prevImageUrl = prevProject ? (prevProject.images[0]) : ""
 
   useEffect(() => {
     setProjectImgIndex(0)
@@ -62,25 +95,10 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
     if (hasMultipleImages && projectImgIndex < currentImages.length - 1) {
       setProjectImgIndex(prev => prev + 1)
     } else {
-      setProjectImgIndex(0)
       const nextIdx = (active + 1) % projects.length
-      if (animating || nextIdx === active) return
-      setDirection(nextIdx > active ? 1 : -1)
-      setAnimating(true)
-      setActive(nextIdx)
-      setTimeout(() => setAnimating(false), 700)
+      switchProject(nextIdx)
     }
-  }, [hasMultipleImages, projectImgIndex, currentImages.length, active, projects.length, animating])
-
-  const nextImage = useCallback(() => {
-    if (!hasMultipleImages) return
-    setProjectImgIndex(prev => (prev + 1) % currentImages.length)
-  }, [hasMultipleImages, currentImages.length])
-
-  const prevImage = useCallback(() => {
-    if (!hasMultipleImages) return
-    setProjectImgIndex(prev => (prev - 1 + currentImages.length) % currentImages.length)
-  }, [hasMultipleImages, currentImages.length])
+  }, [hasMultipleImages, projectImgIndex, currentImages.length, active, projects.length, switchProject])
 
   useEffect(() => {
     if (!isCurrent) {
@@ -91,6 +109,24 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
     return () => { if (timerRef.current) clearInterval(timerRef.current) }
   }, [isCurrent, advance])
 
+  const textTransform = () => {
+    if (textPhase === "exit") return `translateY(${direction === 1 ? "-12px" : "12px"})`
+    if (textPhase === "enter") return `translateY(${direction === 1 ? "12px" : "-12px"})`
+    return "translateY(0)"
+  }
+
+  const textOpacity = () => {
+    if (textPhase === "exit") return 0
+    if (textPhase === "enter") return 0
+    return 1
+  }
+
+  const categoryTransform = () => {
+    if (textPhase === "exit") return `translateX(${direction === 1 ? "-20px" : "20px"})`
+    if (textPhase === "enter") return `translateX(${direction === 1 ? "20px" : "-20px"})`
+    return "translateX(0)"
+  }
+
   return (
     <section style={{
       position: "relative",
@@ -99,10 +135,39 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
       overflow: "hidden",
       background: "#000",
     }}>
-      {/* Background image */}
-      <div style={{ position: "absolute", inset: 0 }}>
+      {/* Outgoing background image (crossfade layer) */}
+      {transitioning && prevImageUrl && (
+        <div style={{
+          position: "absolute",
+          inset: 0,
+          opacity: 0,
+          animation: "portfolioCrossfadeOut 0.9s ease forwards",
+        }}>
+          <img
+            src={prevImageUrl}
+            alt=""
+            style={{
+              position: "absolute",
+              inset: 0,
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+            }}
+          />
+        </div>
+      )}
+
+      {/* Incoming background image */}
+      <div
+        key={imageUrl}
+        style={{
+          position: "absolute",
+          inset: 0,
+          opacity: transitioning ? 0 : 1,
+          animation: transitioning ? "portfolioCrossfadeIn 0.9s ease forwards" : "portfolioKenBurns 12s ease-in-out infinite alternate",
+        }}
+      >
         <img
-          key={imageUrl}
           src={imageUrl}
           alt={project.name}
           loading="eager"
@@ -110,12 +175,15 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
           className="portfolio-bg-img"
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
         />
-        <div style={{
-          position: "absolute",
-          inset: 0,
-          background: "linear-gradient(to right, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.4) 100%)",
-        }} />
       </div>
+
+      {/* Dark overlay */}
+      <div style={{
+        position: "absolute",
+        inset: 0,
+        background: "linear-gradient(to right, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.4) 100%)",
+        zIndex: 1,
+      }} />
 
       {/* Subtle grain overlay */}
       <div style={{
@@ -129,14 +197,15 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
         zIndex: 2,
       }} />
 
-      {/* Project category (visible label) */}
+      {/* Project category */}
       <div className="portfolio-category" style={{
         position: "absolute",
         bottom: "5rem",
         left: "4rem",
         zIndex: 3,
-        opacity: entered ? 1 : 0,
-        transition: "opacity 0.6s ease 0.4s",
+        opacity: entered ? textOpacity() : 0,
+        transform: categoryTransform(),
+        transition: textPhase === "visible" ? "opacity 0.5s ease 0.3s, transform 0.5s ease 0.3s" : "opacity 0.3s ease, transform 0.3s ease",
       }}>
         <p style={{
           fontSize: "clamp(0.75rem, 0.9vw, 0.95rem)",
@@ -154,11 +223,15 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
         position: "absolute",
         left: "4rem",
         top: "50%",
-        transform: entered ? "translateY(-50%)" : "translateY(calc(-50% + 20px))",
+        transform: entered
+          ? `translateY(-50%) ${textTransform()}`
+          : "translateY(calc(-50% + 20px))",
         zIndex: 3,
         maxWidth: "520px",
-        opacity: entered ? 1 : 0,
-        transition: "opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s",
+        opacity: entered ? textOpacity() : 0,
+        transition: textPhase === "visible"
+          ? "opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s"
+          : "opacity 0.3s ease, transform 0.3s ease",
         pointerEvents: "none",
       }}>
         <p style={{
@@ -199,8 +272,10 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
           bottom: isMobile ? "10rem" : "8rem",
           left: isMobile ? "1.25rem" : "4rem",
           zIndex: 3,
-          opacity: entered ? 1 : 0,
-          transition: "opacity 0.6s ease 0.6s",
+          opacity: entered ? textOpacity() : 0,
+          transition: textPhase === "visible"
+            ? "opacity 0.5s ease 0.5s"
+            : "opacity 0.3s ease",
           pointerEvents: "none",
         }}>
           <div style={{
