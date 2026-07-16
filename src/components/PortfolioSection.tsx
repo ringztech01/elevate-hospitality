@@ -28,6 +28,7 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const transitionTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const textTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const lastImageUrlRef = useRef("")
 
   useEffect(() => {
     if (isCurrent && !entered) {
@@ -51,9 +52,16 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
     }
   }, [])
 
-  const switchProject = useCallback((i: number) => {
-    if (i < 0 || i >= projects.length || i === active) return
+  const project = projects[active]
+  const currentImages = project?.images || []
+  const hasMultipleImages = currentImages.length > 1
+  const imageUrl = currentImages[projectImgIndex] || currentImages[0]
+  const prevImageUrl = lastImageUrlRef.current
 
+  const switchProject = useCallback((i: number) => {
+    if (transitioning || i < 0 || i >= projects.length || i === active) return
+
+    lastImageUrlRef.current = imageUrl
     setDirection(i > active ? 1 : -1)
     setPrevActive(active)
     setTransitioning(true)
@@ -61,7 +69,6 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
 
     textTimerRef.current = setTimeout(() => {
       setActive(i)
-      setProjectImgIndex(0)
       setTextPhase("enter")
 
       textTimerRef.current = setTimeout(() => {
@@ -73,32 +80,25 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
       setTransitioning(false)
       setPrevActive(-1)
     }, 900)
-  }, [active, projects.length])
+  }, [active, transitioning, projects.length, imageUrl])
 
   const goTo = useCallback((i: number) => {
-    if (transitioning) return
     switchProject(i)
-  }, [transitioning, switchProject])
-
-  const project = projects[active]
-  const prevProject = prevActive >= 0 ? projects[prevActive] : null
-  const currentImages = project?.images || []
-  const hasMultipleImages = currentImages.length > 1
-  const imageUrl = currentImages[projectImgIndex] || currentImages[0]
-  const prevImageUrl = prevProject ? (prevProject.images[0]) : ""
+  }, [switchProject])
 
   useEffect(() => {
-    setProjectImgIndex(0)
-  }, [active])
+    if (!transitioning) setProjectImgIndex(0)
+  }, [active, transitioning])
 
   const advance = useCallback(() => {
+    if (transitioning) return
     if (hasMultipleImages && projectImgIndex < currentImages.length - 1) {
       setProjectImgIndex(prev => prev + 1)
     } else {
       const nextIdx = (active + 1) % projects.length
       switchProject(nextIdx)
     }
-  }, [hasMultipleImages, projectImgIndex, currentImages.length, active, projects.length, switchProject])
+  }, [hasMultipleImages, projectImgIndex, currentImages.length, active, projects.length, switchProject, transitioning])
 
   useEffect(() => {
     if (!isCurrent) {
