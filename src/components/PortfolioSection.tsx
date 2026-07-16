@@ -196,7 +196,7 @@ export default function PortfolioSection({ projects, isCurrent }: PortfolioSecti
       {project.comingSoon && (
         <div className="portfolio-under-construction" style={{
           position: "absolute",
-          bottom: isMobile ? "7rem" : "5rem",
+          bottom: isMobile ? "10rem" : "8rem",
           left: isMobile ? "1.25rem" : "4rem",
           zIndex: 3,
           opacity: entered ? 1 : 0,
