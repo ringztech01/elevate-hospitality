@@ -92,7 +92,6 @@ export default function SplashScreen({ onDone, ready }: { onDone: () => void; re
             muted
             playsInline
             preload="auto"
-            loading="eager"
             style={{
               width: "clamp(160px, 28vw, 340px)",
               height: "auto",
